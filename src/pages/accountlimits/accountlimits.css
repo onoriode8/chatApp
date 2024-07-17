@@ -1,0 +1,21 @@
+
+@media(min-width: 500px) {
+    .accountlimits_containers {
+        font-size: 1.2em;
+    }
+
+    .accountlimits_div {
+        display: flex;
+        align-items: center;
+    }
+
+    .accountlimits_div div {
+        margin: 0px 5px;
+    }
+}
+
+@media(max-width: 499px) {
+    .accountlimits_div {
+        display: inline-block;
+    }
+}

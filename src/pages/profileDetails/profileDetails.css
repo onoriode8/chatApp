@@ -1,0 +1,107 @@
+.profile_details {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.profile_details_containers {
+    border: 1px solid #f0f0f0;
+    box-shadow: 2px 2px 2px 2px #4444;
+    margin: 40px 350px; 
+}
+
+.profile_details_containers_wrapper {
+    padding: 20px 20px;
+    text-align: start;
+    box-shadow: 1px 0px 1px 0px #1134;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+} 
+
+.profile_details_icon {
+    font-size: 1.5em;
+}
+
+.profile_details_image_edit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile_details_profile_image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile_details_fullname_refCode {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.profile_details_fullname_containers,
+.profile_details_accountnumber_containers,
+.profile_details_emails_containers,
+.profile_details_gender_containers {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    box-shadow: 2px 1px 3px 0px;
+    padding: 10px 0px;
+    margin: 10px 0px;
+}
+
+@media(max-width: 499px) {
+    .profile_details_containers {
+        margin: 20px 20px; 
+    }
+    
+    .profile_details_containers_wrapper {
+        margin: 0px 0px;
+    } 
+
+    .profile_details_fullname_containers,
+    .profile_details_accountnumber_containers,
+    .profile_details_emails_containers,
+    .profile_details_gender_containers {
+        justify-content: space-between;
+        padding: 10px;
+        font-size: 1em;
+    }
+}
+
+@media(min-width: 500px) {
+    .profile_details_containers {
+        margin: 20px 20px; 
+    }
+    
+    .profile_details_containers_wrapper {
+        margin: 0px 0px;
+    } 
+
+    .profile_details_fullname_containers,
+    .profile_details_accountnumber_containers,
+    .profile_details_emails_containers,
+    .profile_details_gender_containers {
+        justify-content: space-between;
+        padding: 10px;
+        font-size: 1em;
+    }
+}
+
+@media(max-width: 240px) {
+    .profile_details_fullname_containers,
+    .profile_details_accountnumber_containers,
+    .profile_details_emails_containers,
+    .profile_details_gender_containers {
+        padding: 6px;
+        font-size: 0.5em;
+    }
+
+    .profile_details_containers {
+        margin: 0px 10px;
+    }
+}

@@ -1,0 +1,37 @@
+.toolbar_logo_wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.toolbar_wrapper_container {
+    background: grey;
+    border-radius: 0.3rem;
+    color: #fff;
+    border: #ccc;
+    padding: 20px; 
+}
+
+.toolbar_menu_icon {
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+@media(max-width: 499px) {
+    .toolbar_logo_wrapper {
+        justify-content: space-between;
+    }
+
+    .toolbar_logo_wrapper div {
+        margin-right: 0px;
+    }
+}
+
+@media(min-width: 500px) {
+    .toolbar_menu_icon {
+        display: none;
+    }
+
+    .toolbar_logo_wrapper div {
+        margin-right: 80px;
+    }
+}
