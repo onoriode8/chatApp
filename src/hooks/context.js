@@ -8,6 +8,12 @@ export const AuthContext = createContext({
     showBalance: false,
     toggleShowBalanceHandler: () => {},
     token: null,
+    email: null,
+    username: null,
+    image: null,
+    friendsref: null,
+    error: null,
+    errorFun: () => {},
     logout: () => {}
 });
 
@@ -15,7 +21,31 @@ export const AuthContext = createContext({
 export const ContextProvider = (props) => {
     const [showBalance, setShowBalance] = useState(false);
     const [sideDrawer, setSideDrawer] = useState(false);
-    const [token, setToken] = useState(null);
+
+    //useState for updating user fetch data.
+    const [userData, setUserData] = useState({token: null, email: null,
+         username: null, image: null, friendsref: null });
+    const [error, setError] = useState();
+
+    //useEffect for fetching user data from the server and rendering to UI.
+    useEffect(() => {
+        const fetchData = async() => {
+          try {
+              const response = await fetch("https://jsonplaceholder.typicode.com/users")
+              const responseData = await response.json();
+              console.log("", response, responseData);
+              if(response.ok === false) {
+                throw new Error(responseData)
+              }
+              setUserData(responseData)
+          } catch(err) {
+              const errorM = "Check your connection!";
+              setError(`Something went wrong. ${errorM}` || err.message);
+          }
+        };
+    
+        fetchData();
+      }, []);
 
 
     const toggleShowBalanceHandler = useCallback(() => {
@@ -28,15 +58,13 @@ export const ContextProvider = (props) => {
         setSideDrawer(!toggleSideDrawer);
     }, [sideDrawer]);
 
-    useEffect(() => {
-        console.log("RUN ALWAYS");
-        
-    });
+
 
     return (
-        <AuthContext.Provider value={{showBalance: showBalance, 
-           toggleShowBalanceHandler: toggleShowBalanceHandler,
-           toggleSideDrawerHandler: toggleSideDrawerHandler,
+        <AuthContext.Provider value={{showBalance: showBalance, token: userData.token,
+           toggleShowBalanceHandler: toggleShowBalanceHandler, email: userData.email,
+           toggleSideDrawerHandler: toggleSideDrawerHandler, username: userData.username,
+           image: userData.image, friendsref: userData.friendsref, error: error, errorFun:() => setError(null),
            sideDrawer: sideDrawer}}>
             {props.children}
         </AuthContext.Provider>
