@@ -1,0 +1,16 @@
+.walletAccount_container {
+    padding-left: 30px;
+    padding-bottom: 12px;
+    padding-top: 16px;
+    border-bottom: 0.5px solid black;
+    border-top: 0.5px solid #1134;
+}
+
+.walletAccount_container p, div {
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.walletAccount_balance_wrapper {
+    display: flex;
+    align-items: center;
+}

@@ -1,3 +1,10 @@
+.transfer_containers a {
+    text-decoration: none;
+    color: black;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+
 @media(min-width: 500px) {
     .transfer_containers {
         font-size: 1.2em;

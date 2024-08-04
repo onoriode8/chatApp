@@ -2,6 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 
 
+//function to change login password.
 export const useChangeLoginPassword = () => {
     const [currentPassword, setCurrentPassword] = useState("");
     const [createNewPassword, setCreateNewPassword] = useState("");
@@ -67,3 +68,10 @@ export const useChangeLoginPassword = () => {
         submitChangeLoginPasswordHandler 
     }
 } 
+
+
+//function to change transaction pin.
+export const useChangeTransactionPin = (url) => {
+    const [oldPin, setOldPin] = useState("");
+    const [newPin, setNewPin] = useState("");
+}

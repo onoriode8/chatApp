@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import { RiFileListFill } from "react-icons/ri";
 
 
@@ -8,10 +10,12 @@ const transactionhistory = ({style}) => (
     <div>
        <div className="transactionhistory_containers">
             <div><RiFileListFill style={style}/></div>
+            <Link to="/transaction-history">
             <div className="transactionhistory_div">
                 <div>Transaction</div>
                 <div>History</div>
             </div>
+            </Link>
        </div>
     </div>
 );

@@ -1,3 +1,8 @@
+.accountlimits_containers a {
+    text-decoration: none;
+    color: black;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
 
 @media(min-width: 500px) {
     .accountlimits_containers {

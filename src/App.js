@@ -8,8 +8,6 @@ import ErrorBoundary from "./containers/errorBoundary";
 import { ContextProvider } from "./hooks/context";
 
 import "./App.css";
-// import ErrorMessage from "./pages/errorMessage/errorMessage";
-// import Error from "./pages/errorMessage/error";
 
 const ProfilePage = React.lazy(() =>
   import("./components/profilePage/profilePage")
@@ -20,7 +18,7 @@ const ChangePasswordComponent = React.lazy(() =>
   import("./components/ChangePasswordComponent/ChangePasswordComponent")
 );
 const ErrorMessage = React.lazy(() => import("./pages/errorMessage/errorMessage"));
-
+const Transfer = React.lazy(() => import("./containers/transfer/transfer"));
 
 
 function App() {
@@ -91,6 +89,10 @@ function App() {
               </Suspense>
             }
           />
+          <Route path="/transfer-money" element={
+            <Suspense fallback={loading}>
+              <Transfer navigate={() => navigate(-1)} />
+          </Suspense>} />
         </Routes>
       </ContextProvider>
     </ErrorBoundary>

@@ -7,6 +7,8 @@ export const AuthContext = createContext({
     toggleSideDrawerHandler: () => {},
     showBalance: false,
     toggleShowBalanceHandler: () => {},
+    balance: 0.00,
+    fullname: null,
     token: null,
     email: null,
     username: null,
@@ -23,8 +25,8 @@ export const ContextProvider = (props) => {
     const [sideDrawer, setSideDrawer] = useState(false);
 
     //useState for updating user fetch data.
-    const [userData, setUserData] = useState({token: null, email: null,
-         username: null, image: null, friendsref: null });
+    const [userData, setUserData] = useState({ balance: 0.00, fullname: null,
+            token: null, email: null, username: null, image: null, friendsref: null });
     const [error, setError] = useState();
 
     //useEffect for fetching user data from the server and rendering to UI.
@@ -64,6 +66,7 @@ export const ContextProvider = (props) => {
         <AuthContext.Provider value={{showBalance: showBalance, token: userData.token,
            toggleShowBalanceHandler: toggleShowBalanceHandler, email: userData.email,
            toggleSideDrawerHandler: toggleSideDrawerHandler, username: userData.username,
+           balance: userData.balance, fullname: userData.fullname,
            image: userData.image, friendsref: userData.friendsref, error: error, errorFun:() => setError(null),
            sideDrawer: sideDrawer}}>
             {props.children}

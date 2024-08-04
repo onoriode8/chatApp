@@ -29,6 +29,11 @@ const ChangePasswordComponentPage = ({ navigate }) => {
         );
     }
 
+    let showPassword = <IoMdEyeOff style={{fontSize: "1.5em"}} />;
+    if(showPasswordVisibility === true) {
+        showPassword = <div>true</div>
+    } 
+
     return (
     <>
     {spinner}
@@ -55,7 +60,7 @@ const ChangePasswordComponentPage = ({ navigate }) => {
                 <div className="changePasswordComponentPage_current_wrapper">
                     <input type={showPasswordVisibility ? "text" : "password"} placeholder="Create a New Password" 
                         onChange={(event) => setCreateNewPassword(event.target.value)}/>
-                    <div><IoMdEyeOff style={{fontSize: "1.5em"}} /></div>
+                    <div>{showPassword}</div>
                 </div>
                 <div>
                     {/* <div>Enter digits</div> */}
@@ -66,7 +71,7 @@ const ChangePasswordComponentPage = ({ navigate }) => {
                 <div className="changePasswordComponentPage_current_wrapper">
                     <input type={showPasswordVisibility ? "text" : "password"} placeholder="Confirm New Password" 
                         onChange={(event) => setConfirmNewPassword(event.target.value)}/>
-                    <div><IoMdEyeOff style={{fontSize: "1.5em"}} /></div>
+                    <div>{showPassword}</div>
                 </div>
                 <div>
                     {/* <div>Enter digits</div> */}
