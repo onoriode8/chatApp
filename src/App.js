@@ -43,12 +43,12 @@ function App() {
   const navigate = useNavigate();
 
   const styles = {
-    fontSize: "1.6em",
-  };
+    fontSize: "1.6em"
+  }
 
   const userId = 2568456788;
 
-  const loading = <p>Loading...</p>;
+  const loading = <p>Loading...</p>
 
   
   return (
