@@ -1,0 +1,11 @@
+.transactionAmount__wrapper {
+    border: 0.2px solid #fff;
+    background-color: rgb(49, 49, 138);
+    opacity: 0.3;
+}
+
+.transactionAmount_amount_wrapper {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}

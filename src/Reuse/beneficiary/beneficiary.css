@@ -9,10 +9,19 @@
 }
 
 .beneficiary_icon_wrapper span {
-    margin-right: 15px;
+    margin-right: 10px;
+    font-size: larger;
+    color: red;
+    cursor: pointer;
 }
 
-.beneficiary_icon_wrapper div,
+.beneficiary_icon_wrapper div {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: red;
+    opacity: 0.7;
+    cursor: pointer;
+}
+
 .beneficiary_wrapper p {
    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
