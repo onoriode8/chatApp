@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import axios from 'axios';
+
+import { AuthContext } from '../../hooks/context';
 
 import Header from '../../Reuse/header/header';
 import { WalletAccount } from '../../Reuse/walletAccount/walletAccount';
@@ -13,11 +16,14 @@ import TransactionConfirm from '../../pages/transactionConfirmation/transactionC
 
 const Transfer = ({ navigate }) => {
     const [amount, setAmount] = useState(0.0);
-    const [amountValue, setAmountValue] = useState(false);
-    const [recipientWalletNumber, setRecipientWalletNumber] = useState("");
-    const [recipientWalletValue, setRecipientWalletValue] = useState(false);
-    
     const [narration, setNarration] = useState("");
+    const [recipientWalletNumber, setRecipientWalletNumber] = useState("");
+
+    //useState for updating recipient Details.
+    const [recipientData, setRecipientData] = useState(null);
+
+    const [amountValue, setAmountValue] = useState(false);
+    const [recipientWalletValue, setRecipientWalletValue] = useState(false);
     const [loading, setLoading] = useState(false);
 
     //useState to toggle screenModel for beneficiaryList
@@ -25,6 +31,9 @@ const Transfer = ({ navigate }) => {
 
     //useState to toggle transfer processes.
     const [changeTransferPage, setChangeTransferPage] = useState(false);
+
+    //AuxContext Provider for rendering user data to UI
+    const {walletNumber, fullname } = useContext(AuthContext);
 
     //function to toggle on screenModel on userBeneficiary.
     const toggleOnScreenModelHandler = () => {
@@ -52,12 +61,56 @@ const Transfer = ({ navigate }) => {
             recipientWalletNumber: recipientWalletNumber,
             amount: amount
         }
+        //fetch request to retrieve user balance 
+        //and details before successfull transaction.
+        // const fetchUserDataHandler = async() => {
+        //     try {
+        //         const response = await axios.get("url here")
+        //         const responseData = response.json();
+        //         if(response.ok === false) {
+        //             console.log("Response from server", responseData);
+        //             throw new Error(responseData);
+        //         }
+        //         setUserData(responseData);
+        //     } catch(err) {
+        //         return err;
+        //     }
+        // }
+        
+        // fetchUserDataHandler();
+         
         console.log(recipientWalletNumber);
         setLoading(false);
 
         setChangeTransferPage(true);
 
     }
+
+    // function to fetch recipient details from 
+    //server once the 10 digit wallet number is entered.
+    //useEffect(() => {
+       // const fetchRecipientDataHandler = async() => {
+           // const wallet = recipientWalletNumber.trim().toString()
+           // if(wallet.length !== 10) return;
+           // try {
+              //  setLoading(true)
+               // const response = await axios.get(`url here/${recipientWalletNumber}`)
+                //const responseData = response.json();
+                //if(response.ok === false) {
+                  //  console.log("Response from server", responseData);
+                   // throw new Error(responseData);
+                //}
+                //setLoading(false)
+                //setRecipientData(responseData);
+           // } catch(err) {
+              //  return err;
+        //    }
+       // }
+       // fetchRecipientDataHandler(); 
+    //}, [recipientWalletNumber]);
+        
+   
+
     return (
         <React.Fragment>
             {loading && <>
@@ -69,7 +122,11 @@ const Transfer = ({ navigate }) => {
                 <WalletAccount />
                 <Amount amount={amount} amountValue={amountValue} setAmount={setAmount} />
                 <RecipientWalletNumber recipientWalletValue={recipientWalletValue}
-                    setRecipientWalletNumber={(e)=>setRecipientWalletNumber(e.target.value)}/>
+                    setRecipientWalletNumber={(e)=>setRecipientWalletNumber(e.target.value)}
+                    recipientDataName={recipientData === null ? null : recipientData.name}
+                    recipientDataWalletNumber={recipientData === null ? null : recipientData.walletNumber}
+                    recipientDataBank={recipientData === null ? null : recipientData.bank}
+                />
                 <NarrationAndBeneficiary 
                 toggleOnScreenModel={toggleOnScreenModel}
                 toggleOnScreenModelHandler={toggleOnScreenModelHandler}
@@ -77,7 +134,10 @@ const Transfer = ({ navigate }) => {
                 <LargeButton submit={onSubmitTransferHandler} title="Confirm Transaction" />
             </div>}
             {changeTransferPage && <div>
-                <TransactionConfirm />
+                <TransactionConfirm recipientWalletNumber={recipientWalletNumber}
+                    narration={narration} amount={parseInt(amount)}
+                    sourceWalletName={fullname} sourceWalletNumber={walletNumber}
+                />
             </div>}
         </React.Fragment>
     )

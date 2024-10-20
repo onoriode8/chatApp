@@ -8,7 +8,6 @@ import './amount.css';
 
 
 const Amount = ({ amount, setAmount, amountValue }) => {
-    // const [amount, setAmount] = useState(0.0);
 
 
     const oneThousandButtonHandler = () => {
@@ -46,8 +45,12 @@ const Amount = ({ amount, setAmount, amountValue }) => {
             <p>Amount</p>
             <div className="amount_naira_wrapper">
                 {/* <div>NGN</div> */}
-                {amount === 0 ? <input type="number" placeholder="NGN 0" /> : null}
-                {amount !== 0 ? <div className="amount_amount">NGN {amount}</div>: null}
+                {/* {amount === 0 ?  */}
+                <input type="number"
+                 onChange={(e) =>setAmount(e.target.value)} 
+                 placeholder={amount !== 0 ? `NGN ${+amount}` : "NGN 0"} />
+                     {/* : null} */}
+                {/* {amount !== 0 ? <div className="amount_amount">NGN {amount}</div>: null} */}
             </div>
             {amountValue && <p className="amount_p">enter an amount to proceed.</p>}
             <div className='amount_smallButton_wrapper'>

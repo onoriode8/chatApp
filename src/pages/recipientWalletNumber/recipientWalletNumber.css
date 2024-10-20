@@ -16,3 +16,13 @@
     font-size: small;
     color: red;
 }
+
+.recipientWalletNumber_recipientData_details {
+    display: flex;
+    flex-direction: column;
+    color: green;
+    opacity: 0.5;
+    margin-top: 5px;
+    margin-left: 20px;
+    background-color: #ccc;
+}

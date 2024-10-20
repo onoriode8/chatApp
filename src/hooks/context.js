@@ -9,6 +9,7 @@ export const AuthContext = createContext({
     toggleShowBalanceHandler: () => {},
     balance: 0.00,
     fullname: null,
+    walletNumber: null,
     token: null,
     email: null,
     username: null,
@@ -26,7 +27,9 @@ export const ContextProvider = (props) => {
 
     //useState for updating user fetch data.
     const [userData, setUserData] = useState({ balance: 0.00, fullname: null,
-            token: null, email: null, username: null, image: null, friendsref: null });
+            walletNumber: null,
+            token: null, email: null, username: null, image: null, 
+            friendsref: null });
     const [error, setError] = useState();
 
     //useEffect for fetching user data from the server and rendering to UI.
@@ -67,6 +70,7 @@ export const ContextProvider = (props) => {
            toggleShowBalanceHandler: toggleShowBalanceHandler, email: userData.email,
            toggleSideDrawerHandler: toggleSideDrawerHandler, username: userData.username,
            balance: userData.balance, fullname: userData.fullname,
+           walletNumber: userData.walletNumber,
            image: userData.image, friendsref: userData.friendsref, error: error, errorFun:() => setError(null),
            sideDrawer: sideDrawer}}>
             {props.children}

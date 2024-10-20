@@ -1,0 +1,17 @@
+.recipientDetails_destination_account,
+.recipientDetails_bank,
+.recipientDetails_sourceAccount_wrapper,
+.recipientDetails_narration {
+    padding: 20px;
+}
+
+.recipientDetails_name_walletNumber,
+.recipientDetails_sourceWalletName_sourceWalletNumber {
+    display: flex;
+    align-items: center;
+    font-family: 'Times New Roman';
+    font-size: 18px;
+    font-weight: inherit;
+    /* border: 1px solid black; */
+}
+

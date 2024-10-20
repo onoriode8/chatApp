@@ -1,11 +1,30 @@
 .transactionAmount__wrapper {
     border: 0.2px solid #fff;
-    background-color: rgb(49, 49, 138);
-    opacity: 0.3;
+    background-color: rgba(9, 174, 244, 0.35);
+    padding: 20px;
+    border-radius: 12px;
+    margin: 20px;
 }
 
-.transactionAmount_amount_wrapper {
+.transactionAmount_amount_wrapper,
+.transactionAmount_charges_fee_wrapper,
+.transactionAmount_total_wrapper {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
+    padding: 5px 0px;
 }
+
+@media(min-width: 500px) {
+    .transactionAmount_amount_wrapper,
+    .transactionAmount_charges_fee_wrapper,
+    .transactionAmount_total_wrapper {
+        justify-content: space-between;
+   }
+
+   .transactionAmount__wrapper {
+        padding: 20px;
+        margin: 20px 100px;
+    }
+}
+
