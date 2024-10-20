@@ -40,6 +40,12 @@ const Amount = ({ amount, setAmount, amountValue }) => {
         setAmount(formattedToString);
     };
 
+    let parsedAmount;
+    if(typeof(amount) === 'string') {
+        const Amount = amount.replace(/[^0-9.-]+/g, "");
+        parsedAmount = +Amount;
+    }
+
     return (
         <div className="amount_wrapper">
             <p>Amount</p>
@@ -48,7 +54,7 @@ const Amount = ({ amount, setAmount, amountValue }) => {
                 {/* {amount === 0 ?  */}
                 <input type="number"
                  onChange={(e) =>setAmount(e.target.value)} 
-                 placeholder={amount !== 0 ? `NGN ${+amount}` : "NGN 0"} />
+                 placeholder={amount !== 0 ? `NGN ${parsedAmount}` : "NGN 0"} />
                      {/* : null} */}
                 {/* {amount !== 0 ? <div className="amount_amount">NGN {amount}</div>: null} */}
             </div>

@@ -135,7 +135,7 @@ const Transfer = ({ navigate }) => {
             </div>}
             {changeTransferPage && <div>
                 <TransactionConfirm recipientWalletNumber={recipientWalletNumber}
-                    narration={narration} amount={parseInt(amount)}
+                    narration={narration} amount={amount}
                     sourceWalletName={fullname} sourceWalletNumber={walletNumber}
                 />
             </div>}

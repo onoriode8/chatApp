@@ -7,19 +7,29 @@ import './transactionConfirm.css';
 
 
 const transactionConfirm = ({sourceWalletName, amount, narration, 
-    sourceWalletNumber, recipientWalletNumber}) => (
-    <div>
+    sourceWalletNumber, recipientWalletNumber}) => {
+
+        let parsedAmount;
+        if(typeof(amount) === 'string') {
+            const Amount = amount.replace(/[^0-9.-]+/g, "");
+            parsedAmount = +Amount;
+        }
+        
+    return (
         <div>
-            <header>Transaction Confirmation</header>
-            <div>Enter your payment PIN to continue</div>
+            <div>
+                <header>Transaction Confirmation</header>
+                <div>Enter your payment PIN to continue</div>
+            </div>
+            <TransactionAmount amount={parsedAmount} fee={0.00} total={parsedAmount} />
+            <RecipientInfo name="" walletNumber={recipientWalletNumber} bank="Baseday" narration={narration} 
+                sourceWalletName={sourceWalletName} 
+                sourceWalletNumber={sourceWalletNumber} />
+            <TransactionPinEntered />
         </div>
-        <TransactionAmount amount={amount} fee={0.00} total={amount} />
-        <RecipientInfo name="" walletNumber={recipientWalletNumber} bank="Baseday" narration={narration} 
-            sourceWalletName={sourceWalletName} 
-            sourceWalletNumber={sourceWalletNumber} />
-        <TransactionPinEntered />
-    </div>
-);
+    );
+
+}
 
 
 export default transactionConfirm;
