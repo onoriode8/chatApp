@@ -6,8 +6,8 @@ import './transactionConfirm.css';
 
 
 
-const transactionConfirm = ({sourceWalletName, amount, narration, 
-    sourceWalletNumber, recipientWalletNumber}) => {
+const transactionConfirm = ({ sourceWalletName, amount, narration, 
+    sourceWalletNumber, recipientWalletNumber, paymentPin, setPaymentPin }) => {
 
         let parsedAmount;
         if(typeof(amount) === 'string') {
@@ -17,7 +17,7 @@ const transactionConfirm = ({sourceWalletName, amount, narration,
         
     return (
         <div>
-            <div>
+            <div className="transactionConfirm_text_">
                 <header>Transaction Confirmation</header>
                 <div>Enter your payment PIN to continue</div>
             </div>
@@ -25,7 +25,7 @@ const transactionConfirm = ({sourceWalletName, amount, narration,
             <RecipientInfo name="" walletNumber={recipientWalletNumber} bank="Baseday" narration={narration} 
                 sourceWalletName={sourceWalletName} 
                 sourceWalletNumber={sourceWalletNumber} />
-            <TransactionPinEntered />
+            <TransactionPinEntered paymentPin={paymentPin} setPaymentPin={setPaymentPin} />
         </div>
     );
 

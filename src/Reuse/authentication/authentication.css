@@ -1,0 +1,124 @@
+.authentication_main_wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px 0px;
+    height: 80vh;
+}
+
+.authentication_logo_area {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.authentication_logo_area p:first-child {
+    font-size: xx-large;
+}
+
+.authentication_logo_area header {
+    font-size: larger;
+    font-family:'Times New Roman', Times, serif;
+}
+
+.authentication_input_wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.authentication_username_email_wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.authentication_username_email_wrapper input,
+.authentication_password_container input {
+    padding: 8px 100px;
+    border-radius: 10px;
+    margin: 10px 0px;
+}
+
+.authentication_password_container {
+    display: flex;
+    flex-direction: column;
+}
+
+.authentication_showPassword_wrapper {
+    display: flex;
+    align-items: center;
+    font-family: serif;
+    margin-top: -8px;
+}
+
+.authentication_showPassword_wrapper input {
+    margin-right: 20px;
+}
+
+/* create an account wrapper */
+.authentication_create_an_account {
+    display: flex;
+    justify-content: center;
+}
+
+.authentication_create_an_account p:last-child a {
+    text-decoration: none;
+    margin-left: 8px;
+}
+
+
+@media (max-width: 499px) {
+    .authentication_input_wrapper {
+        margin: 20px 7%;
+    }
+
+    .authentication_username_email_wrapper input,
+    .authentication_password_container input {
+        padding: 8px 60px;
+    }
+
+    .authentication_main_wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 20px 0px;
+    }
+}
+
+@media (min-width: 500px) {
+    .authentication_input_wrapper {
+        margin: 20px 20%;
+    }
+
+    .authentication_username_email_wrapper input,
+    .authentication_password_container input {
+        padding: 8px 60px;
+    }
+
+    .authentication_main_wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 20px 0px;
+    }
+}  
+
+
+@media (min-width: 539px) {
+    .authentication_input_wrapper {
+        margin: 20px 40%;
+    }
+
+    .authentication_username_email_wrapper input,
+    .authentication_password_container input {
+        padding: 8px 60px;
+    }
+
+    .authentication_main_wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 20px 0px;
+    }
+}  

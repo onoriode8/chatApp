@@ -29,10 +29,10 @@ export const ContextProvider = (props) => {
     const [userData, setUserData] = useState({ balance: 0.00, fullname: null,
             walletNumber: null,
             token: null, email: null, username: null, image: null, 
-            friendsref: null });
+            friendsref: null }); 
     const [error, setError] = useState();
 
-    //useEffect for fetching user data from the server and rendering to UI.
+    //useEffect for fetching user data from the server and rendering to UI when the UI gets reloaded.
     useEffect(() => {
         const fetchData = async() => {
           try {
@@ -50,7 +50,7 @@ export const ContextProvider = (props) => {
         };
     
         fetchData();
-      }, []);
+    }, []); 
 
 
     const toggleShowBalanceHandler = useCallback(() => {

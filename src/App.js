@@ -20,6 +20,9 @@ const ChangePasswordComponent = React.lazy(() =>
 const ErrorMessage = React.lazy(() => import("./pages/errorMessage/errorMessage"));
 const Transfer = React.lazy(() => import("./containers/transfer/transfer"));
 
+const SignIn = React.lazy(() => import("./containers/authentication/signIn"));
+const SignUp = React.lazy(() => import("./containers/authentication/signup"));
+
 
 function App() {
 
@@ -52,50 +55,56 @@ function App() {
 
   
   return (
-    <ErrorBoundary>
-      <ContextProvider>
-        <Toolbar styles={styles} />
-        <ErrorMessage  />
-        <Routes>
-          <Route
-            path="/"
-            element={
+    <React.Fragment>
+      { userId ? <Routes>
+        <Route path="/" element={<Suspense fallback={loading}><SignIn /></Suspense>} />
+        <Route path="/signup/new-user" element={<Suspense fallback={loading}><SignUp /></Suspense>} />
+      </Routes> :
+      <ErrorBoundary>
+        <ContextProvider>
+          <Toolbar styles={styles} />
+          <ErrorMessage  />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Suspense fallback={loading}>
+                  <HomePage />
+                </Suspense>
+              }
+            />
+            <Route
+              path={`/profile/${userId}`}
+              element={
+                <Suspense fallback={loading}>
+                  <ProfilePage navigate={() => navigate(-1)} />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/settings"
+              element={
+                <Suspense fallback={loading}>
+                  <Settings navigate={() => navigate(-1)} />
+                </Suspense>
+              }
+            />
+            <Route
+              path="/change_password/userId"
+              element={
+                <Suspense fallback={loading}>
+                  <ChangePasswordComponent navigate={() => navigate(-1)} />
+                </Suspense>
+              }
+            />
+            <Route path="/transfer-money" element={
               <Suspense fallback={loading}>
-                <HomePage />
-              </Suspense>
-            }
-          />
-          <Route
-            path={`/profile/${userId}`}
-            element={
-              <Suspense fallback={loading}>
-                <ProfilePage navigate={() => navigate(-1)} />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/settings"
-            element={
-              <Suspense fallback={loading}>
-                <Settings navigate={() => navigate(-1)} />
-              </Suspense>
-            }
-          />
-          <Route
-            path="/change_password/userId"
-            element={
-              <Suspense fallback={loading}>
-                <ChangePasswordComponent navigate={() => navigate(-1)} />
-              </Suspense>
-            }
-          />
-          <Route path="/transfer-money" element={
-            <Suspense fallback={loading}>
-              <Transfer navigate={() => navigate(-1)} />
-          </Suspense>} />
-        </Routes>
-      </ContextProvider>
-    </ErrorBoundary>
+                <Transfer navigate={() => navigate(-1)} />
+            </Suspense>} />
+          </Routes>
+        </ContextProvider>
+      </ErrorBoundary>}
+    </React.Fragment>
   );
 }
 
