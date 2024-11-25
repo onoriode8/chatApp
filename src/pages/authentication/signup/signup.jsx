@@ -1,17 +1,20 @@
 import Authentication from "../../../Reuse/authentication/authentication";
 
 
-const signUp = ({ emailOrUsername, password, onChangeEmailOrUsernameHandler,
-    onChangePasswordHandler, onSubmitFuncHandler, showPassword,
+const signUp = ({ email, username, password, onChangeEmailHandler,
+    onChangeUsernameHandler, onChangePasswordHandler,
+     onSubmitFuncHandler, showPassword, error, loading,
     setPrevStateHandler }) => (
     <div>
         <Authentication 
-            emailOrUsername={emailOrUsername} password={password}
+            email={email} password={password} username={username}
             onChangePasswordHandler={onChangePasswordHandler}
-            onChangeEmailOrUsernameHandler={onChangeEmailOrUsernameHandler}
-            onSubmitSignInHandler={onSubmitFuncHandler}
+            onChangeEmailHandler={onChangeEmailHandler}
+            onChangeUsernameHandler={onChangeUsernameHandler}
+            onSubmitFuncHandler={onSubmitFuncHandler}
             showPassword={showPassword}
             setPrevStateHandler={setPrevStateHandler}
+            error={error} loading={loading}
 
             header="Sign up to BaseDay" titleOnButton="Sign up"
             paragraph="Already have an account?" account="Login" path="/" 

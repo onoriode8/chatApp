@@ -66,7 +66,7 @@ function App() {
           <ErrorMessage  />
           <Routes>
             <Route
-              path="/"
+              path="/home"
               element={
                 <Suspense fallback={loading}>
                   <HomePage />

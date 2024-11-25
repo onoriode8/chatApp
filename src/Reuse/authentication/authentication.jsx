@@ -13,8 +13,11 @@ import "./authentication.css";
 
 
 const authentication = ({ account, header, path, titleOnButton, paragraph, 
-    onChangePasswordHandler, onChangeEmailOrUsernameHandler,
-    onSubmitFuncHandler, showPassword, setPrevStateHandler }) => (
+    onChangePasswordHandler, onChangeEmailHandler, onChangeUsernameHandler,
+    onSubmitFuncHandler, showPassword, setPrevStateHandler, showSignIn,
+    error, loading  }) => {
+    // console.log("submit", onSubmitFuncHandler)
+    return(
     <div>
         <div className="authentication_main_wrapper">
             <div className="authentication_logo_area">
@@ -23,9 +26,14 @@ const authentication = ({ account, header, path, titleOnButton, paragraph,
             </div>
 
             <div className="authentication_input_wrapper">
+                {!showSignIn && <div className="authentication_username_email_wrapper">
+                    <label>Email address</label>
+                    <input type="text" onChange={onChangeEmailHandler} placeholder="" />
+                </div>}
+
                 <div className="authentication_username_email_wrapper">
-                    <label>Username or email address</label>
-                    <input type="text" onChange={onChangeEmailOrUsernameHandler} placeholder="" />
+                    <label>Username</label>
+                    <input type="text" onChange={onChangeUsernameHandler} placeholder="" />
                 </div>
 
                 <div className="authentication_password_container">
@@ -37,24 +45,30 @@ const authentication = ({ account, header, path, titleOnButton, paragraph,
                     </div>
                 </div>
             </div>
-
+            
             <div>
                 <AuthenticationButton title={titleOnButton} submit={onSubmitFuncHandler} />
             </div>
 
             <div className="authentication_create_an_account">
             <p>{paragraph} </p>
-            <p><a href={`${path}`}>{account}</a></p>
+            <p><a href={`${path}`}> {account}</a></p>
         </div>
+        <div style={{textAlign: "center"}}>
+            {loading && <p>Loading...</p>}
+            <p>{error}</p>
+        </div>
+
         </div>
 
         
 
     </div>
-);
+)};
 
 authentication.propTypes = {
-    onChangeEmailOrUsernameHandler: PropTypes.func,
+    onChangeUsernameHandler: PropTypes.func,
+    onChangeEmailHandler: PropTypes.func,
     onChangePasswordHandler: PropTypes.func,
     onSubmitSignInHandler: PropTypes.func,
     path: PropTypes.string,
