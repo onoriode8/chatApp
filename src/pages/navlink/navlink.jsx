@@ -1,12 +1,19 @@
+import { useContext } from "react";
+
 import { MdCircleNotifications, MdHome } from "react-icons/md";
 import { RxAvatar } from "react-icons/rx";
 import { IoMdSettings } from "react-icons/io";
+import { AiOutlineLogout } from "react-icons/ai";
+import { AuthContext } from "../../hooks/context";
 
 import './navlink.css';
 
 const userId = 2568456788; //change to real userId from DB/server side.
 
-const navlink = ({styles, display,alignItems,justifyContent,flexDirection}) => (
+const Navlink = ({styles, display,alignItems,justifyContent,flexDirection}) => {
+  const { logout } = useContext(AuthContext);
+
+  return (
     <div className="navlink_container__QB2X">
       <div style={{display: display, alignItems: alignItems, 
             justifyContent: justifyContent, flexDirection: flexDirection }}>
@@ -14,8 +21,14 @@ const navlink = ({styles, display,alignItems,justifyContent,flexDirection}) => (
         <li className="navlink_spacing"><a href="/notification" title="Notification"><MdCircleNotifications style={styles} /></a></li>
         <li className="navlink_spacing"><a href={`/profile/${userId}`} title="Profile"><RxAvatar style={styles}/></a></li>
         <li className="navlink_spacing"><a href='/settings' title="Settings"><IoMdSettings style={styles}/></a></li>
+        <li onClick={logout} className="navlink_spacing" title="Logout">
+          {/* <a href title="Logout"> */}
+            <AiOutlineLogout style={styles}/>
+            {/* </a> */}
+            </li>
       </div>
     </div>
-  );
+  )
+}
 
-export default navlink;
+export default Navlink;

@@ -44,7 +44,8 @@ function App() {
   // const { error, errorFun } = useContext(AuthContext);
 
   const navigate = useNavigate();
-
+  const localData = sessionStorage.getItem("auth");
+  const parsedLocalData = localData
   const styles = {
     fontSize: "1.6em"
   }
@@ -56,7 +57,7 @@ function App() {
   
   return (
     <React.Fragment>
-      { userId ? <Routes>
+      { !parsedLocalData ? <Routes>
         <Route path="/" element={<Suspense fallback={loading}><SignIn /></Suspense>} />
         <Route path="/signup/new-user" element={<Suspense fallback={loading}><SignUp /></Suspense>} />
       </Routes> :

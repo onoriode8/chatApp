@@ -64,13 +64,20 @@ export const ContextProvider = (props) => {
     }, [sideDrawer]);
 
 
+    //function to logout user.
+    const logoutHandler = () => {
+        sessionStorage.removeItem("auth");
+        window.location.reload("/");
+    }
+      
+
 
     return (
         <AuthContext.Provider value={{showBalance: showBalance, token: userData.token,
            toggleShowBalanceHandler: toggleShowBalanceHandler, email: userData.email,
            toggleSideDrawerHandler: toggleSideDrawerHandler, username: userData.username,
            balance: userData.balance, fullname: userData.fullname,
-           walletNumber: userData.walletNumber,
+           walletNumber: userData.walletNumber, logout: logoutHandler,
            image: userData.image, friendsref: userData.friendsref, error: error, errorFun:() => setError(null),
            sideDrawer: sideDrawer}}>
             {props.children}

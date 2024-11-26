@@ -55,8 +55,8 @@ const authentication = ({ account, header, path, titleOnButton, paragraph,
             <p><a href={`${path}`}> {account}</a></p>
         </div>
         <div style={{textAlign: "center"}}>
-            {loading && <p>Loading...</p>}
-            <p>{error}</p>
+            {loading && <p className="loader">Loading...</p>}
+            <p style={{color: "red", fontSize: "small"}}>{error}</p>
         </div>
 
         </div>

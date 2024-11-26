@@ -40,30 +40,44 @@ const SignUpFunction = () => {
         setShowPassword(prevState => !prevState);
     }
 
-    const onSubmitFuncHandler = async (e) => {
+    const onSubmitFuncHandler = async(e) => {
         e.preventDefault();
         try {
             setLoading(true);
-            const response = 
-            await axios.post("https://final-year-project-pijh.onrender.com/signup", {
+            console.log("RESPONSE");
+
+            const response = await fetch("https://final-year-project-pijh.onrender.com/signup", {
+                method: "POST",
                 body: JSON.stringify({
                     email: email,
                     username: username,
                     password: password
-                })
+                }),
+                headers: {
+                    "Content-Type" : "application/json"
+                }
             })
+            // .then(response => {
+            //     console.log("RESPONSE", response)
+                
+            //     response.json()
+            // }).then(data => 
+            //     console.log("SERVER DATA", data)
+            // )
+            console.log("RESPONSEsss1", response);
+
             const responseData = await response.json();
+            console.log("RESPONSEDATA", responseData);
             if(!response.ok) {
                 throw new Error(responseData);
             }
             setLoading(false)
-            const data = {
-                auth: true
-            }
+            const data = true;
+            console.log("RES", response);
             sessionStorage.setItem("auth", data);
-            console.log("SERVER RESPONSE IN SIGNUP", responseData);
-            navigate("/home");
-            window.location.reload("/home");
+            //console.log("SERVER RESPONSE IN SIGNUP", responseData);
+            // navigate("/home");
+            // window.location.reload();
         } catch(err) {
             setLoading(false)
             setError(err.message);
