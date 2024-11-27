@@ -15,6 +15,7 @@ import "./authentication.css";
 const authentication = ({ account, header, path, titleOnButton, paragraph, 
     onChangePasswordHandler, onChangeEmailHandler, onChangeUsernameHandler,
     onSubmitFuncHandler, showPassword, setPrevStateHandler, showSignIn,
+    setPhoneNumber,
     error, loading  }) => {
     // console.log("submit", onSubmitFuncHandler)
     return(
@@ -29,6 +30,10 @@ const authentication = ({ account, header, path, titleOnButton, paragraph,
                 {!showSignIn && <div className="authentication_username_email_wrapper">
                     <label>Email address</label>
                     <input type="text" onChange={onChangeEmailHandler} placeholder="" />
+                </div>}
+                {!showSignIn && <div className="authentication_username_email_wrapper">
+                    <label>Phone Number</label>
+                    <input type="number" onChange={setPhoneNumber} placeholder="" />
                 </div>}
 
                 <div className="authentication_username_email_wrapper">

@@ -22,8 +22,14 @@ export const AuthContext = createContext({
 
 
 export const ContextProvider = (props) => {
+    const sessionData = sessionStorage.getItem("auth");
+    const parsedData = JSON.parse({ sessionData })
+
+
+    console.log("PARSED_DATA", parsedData);
     const [showBalance, setShowBalance] = useState(false);
     const [sideDrawer, setSideDrawer] = useState(false);
+
 
     //useState for updating user fetch data.
     const [userData, setUserData] = useState({ balance: 0.00, fullname: null,
@@ -79,7 +85,7 @@ export const ContextProvider = (props) => {
            balance: userData.balance, fullname: userData.fullname,
            walletNumber: userData.walletNumber, logout: logoutHandler,
            image: userData.image, friendsref: userData.friendsref, error: error, errorFun:() => setError(null),
-           sideDrawer: sideDrawer}}>
+           sideDrawer: sideDrawer }}>
             {props.children}
         </AuthContext.Provider>
     )

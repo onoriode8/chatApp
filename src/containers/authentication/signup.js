@@ -1,6 +1,6 @@
 import { useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+// import axios from "axios";
+// import { useNavigate } from "react-router-dom";
 
 import SignUp from "../../pages/authentication/signup/signup";
 
@@ -11,28 +11,26 @@ const SignUpFunction = () => {
     const [email, setEmail] = useState("");
     const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
 
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
 
 
     const onChangeEmailHandler = (e) => {
         const dataEntered = e.target.value;
-        console.log("Signup on EMail", dataEntered); 
         setEmail(dataEntered);
     }
 
     const onChangeUsernameHandler = (e) => {
         const dataEntered = e.target.value;
-        console.log("Signup on Username", dataEntered); 
         setUserName(dataEntered);
     }
 
     const onChangePasswordHandler = (e) => {
         const passwordDataEntered = e.target.value;
-        console.log("signUp for password", passwordDataEntered)
         setPassword(passwordDataEntered);
     }
 
@@ -44,40 +42,37 @@ const SignUpFunction = () => {
         e.preventDefault();
         try {
             setLoading(true);
-            console.log("RESPONSE");
 
             const response = await fetch("https://final-year-project-pijh.onrender.com/signup", {
                 method: "POST",
                 body: JSON.stringify({
                     email: email,
                     username: username,
-                    password: password
+                    password: password,
+                    phoneNumber: phoneNumber
                 }),
                 headers: {
                     "Content-Type" : "application/json"
                 }
             })
-            // .then(response => {
-            //     console.log("RESPONSE", response)
-                
-            //     response.json()
-            // }).then(data => 
-            //     console.log("SERVER DATA", data)
-            // )
-            console.log("RESPONSEsss1", response);
 
             const responseData = await response.json();
-            console.log("RESPONSEDATA", responseData);
-            if(!response.ok) {
+            if(!response.ok && response.status !== 200) {
                 throw new Error(responseData);
             }
             setLoading(false)
-            const data = true;
-            console.log("RES", response);
+            const data = {
+                auth: true,
+                id: responseData.id,
+                email: responseData.email,
+                walletNumber: responseData.walletNumber,
+                notification: responseData.notification,
+                image: responseData.image,
+                username: response.username,
+                token: responseData.token
+            }
             sessionStorage.setItem("auth", data);
-            //console.log("SERVER RESPONSE IN SIGNUP", responseData);
-            // navigate("/home");
-            // window.location.reload();
+            window.location.reload();
         } catch(err) {
             setLoading(false)
             setError(err.message);
@@ -91,6 +86,7 @@ const SignUpFunction = () => {
                 onChangeUsernameHandler={onChangeUsernameHandler}
                 onChangePasswordHandler={onChangePasswordHandler}
                 onChangeEmailHandler={onChangeEmailHandler}
+                setPhoneNumber={(e) =>setPhoneNumber(e.target.value)}
                 onSubmitFuncHandler={onSubmitFuncHandler}
                 showPassword={showPassword}
                 setPrevStateHandler={setPrevStateHandler}

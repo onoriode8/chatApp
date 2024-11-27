@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from 'axios';
+// import { useNavigate } from "react-router-dom";
+// import axios from 'axios';
 
 import SignIn from "../../pages/authentication/signIn/signIn";
 
@@ -14,19 +14,16 @@ const SignInFunction = () => {
     const [loading, setLoading] = useState(null);
 
 
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
 
 
     const onChangeUsernameHandler = (e) => {
-        console.log("testing");
         const dataEntered = e.target.value;
-        console.log(dataEntered)
         setUsername(dataEntered);
     }
 
     const onChangePasswordHandler = (e) => {
         const passwordDataEntered = e.target.value;
-        console.log(passwordDataEntered)
         setPassword(passwordDataEntered);
     }
 
@@ -36,11 +33,10 @@ const SignInFunction = () => {
 
 
     const onSubmitFuncHandler = async (e) => {
-        // e.preventDefault();
-        console.log("LOGIN!!!");
+        e.preventDefault();
         try {
             setLoading(true);
-            const response = await axios.post("https://final-year-project-pijh.onrender.com/signin", {
+            const response = await fetch("https://final-year-project-pijh.onrender.com/signin", {
                 body: JSON.stringify({
                     username: username,
                     password: password
@@ -51,13 +47,17 @@ const SignInFunction = () => {
                 throw new Error(responseData);
             }
             setLoading(false)
-            console.log("REGISTER!!!");
             const data = {
-                auth: true 
+                auth: true,
+                id: responseData.id,
+                email: responseData.email,
+                walletNumber: responseData.walletNumber,
+                notification: responseData.notification,
+                image: responseData.image,
+                username: response.username,
+                token: responseData.token
             }
             sessionStorage.setItem("auth", data);
-            console.log("SERVER RESPONSE IN SIGIN", responseData)
-            navigate("/home")
             window.location.reload("/home");
         } catch(err) {
             setLoading(false)
@@ -65,7 +65,6 @@ const SignInFunction = () => {
         }
     }
 
-    // console.log("sub", onSubmitFuncHandler())
 
     return (
         <div>

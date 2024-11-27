@@ -2,12 +2,13 @@ import Authentication from "../../../Reuse/authentication/authentication";
 
 
 const signUp = ({ email, username, password, onChangeEmailHandler,
-    onChangeUsernameHandler, onChangePasswordHandler,
+    onChangeUsernameHandler, onChangePasswordHandler, setPhoneNumber,
      onSubmitFuncHandler, showPassword, error, loading,
     setPrevStateHandler }) => (
     <div>
         <Authentication 
             email={email} password={password} username={username}
+            setPhoneNumber={setPhoneNumber}
             onChangePasswordHandler={onChangePasswordHandler}
             onChangeEmailHandler={onChangeEmailHandler}
             onChangeUsernameHandler={onChangeUsernameHandler}
