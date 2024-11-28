@@ -7,7 +7,7 @@ import "./services.css";
 
 
 
-const services = ({styles}) => (
+const services = ({ styles }) => (
   <div className="services_wrapper_container">
     <div className="services__services">Services</div>
       <div className="services_wrapper">

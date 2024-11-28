@@ -14,7 +14,7 @@ import Loading from "../../pages/loading/loading";
 import TransactionConfirm from '../../pages/transactionConfirmation/transactionConfirm/transactionConfirm';
 
 
-const Transfer = ({ navigate }) => {
+const Transfer = ({ navigate, parsedUserData }) => {
     const [amount, setAmount] = useState(0.0);
     const [narration, setNarration] = useState("");
     const [recipientWalletNumber, setRecipientWalletNumber] = useState("");
@@ -46,7 +46,7 @@ const Transfer = ({ navigate }) => {
 
     const onSubmitTransferHandler = (event) => {
         event.preventDefault();
-        if(amount === undefined || amount === 0) 
+        if(amount === undefined || amount === 0 || amount < 9) 
         {
             setAmountValue(true);
             return;
@@ -159,7 +159,7 @@ const Transfer = ({ navigate }) => {
             </>}
             <Header header="Transfer To Baseday" navigate={navigate} />
             {!changeTransferPage && <div>
-                <WalletAccount />
+                <WalletAccount parsedUserData={parsedUserData} />
                 <Amount amount={amount} amountValue={amountValue} setAmount={setAmount} />
                 <RecipientWalletNumber recipientWalletValue={recipientWalletValue}
                     setRecipientWalletNumber={(e)=>setRecipientWalletNumber(e.target.value)}

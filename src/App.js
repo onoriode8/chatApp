@@ -22,6 +22,7 @@ const Transfer = React.lazy(() => import("./containers/transfer/transfer"));
 
 const SignIn = React.lazy(() => import("./containers/authentication/signIn"));
 const SignUp = React.lazy(() => import("./containers/authentication/signup"));
+const NotificationItem = React.lazy(() => import("./pages/notification/notificationItem"));
 
 
 function App() {
@@ -44,13 +45,17 @@ function App() {
   // const { error, errorFun } = useContext(AuthContext);
 
   const navigate = useNavigate();
+
   const localData = sessionStorage.getItem("auth");
-  const parsedLocalData = localData
+  const sessionData = sessionStorage.getItem("user");
+
+  const parsedUserData = JSON.parse(sessionData);
+  const parsedLocalData = JSON.parse(localData);
+
+
   const styles = {
     fontSize: "1.6em"
   }
-
-  const userId = 2568456788;
 
   const loading = <p>Loading...</p>
 
@@ -70,15 +75,21 @@ function App() {
               path="/home"
               element={
                 <Suspense fallback={loading}>
-                  <HomePage />
+                  <HomePage parsedUserData={parsedUserData} />
                 </Suspense>
               }
             />
+            <Route path="/notification" element={
+              <Suspense fallback={loading}>
+                <NotificationItem parsedUserData={parsedUserData} />
+              </Suspense>
+            } />
             <Route
-              path={`/profile/${userId}`}
+              path={`/profile/${parsedUserData.id}`}
               element={
                 <Suspense fallback={loading}>
-                  <ProfilePage navigate={() => navigate(-1)} />
+                  <ProfilePage navigate={() => navigate(-1)}
+                     parsedUserData={parsedUserData}/>
                 </Suspense>
               }
             />
@@ -86,21 +97,24 @@ function App() {
               path="/settings"
               element={
                 <Suspense fallback={loading}>
-                  <Settings navigate={() => navigate(-1)} />
+                  <Settings navigate={() => navigate(-1)}
+                   parsedUserData={parsedUserData}/>
                 </Suspense>
               }
             />
             <Route
-              path="/change_password/userId"
+              path={`change_password/${parsedUserData.id}`}
               element={
                 <Suspense fallback={loading}>
-                  <ChangePasswordComponent navigate={() => navigate(-1)} />
+                  <ChangePasswordComponent navigate={() => navigate(-1)} 
+                    parsedUserData={parsedUserData}/>
                 </Suspense>
               }
             />
             <Route path="/transfer-money" element={
               <Suspense fallback={loading}>
-                <Transfer navigate={() => navigate(-1)} />
+                <Transfer navigate={() => navigate(-1)}
+                parsedUserData={parsedUserData} />
             </Suspense>} />
           </Routes>
         </ContextProvider>

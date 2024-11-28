@@ -1,8 +1,8 @@
 import Dashboard from '../../pages/dashboard/dashboard';
 
-const wallet = () => (
+const wallet = ({ parsedUserData }) => (
     <div>
-       <Dashboard />
+       <Dashboard parsedUserData={parsedUserData} />
     </div>
 );
 

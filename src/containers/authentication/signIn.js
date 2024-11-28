@@ -1,5 +1,5 @@
 import { useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // import axios from 'axios';
 
 import SignIn from "../../pages/authentication/signIn/signIn";
@@ -14,7 +14,7 @@ const SignInFunction = () => {
     const [loading, setLoading] = useState(null);
 
 
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
 
 
     const onChangeUsernameHandler = (e) => {
@@ -37,28 +37,40 @@ const SignInFunction = () => {
         try {
             setLoading(true);
             const response = await fetch("https://final-year-project-pijh.onrender.com/signin", {
+                method: "POST",
                 body: JSON.stringify({
                     username: username,
                     password: password
-                })
+                }),
+                headers: {
+                    "Content-Type" : "application/json"
+                }
             })
             const responseData = await response.json();
             if(!response.ok) {
                 throw new Error(responseData);
             }
             setLoading(false)
-            const data = {
-                auth: true,
+            const data = true;
+            const userData = {
                 id: responseData.id,
+                balance: responseData.balance,
+                fullname: responseData.fullname,
                 email: responseData.email,
                 walletNumber: responseData.walletNumber,
                 notification: responseData.notification,
                 image: responseData.image,
-                username: response.username,
+                username: responseData.username,
                 token: responseData.token
             }
-            sessionStorage.setItem("auth", data);
-            window.location.reload("/home");
+            const authData = JSON.stringify(data);
+            const userParsedToString = JSON.stringify(userData);
+
+            sessionStorage.setItem("auth", authData);
+            sessionStorage.setItem("user", userParsedToString);
+            window.location.href = "/home";
+            navigate("/home");
+            window.location.reload();
         } catch(err) {
             setLoading(false)
             setError(err.message);

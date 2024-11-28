@@ -1,6 +1,6 @@
 import { useState } from "react";
 // import axios from "axios";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import SignUp from "../../pages/authentication/signup/signup";
 
@@ -8,6 +8,8 @@ import SignUp from "../../pages/authentication/signup/signup";
 
 //function to register new users.
 const SignUpFunction = () => {
+    // sessionStorage.removeItem("user") 
+
     const [email, setEmail] = useState("");
     const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
@@ -16,7 +18,7 @@ const SignUpFunction = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
 
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
 
 
     const onChangeEmailHandler = (e) => {
@@ -60,10 +62,12 @@ const SignUpFunction = () => {
             if(!response.ok && response.status !== 200) {
                 throw new Error(responseData);
             }
-            setLoading(false)
-            const data = {
-                auth: true,
+            setLoading(false);
+            const data = true;
+            const userData = {
                 id: responseData.id,
+                balance: responseData.balance,
+                fullname: responseData.fullname,
                 email: responseData.email,
                 walletNumber: responseData.walletNumber,
                 notification: responseData.notification,
@@ -71,7 +75,13 @@ const SignUpFunction = () => {
                 username: response.username,
                 token: responseData.token
             }
-            sessionStorage.setItem("auth", data);
+            const authData = JSON.stringify(data);
+            const userParsedToString = JSON.stringify(userData);
+
+            sessionStorage.setItem("auth", authData);
+            sessionStorage.setItem("user", userParsedToString);
+            window.location.href = "/home";
+            navigate("/home");
             window.location.reload();
         } catch(err) {
             setLoading(false)

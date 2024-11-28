@@ -8,10 +8,11 @@ import { AuthContext } from "../../hooks/context";
 
 import './navlink.css';
 
-const userId = 2568456788; //change to real userId from DB/server side.
+
 
 const Navlink = ({styles, display,alignItems,justifyContent,flexDirection}) => {
-  const { logout } = useContext(AuthContext);
+
+  const { logout, userId } = useContext(AuthContext);
 
   return (
     <div className="navlink_container__QB2X">
@@ -22,10 +23,7 @@ const Navlink = ({styles, display,alignItems,justifyContent,flexDirection}) => {
         <li className="navlink_spacing"><a href={`/profile/${userId}`} title="Profile"><RxAvatar style={styles}/></a></li>
         <li className="navlink_spacing"><a href='/settings' title="Settings"><IoMdSettings style={styles}/></a></li>
         <li onClick={logout} className="navlink_spacing" title="Logout">
-          {/* <a href title="Logout"> */}
-            <AiOutlineLogout style={styles}/>
-            {/* </a> */}
-            </li>
+            <AiOutlineLogout style={styles}/></li>
       </div>
     </div>
   )

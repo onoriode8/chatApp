@@ -6,19 +6,25 @@ import { AuthContext } from "../../hooks/context";
 
 import "./dashboard.css";
 
-const Dashboard = () => {
-  const {showBalance, toggleShowBalanceHandler} = useContext(AuthContext);
+const Dashboard = ({ parsedUserData }) => {
+  const {showBalance, toggleShowBalanceHandler, balance} = useContext(AuthContext);
+
+  //check for updated balance and render to dashboard otherwise fall back to default balance.
+  let userUpdatedBalance = parsedUserData.balance;
+  if(!balance || balance === null || balance === undefined || balance < 1) {
+    userUpdatedBalance = balance
+  }
 
   return (
     <div className="dashboard_container">
           <div className="dashboard_currency_amount">            
-            <div><strong>NGN {!showBalance ? 1000.00 : "*****"}</strong></div>
+            <div><strong>NGN {!showBalance ? userUpdatedBalance : "*****"}</strong></div>
           </div>
           <div className="dashboard_account">
-            <div>A/c No 1556684957</div>
+            <div>A/c No {parsedUserData.walletNumber}</div>
           </div>
       <div className="dashboard_fullname">
-        <div>Full name</div>
+        <div>{parsedUserData.fullname}</div>
         <div>
           <FaRegEyeSlash onClick={toggleShowBalanceHandler}/>
         </div>

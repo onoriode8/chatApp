@@ -12,15 +12,15 @@ import { AuthContext } from '../../hooks/context';
 
 
 
-const HomePage = ({ styles }) => {
+const HomePage = ({ styles, parsedUserData }) => {
   const { sideDrawer } = useContext(AuthContext);
 
   return (
   <div>
     {sideDrawer && <SideDrawer />}
     <div style={{textAlign: "center"}}>
-      <Wallet />
-      <Services styles={styles}/>
+      <Wallet parsedUserData={parsedUserData} />
+      <Services styles={styles} parsedUserData={parsedUserData} />
       <ImageSlider />
     </div>
   </div>
