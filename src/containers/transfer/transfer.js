@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import axios from 'axios';
+import axios from "axios";
 
 import { AuthContext } from '../../hooks/context';
 
@@ -14,6 +14,7 @@ import Loading from "../../pages/loading/loading";
 import TransactionConfirm from '../../pages/transactionConfirmation/transactionConfirm/transactionConfirm';
 
 
+
 const Transfer = ({ navigate, parsedUserData }) => {
     const [amount, setAmount] = useState(0.0);
     const [narration, setNarration] = useState("");
@@ -26,6 +27,9 @@ const Transfer = ({ navigate, parsedUserData }) => {
     const [recipientWalletValue, setRecipientWalletValue] = useState(false);
     const [loading, setLoading] = useState(false);
 
+    const [error, setError] = useState(null);
+
+
     //useState to toggle screenModel for beneficiaryList
     const [toggleOnScreenModel, setToggleOnScreenModel] = useState(false);
 
@@ -34,6 +38,7 @@ const Transfer = ({ navigate, parsedUserData }) => {
 
     //useState to entered payment pin to make transfer.
     const [paymentPin, setPaymentPin] = useState("");
+
 
     //AuxContext Provider for rendering user data to UI
     const {walletNumber, fullname } = useContext(AuthContext);
@@ -59,33 +64,46 @@ const Transfer = ({ navigate, parsedUserData }) => {
         };
 
         setLoading(true);
-        const data = {
-            narration: narration,
-            recipientWalletNumber: recipientWalletNumber,
-            amount: amount
-        }
+        
         // fetch request to retrieve user balance 
         // and details before successfull transaction.
         const fetchUserDataHandler = async() => {
+            //convert amount in string to Number.
+            const formattedDataAmount = amount.replace(/[^0-9.-]+/g, "");
+
             try {
-                const response = await fetch(`https://final-year-project-pijh.onrender.com/transaction_history`)
-                const responseData = response.json();
+                const response = await fetch(`https://final-year-project-pijh.onrender.com/transfer-fund`, {
+                    method: "PATCH",
+                    body: JSON.stringify({
+                        description: narration,
+                        walletNumber: Number(recipientData.walletNumber),
+                        amount: Number(formattedDataAmount),
+                        fullName: recipientData.fullname,
+                        creatorId: parsedUserData.id
+                    }),
+                    headers: {
+                        "Content-Type" : "application/json"
+                    }
+                })
+                const responseData = await response.json();
                 if(response.ok === false) {
-                    console.log("Response from server", responseData);
                     throw new Error(responseData);
                 }
-                // setUserData(responseData);
+                setLoading(false);
+                alert("Your Transaction was successful.");
+                navigate("/");
             } catch(err) {
-                return err;
+                setLoading(false)
+                setError(err.message);
+                alert(err.message);
             }
         }
         
         fetchUserDataHandler();
          
-        console.log(recipientWalletNumber);
-        setLoading(false);
+        // console.log(recipientWalletNumber);
 
-        setChangeTransferPage(true);
+        // setChangeTransferPage(true);
 
     }
 
@@ -98,9 +116,8 @@ const Transfer = ({ navigate, parsedUserData }) => {
            try {
                setLoading(true)
                const response = await fetch(`https://final-year-project-pijh.onrender.com/get_wallet/${recipientWalletNumber}`)
-                const responseData = response.json();
+                const responseData = await response.json();
                 if(response.ok === false) {
-                   console.log("Response from server", responseData);
                    throw new Error(responseData);
                 }
                 setLoading(false)
@@ -168,6 +185,7 @@ const Transfer = ({ navigate, parsedUserData }) => {
                     recipientDataWalletNumber={recipientData === null ? null : recipientData.walletNumber}
                     recipientDataBank={recipientData === null ? null : recipientData.bank}
                     
+                    error={error}
                     // {/* data from server render to page. */}
                     walletNumber={recipientData !== null ? recipientData.walletNumber : null}
                     fullname={recipientData !== null ? recipientData.fullname : null}
@@ -178,14 +196,14 @@ const Transfer = ({ navigate, parsedUserData }) => {
                 setNarration={(e)=>setNarration(e.target.value)} />
                 <LargeButton submit={onSubmitTransferHandler} title="Confirm Transaction" />
             </div>}
-            {changeTransferPage && <div>
+            {/* {changeTransferPage && <div>
                 <TransactionConfirm recipientWalletNumber={recipientWalletNumber}
                     narration={narration} amount={amount}
                     sourceWalletName={fullname} sourceWalletNumber={walletNumber}
 
                     setPaymentPin={setPaymentPin} paymentPin={paymentPin}
                 />
-            </div>}
+            </div>} */}
         </React.Fragment>
     )
 }

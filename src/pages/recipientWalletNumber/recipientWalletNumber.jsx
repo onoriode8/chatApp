@@ -6,8 +6,9 @@ import "./recipientWalletNumber.css";
 
 const recipientWalletNumber = ({recipientDataName, recipientDataBank, 
     recipientDataWalletNumber, setRecipientWalletNumber,
-        walletNumber, fullname,
-     recipientWalletValue }) => (
+        walletNumber, fullname, error,
+     recipientWalletValue }) => {
+        return (
     <div>
         <div className="recipientWalletNumber_wrapper">
             <p>Recipient Wallet Number</p>
@@ -16,9 +17,10 @@ const recipientWalletNumber = ({recipientDataName, recipientDataBank,
                 type="number" placeholder="0000000000" 
                 />
             </div>
+            <div style={{color: "red", fontSize: "10px"}}>{error}</div>
             <div style={{color: "green", textAlign: "center"}}>
-                <p>{walletNumber}</p>
-                <p>{fullname}</p>
+                <div>{walletNumber}</div>
+                <div>{fullname}</div>
             </div>
             {recipientWalletValue && <p>enter wallet number to proceed.</p>}
         </div>
@@ -30,6 +32,7 @@ const recipientWalletNumber = ({recipientDataName, recipientDataBank,
         </div> : null}
     </div>
 );
+     }
 
 recipientWalletNumber.propTypes = {
     setRecipientWalletNumber: PropTypes.func,

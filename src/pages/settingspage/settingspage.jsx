@@ -31,7 +31,7 @@ const settingsPage = ({ navigate }) => (
             </div>
             <div className="settingsPage_change_password_container">
                 <div><LiaKeySolid /> Two factor Authenticator</div>
-                <Link to=""><MdKeyboardArrowRight /></Link>
+                <Link to="/two_factor_authenticator"><MdKeyboardArrowRight /></Link>
             </div>
             <div className="settingsPage_change_password_container">
                 <div><TfiPowerOff /> Close Account</div>

@@ -24,6 +24,8 @@ const SignIn = React.lazy(() => import("./containers/authentication/signIn"));
 const SignUp = React.lazy(() => import("./containers/authentication/signup"));
 const NotificationItem = React.lazy(() => import("./pages/notification/notificationItem/notificationItem"));
 const TransactionHistory = React.lazy(() => import("./pages/transactionComponent/transactionHistory/transactionHistory"));
+const TwoFactorAuthenticator = React.lazy(() => import("./pages/twoFactor/twoFactor"));
+
 
 function App() {
 
@@ -105,6 +107,15 @@ function App() {
               element={
                 <Suspense fallback={loading}>
                   <Settings navigate={() => navigate(-1)}
+                   parsedUserData={parsedUserData}/>
+                </Suspense>
+              }
+            />
+             <Route
+              path="/two_factor_authenticator"
+              element={
+                <Suspense fallback={loading}>
+                  <TwoFactorAuthenticator navigate={() => navigate(-1)}
                    parsedUserData={parsedUserData}/>
                 </Suspense>
               }

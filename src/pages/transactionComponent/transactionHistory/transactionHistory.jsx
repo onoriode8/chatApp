@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 import TransactionHistoryList from "../transactionHistoryList/transactionHistoryList";
-
+import Header from "../../../Reuse/header/header";
 
 
 const TransactionHistory = ({ navigate, parsedUserData }) => {
@@ -51,6 +51,8 @@ const TransactionHistory = ({ navigate, parsedUserData }) => {
 
     return (
         <div>
+            
+        <Header header="Transaction Details" navigate={navigate} />
             {error && <div 
                 style={{marginTop: "40px", color: "red",
                 fontSize: "18px",

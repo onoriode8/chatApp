@@ -1,4 +1,4 @@
-import Header from "../../../Reuse/header/header";
+
 
 import "./transactionHistoryList.css";
 
@@ -8,7 +8,6 @@ const transactionHistoryList = ({
         transactionDate, sessionId, status, description }) => {
     return (
     <div>
-        <Header header="Transaction Details" navigate={navigate} />
         <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
             <div className="transactionHistory_header_wrapper">
                 <div>Transfer to {receiverName.toUpperCase()}</div>
