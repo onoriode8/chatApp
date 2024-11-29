@@ -27,5 +27,7 @@
 @media (max-width: 499px) {
     .navlink_spacing {
         /* display: none; */
+        /* color: black;
+        border: 1px solid black; */
     }
 }

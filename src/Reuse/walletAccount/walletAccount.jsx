@@ -7,22 +7,21 @@ import "./walletAccount.css";
 
 
 export const WalletAccount = ({ parsedUserData }) => {
-    const { fullname, balance } = useContext(AuthContext);
+    const { balance } = useContext(AuthContext);
 
 
-    // let userBalance = <div>0.00</div>
-    // if(balance > 0) {
-    //     userBalance = <div>{balance}</div>
-    // };
+    let userUpdatedBalance = parsedUserData.balance;
+    if(!balance || balance === null || balance === undefined || balance < 1) {
+        userUpdatedBalance = balance
+    };
 
     
     return (
        <div className="walletAccount_container">
-            <p>Wallet Account - {parsedUserData.fullname}</p>
+            <p>Wallet Account - {parsedUserData.fullname.toUpperCase()}</p>
             <div className="walletAccount_balance_wrapper">
                 <div>Balance: <strong>N</strong></div>
-                <strong>{parsedUserData.balance}</strong>
-                {/* {userBalance} */}
+                <strong>{userUpdatedBalance}</strong>
             </div>
        </div> 
     )

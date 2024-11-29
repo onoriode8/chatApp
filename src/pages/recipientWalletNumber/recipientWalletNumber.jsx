@@ -6,6 +6,7 @@ import "./recipientWalletNumber.css";
 
 const recipientWalletNumber = ({recipientDataName, recipientDataBank, 
     recipientDataWalletNumber, setRecipientWalletNumber,
+        walletNumber, fullname,
      recipientWalletValue }) => (
     <div>
         <div className="recipientWalletNumber_wrapper">
@@ -14,6 +15,10 @@ const recipientWalletNumber = ({recipientDataName, recipientDataBank,
                 <input onChange={setRecipientWalletNumber}
                 type="number" placeholder="0000000000" 
                 />
+            </div>
+            <div style={{color: "green", textAlign: "center"}}>
+                <p>{walletNumber}</p>
+                <p>{fullname}</p>
             </div>
             {recipientWalletValue && <p>enter wallet number to proceed.</p>}
         </div>

@@ -22,8 +22,8 @@ const Transfer = React.lazy(() => import("./containers/transfer/transfer"));
 
 const SignIn = React.lazy(() => import("./containers/authentication/signIn"));
 const SignUp = React.lazy(() => import("./containers/authentication/signup"));
-const NotificationItem = React.lazy(() => import("./pages/notification/notificationItem"));
-
+const NotificationItem = React.lazy(() => import("./pages/notification/notificationItem/notificationItem"));
+const TransactionHistory = React.lazy(() => import("./pages/transactionComponent/transactionHistory/transactionHistory"));
 
 function App() {
 
@@ -89,10 +89,17 @@ function App() {
               element={
                 <Suspense fallback={loading}>
                   <ProfilePage navigate={() => navigate(-1)}
-                     parsedUserData={parsedUserData}/>
+                     parsedUserData={parsedUserData} />
                 </Suspense>
               }
             />
+            <Route path="/transaction-history" element={
+              <Suspense>
+                <TransactionHistory 
+                  navigate={() => navigate(-1)}
+                  parsedUserData={parsedUserData} />
+              </Suspense>
+            } />
             <Route
               path="/settings"
               element={

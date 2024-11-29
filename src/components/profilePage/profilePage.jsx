@@ -1,9 +1,9 @@
 import ProfileDetails from "../../pages/profileDetails/profileDetails";
 
 
-const profilePage = ({ navigate }) => (
+const profilePage = ({ navigate, parsedUserData }) => (
     <div>
-        <ProfileDetails navigate={navigate} />
+        <ProfileDetails navigate={navigate} parsedUserData={parsedUserData} />
     </div>
 );
 

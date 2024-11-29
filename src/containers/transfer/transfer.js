@@ -59,28 +59,28 @@ const Transfer = ({ navigate, parsedUserData }) => {
         };
 
         setLoading(true);
-        // const data = {
-        //     narration: narration,
-        //     recipientWalletNumber: recipientWalletNumber,
-        //     amount: amount
-        // }
-        //fetch request to retrieve user balance 
-        //and details before successfull transaction.
-        // const fetchUserDataHandler = async() => {
-        //     try {
-        //         const response = await axios.get("url here")
-        //         const responseData = response.json();
-        //         if(response.ok === false) {
-        //             console.log("Response from server", responseData);
-        //             throw new Error(responseData);
-        //         }
-        //         setUserData(responseData);
-        //     } catch(err) {
-        //         return err;
-        //     }
-        // }
+        const data = {
+            narration: narration,
+            recipientWalletNumber: recipientWalletNumber,
+            amount: amount
+        }
+        // fetch request to retrieve user balance 
+        // and details before successfull transaction.
+        const fetchUserDataHandler = async() => {
+            try {
+                const response = await fetch(`https://final-year-project-pijh.onrender.com/transaction_history`)
+                const responseData = response.json();
+                if(response.ok === false) {
+                    console.log("Response from server", responseData);
+                    throw new Error(responseData);
+                }
+                // setUserData(responseData);
+            } catch(err) {
+                return err;
+            }
+        }
         
-        // fetchUserDataHandler();
+        fetchUserDataHandler();
          
         console.log(recipientWalletNumber);
         setLoading(false);
@@ -90,14 +90,14 @@ const Transfer = ({ navigate, parsedUserData }) => {
     }
 
     // function to fetch recipient details from 
-    //server once the 10 digit wallet number is entered.
+    //server once the 10 digit wallet number is entered. Route passed.
     useEffect(() => {
        const fetchRecipientDataHandler = async() => {
            const wallet = recipientWalletNumber.trim().toString()
            if(wallet.length !== 10) return;
            try {
                setLoading(true)
-               const response = await axios.get(`url here/${recipientWalletNumber}`)
+               const response = await fetch(`https://final-year-project-pijh.onrender.com/get_wallet/${recipientWalletNumber}`)
                 const responseData = response.json();
                 if(response.ok === false) {
                    console.log("Response from server", responseData);
@@ -106,6 +106,7 @@ const Transfer = ({ navigate, parsedUserData }) => {
                 setLoading(false)
                 setRecipientData(responseData);
            } catch(err) {
+               setLoading(false);
                return err;
            }
        }
@@ -166,6 +167,10 @@ const Transfer = ({ navigate, parsedUserData }) => {
                     recipientDataName={recipientData === null ? null : recipientData.name}
                     recipientDataWalletNumber={recipientData === null ? null : recipientData.walletNumber}
                     recipientDataBank={recipientData === null ? null : recipientData.bank}
+                    
+                    // {/* data from server render to page. */}
+                    walletNumber={recipientData !== null ? recipientData.walletNumber : null}
+                    fullname={recipientData !== null ? recipientData.fullname : null}
                 />
                 <NarrationAndBeneficiary 
                 toggleOnScreenModel={toggleOnScreenModel}

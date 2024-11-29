@@ -57,6 +57,7 @@ const SignInFunction = () => {
                 balance: responseData.balance,
                 fullname: responseData.fullname,
                 email: responseData.email,
+                referenceCode: responseData.referenceCode,
                 walletNumber: responseData.walletNumber,
                 notification: responseData.notification,
                 image: responseData.image,

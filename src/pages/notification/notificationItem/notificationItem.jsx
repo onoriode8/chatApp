@@ -1,4 +1,4 @@
-import NotificationList from "";
+import NotificationList from "../notificationList/notificationList";
 
 
 const notification = ({ parsedUserData }) => {
@@ -6,7 +6,7 @@ const notification = ({ parsedUserData }) => {
     let mapData;
     if(mapNotification.length !== 0) {
         mapData = mapNotification.map(item => <NotificationList
-            key={item.date} message={item.message} date={item.date}
+            key={item.id} message={item.message} date={item.date}
             ip={item.ip}
             />)
     }

@@ -11,16 +11,19 @@ import './navlink.css';
 
 
 const Navlink = ({styles, display,alignItems,justifyContent,flexDirection}) => {
+  const sessionData = sessionStorage.getItem("user");
 
-  const { logout, userId } = useContext(AuthContext);
+  const parsedUserData = JSON.parse(sessionData);
+
+  const { logout } = useContext(AuthContext);
 
   return (
     <div className="navlink_container__QB2X">
       <div style={{display: display, alignItems: alignItems, 
             justifyContent: justifyContent, flexDirection: flexDirection }}>
-        <li className="navlink_spacing"><a href="/" title="Home"><MdHome style={styles} /></a></li>
+        <li className="navlink_spacing"><a href="/home" title="Home"><MdHome style={styles} /></a></li>
         <li className="navlink_spacing"><a href="/notification" title="Notification"><MdCircleNotifications style={styles} /></a></li>
-        <li className="navlink_spacing"><a href={`/profile/${userId}`} title="Profile"><RxAvatar style={styles}/></a></li>
+        <li className="navlink_spacing"><a href={`/profile/${parsedUserData.id}`} title="Profile"><RxAvatar style={styles}/></a></li>
         <li className="navlink_spacing"><a href='/settings' title="Settings"><IoMdSettings style={styles}/></a></li>
         <li onClick={logout} className="navlink_spacing" title="Logout">
             <AiOutlineLogout style={styles}/></li>

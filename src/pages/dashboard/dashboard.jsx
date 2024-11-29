@@ -24,7 +24,7 @@ const Dashboard = ({ parsedUserData }) => {
             <div>A/c No {parsedUserData.walletNumber}</div>
           </div>
       <div className="dashboard_fullname">
-        <div>{parsedUserData.fullname}</div>
+        <div>{parsedUserData.fullname.toUpperCase()}</div>
         <div>
           <FaRegEyeSlash onClick={toggleShowBalanceHandler}/>
         </div>
