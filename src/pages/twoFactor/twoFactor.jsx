@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
-
+import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
+import { IoIosArrowBack } from "react-icons/io";
 
 const TwoFactorAuthenticator = ({ parsedUserData }) => {
     const [secret, setSecret] = useState("");
@@ -10,10 +11,17 @@ const TwoFactorAuthenticator = ({ parsedUserData }) => {
 
     const [code, setCode] = useState("");
 
+    const navigate = useNavigate();
+
     const getQrCodeHandler = async () => {
         try {
             setLoading(true)
-            const response = await fetch(`https://final-year-project-pijh.onrender.com/generate_code/${parsedUserData.id}`)
+            const response = await fetch(`https://final-year-project-pijh.onrender.com/generate_code/${parsedUserData.id}`,{
+                headers: {
+                    "Content-Type" : "application/json",
+                    "Authorization" : "Bearer " + parsedUserData.token
+                }
+            })
             const responseData = await response.json();
             if(!response.ok) {
                 throw new Error(responseData);
@@ -24,7 +32,7 @@ const TwoFactorAuthenticator = ({ parsedUserData }) => {
             setSecret(responseData.secret);
             setqrCode(responseData.qrCode);
         } catch(err) {
-            setLoading(true)
+            setLoading(false);
             setError(err.message);
         }
     }
@@ -38,16 +46,17 @@ const TwoFactorAuthenticator = ({ parsedUserData }) => {
                     code: code
                 }),
                 headers: {
-                    "Content-Type" : "applocation/json"
+                    "Content-Type" : "application/json",
+                    "Authorization" : "Bearer " + parsedUserData.token
                 }
             })
             const responseData = await response.json();
-            // if(!response.ok) {
-            //     throw new Error(responseData);
-            // }
+            if(!response.ok) {
+                throw new Error(responseData);
+            }
 
             setLoading(false)
-            sessionStorage.setItem("code", code);
+            //sessionStorage.setItem("code", code);
             alert("successfully added two factor auhtenticator");
         } catch(err) {
             setLoading(true)
@@ -56,6 +65,11 @@ const TwoFactorAuthenticator = ({ parsedUserData }) => {
     }
 
     return (
+        <div>
+        <div style={{display: "flex", marginTop: "6px", alignItem: "center", justifyContent: "space-between"}}>
+            <div onClick={() => navigate(-1)}><IoIosArrowBack /></div>
+            <div></div>
+        </div>
         <div style={{textAlign: "center", marginTop: "20px"}}>
             <div>
                 <img src={qrCode} alt="" />
@@ -63,23 +77,24 @@ const TwoFactorAuthenticator = ({ parsedUserData }) => {
             
             <div>
                 <p>Secret Code</p>
-                <p style={{color: "black"}}>{secret}</p>
+                <p style={{color: "black", fontSize: "11px"}}>{secret}</p>
             </div>
             
-            <button onClick={getQrCodeHandler}>Click to get code</button>
+            {!secret ? <button onClick={getQrCodeHandler}>Click to get code</button>: null}
             {loading && <p>Loading...</p>}
-            <p>{error}</p>
+            <p style={{color: "red"}}>{error}</p>
 
             <div>
-                <div>Scan the QR code on your google authenticator App to get Code.</div>
+                {secret && <div>Scan the QR code on your google authenticator App to get Code.</div>}
                 {secret.length !== 0 ? 
-                <div>Enter Code to complete to Two
-                     Factor authenticator Process</div> : null}
+                <div style={{fontSize: "15px"}}>Enter Code to complete Two
+                     Factor authenticator Process.</div> : null}
                 {secret ? <div>
                     <input type="number" onChange={(e) => setCode(e.target.value)} placeholder="Enter Google Authenticator code" />
                     <button onClick={submitCodeHandler}>Submit Code</button>
                 </div> : null}
             </div>
+        </div>
         </div>
     )
 }

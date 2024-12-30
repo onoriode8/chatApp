@@ -81,11 +81,19 @@ const SignUpFunction = () => {
 
             sessionStorage.setItem("auth", authData);
             sessionStorage.setItem("user", userParsedToString);
-            window.location.href = "/home";
+            setEmail("")
+            setUserName("")
+            setPassword("")
+            setPhoneNumber("")
+            //window.location.href = "/home";
             navigate("/home");
-            window.location.reload();
+            //window.location.reload();
         } catch(err) {
             setLoading(false)
+            setEmail("")
+            setUserName("")
+            setPassword("")
+            setPhoneNumber("")
             setError(err.message);
         }
     }

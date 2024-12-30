@@ -42,7 +42,12 @@ export const ContextProvider = (props) => {
     useEffect(() => {
         const fetchData = async() => {
           try {
-              const response = await fetch(`https://final-year-project-pijh.onrender.com/user/${parsedUserData.id}`)
+              const response = await fetch(`https://final-year-project-pijh.onrender.com/user/${parsedUserData.id}`,{
+                headers: {
+                    "Content-Type" : "application/json",
+                    "Authorization" : "Bearer " + parsedUserData.token
+                }
+              })
               const responseData = await response.json();
               if(response.ok === false) {
                 throw new Error(responseData)
