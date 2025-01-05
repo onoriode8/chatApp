@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { IoIosArrowBack } from "react-icons/io";
 
@@ -37,32 +37,38 @@ const TwoFactorAuthenticator = ({ parsedUserData }) => {
         }
     }
 
-    const submitCodeHandler = async () => {
-        try {
-            setLoading(true)
-            const response = await fetch(`https://final-year-project-pijh.onrender.com/submit_code`, {
-                method: "POST",
-                body: JSON.stringify({
-                    code: code
-                }),
-                headers: {
-                    "Content-Type" : "application/json",
-                    "Authorization" : "Bearer " + parsedUserData.token
+    useEffect(() => {
+        if(code.length !== 6) return;
+        const submitCodeHandler = async () => {
+            try {
+                setLoading(true)
+                const response = await fetch(`https://final-year-project-pijh.onrender.com/verify/2fa/token`, {
+                    method: "POST",
+                    body: JSON.stringify({
+                        code: code,
+                        secret: secret, //send from server backend.
+                        userId: parsedUserData.id
+                    }),
+                    headers: {
+                        "Content-Type" : "application/json",
+                        "Authorization" : "Bearer " + parsedUserData.token
+                    }
+                })
+                const responseData = await response.json();
+                if(!response.ok) {
+                    throw new Error(responseData);
                 }
-            })
-            const responseData = await response.json();
-            if(!response.ok) {
-                throw new Error(responseData);
-            }
 
-            setLoading(false)
-            //sessionStorage.setItem("code", code);
-            alert("successfully added two factor auhtenticator");
-        } catch(err) {
-            setLoading(true)
-            setError(err.message);
+                setLoading(false)
+                //sessionStorage.setItem("code", code);
+                alert("successfully added two factor auhtenticator");
+            } catch(err) {
+                setLoading(true)
+                setError(err.message);
+            }
         }
-    }
+        submitCodeHandler()
+    }, [code, parsedUserData.id, parsedUserData.token, secret])
 
     return (
         <div>
@@ -90,8 +96,8 @@ const TwoFactorAuthenticator = ({ parsedUserData }) => {
                 <div style={{fontSize: "15px"}}>Enter Code to complete Two
                      Factor authenticator Process.</div> : null}
                 {secret ? <div>
-                    <input type="number" onChange={(e) => setCode(e.target.value)} placeholder="Enter Google Authenticator code" />
-                    <button onClick={submitCodeHandler}>Submit Code</button>
+                    <input type="number" value={code} onChange={(e) => setCode(e.target.value)} placeholder="Enter Google Authenticator code" />
+                    {/* <button onClick={submitCodeHandler()}>Submit Code</button> */}
                 </div> : null}
             </div>
         </div>
