@@ -84,8 +84,8 @@ export const ContextProvider = (props) => {
     const logoutHandler = () => {
         sessionStorage.removeItem("auth");
         sessionStorage.removeItem("user");
+        sessionStorage.removeItem("twoFactor")
 
-        window.location.href = "/";
         navigate("/");
         window.location.reload();
     }

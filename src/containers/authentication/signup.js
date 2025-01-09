@@ -1,5 +1,4 @@
 import { useState } from "react";
-// import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import SignUp from "../../pages/authentication/signup/signup";
@@ -8,8 +7,6 @@ import SignUp from "../../pages/authentication/signup/signup";
 
 //function to register new users.
 const SignUpFunction = () => {
-    // sessionStorage.removeItem("user") 
-
     const [email, setEmail] = useState("");
     const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
@@ -74,7 +71,8 @@ const SignUpFunction = () => {
                 notification: responseData.notification,
                 image: responseData.image,
                 username: response.username,
-                token: responseData.token
+                token: responseData.token,
+                isMFA: responseData.isMFA
             }
             const authData = JSON.stringify(data);
             const userParsedToString = JSON.stringify(userData);
@@ -85,9 +83,7 @@ const SignUpFunction = () => {
             setUserName("")
             setPassword("")
             setPhoneNumber("")
-            //window.location.href = "/home";
             navigate("/home");
-            //window.location.reload();
         } catch(err) {
             setLoading(false)
             setEmail("")
@@ -102,6 +98,7 @@ const SignUpFunction = () => {
     return (
         <div>
             <SignUp email={email} password={password} username={username}
+                phoneNumber={phoneNumber}
                 onChangeUsernameHandler={onChangeUsernameHandler}
                 onChangePasswordHandler={onChangePasswordHandler}
                 onChangeEmailHandler={onChangeEmailHandler}

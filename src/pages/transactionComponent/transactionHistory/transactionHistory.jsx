@@ -15,7 +15,12 @@ const TransactionHistory = ({ navigate, parsedUserData }) => {
         const fetchUserTransactionHistoryList = async () => {
             try {
                 setLoading(true);
-                const response = await fetch(`https://final-year-project-pijh.onrender.com/transaction_history/${parsedUserData.id}`);
+                const response = await fetch(`https://final-year-project-pijh.onrender.com/transaction_history/${parsedUserData.id}`, {
+                    headers: {
+                        "Content-Type" : "application/json",
+                        "Authorization" : "Bearer " + parsedUserData.token
+                    }
+                });
                 const responseData = await response.json();
                 if(response.ok === false) {
                     throw new Error("Failed to get history.");
@@ -29,9 +34,9 @@ const TransactionHistory = ({ navigate, parsedUserData }) => {
         }
 
         fetchUserTransactionHistoryList();
-    }, [parsedUserData.id]);
+    }, [parsedUserData.id, parsedUserData.token]);
 
-    let transactionDefault = <p>
+    let transactionDefault = <p style={{textAlign: "center"}}>
             No Transaction History yet!.
             Your Transaction history will be display here.
         </p>

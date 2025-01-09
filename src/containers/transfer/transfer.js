@@ -82,7 +82,8 @@ const Transfer = ({ navigate, parsedUserData }) => {
                         creatorId: parsedUserData.id
                     }),
                     headers: {
-                        "Content-Type" : "application/json"
+                        "Content-Type" : "application/json",
+                        "Authorization" : "Bearer " + parsedUserData.token
                     }
                 })
                 const responseData = await response.json();
@@ -115,7 +116,12 @@ const Transfer = ({ navigate, parsedUserData }) => {
            if(wallet.length !== 10) return;
            try {
                setLoading(true)
-               const response = await fetch(`https://final-year-project-pijh.onrender.com/get_wallet/${recipientWalletNumber}`)
+               const response = await fetch(`https://final-year-project-pijh.onrender.com/get_wallet/${recipientWalletNumber}`, {
+                headers: {
+                    'Content-Type' : "application/json",
+                    "Authorization" : "Bearer " + parsedUserData.token
+                }
+               })
                 const responseData = await response.json();
                 if(response.ok === false) {
                    throw new Error(responseData);
@@ -128,7 +134,7 @@ const Transfer = ({ navigate, parsedUserData }) => {
            }
        }
        fetchRecipientDataHandler(); 
-    }, [recipientWalletNumber]);
+    }, [recipientWalletNumber, parsedUserData.token]);
 
         
    //function to entered 5 digits pin and proceed with payment on server.

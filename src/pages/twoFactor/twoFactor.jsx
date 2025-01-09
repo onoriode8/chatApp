@@ -1,108 +1,64 @@
-import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { IoIosArrowBack } from "react-icons/io";
+import { GiCheckMark } from "react-icons/gi";
 
-const TwoFactorAuthenticator = ({ parsedUserData }) => {
-    const [secret, setSecret] = useState("");
-    const [qrCode, setqrCode] = useState("");
+import { useTwoFactorAuthenticator } from '../../containers/2MFA/twoFactor';
 
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+const TwoFactorAuthenticatorPage = ({ parsedUserData }) => {
 
-    const [code, setCode] = useState("");
+    const { secret, qrCode, loading, error, code, successMessage, setCode, 
+        getQrCodeHandler } = useTwoFactorAuthenticator({parsedUserData})
 
     const navigate = useNavigate();
 
-    const getQrCodeHandler = async () => {
-        try {
-            setLoading(true)
-            const response = await fetch(`https://final-year-project-pijh.onrender.com/generate_code/${parsedUserData.id}`,{
-                headers: {
-                    "Content-Type" : "application/json",
-                    "Authorization" : "Bearer " + parsedUserData.token
-                }
-            })
-            const responseData = await response.json();
-            if(!response.ok) {
-                throw new Error(responseData);
-            }
-
-            setLoading(false)
-
-            setSecret(responseData.secret);
-            setqrCode(responseData.qrCode);
-        } catch(err) {
-            setLoading(false);
-            setError(err.message);
-        }
-    }
-
-    useEffect(() => {
-        if(code.length !== 6) return;
-        const submitCodeHandler = async () => {
-            try {
-                setLoading(true)
-                const response = await fetch(`https://final-year-project-pijh.onrender.com/verify/2fa/token`, {
-                    method: "POST",
-                    body: JSON.stringify({
-                        code: code,
-                        secret: secret, //send from server backend.
-                        userId: parsedUserData.id
-                    }),
-                    headers: {
-                        "Content-Type" : "application/json",
-                        "Authorization" : "Bearer " + parsedUserData.token
-                    }
-                })
-                const responseData = await response.json();
-                if(!response.ok) {
-                    throw new Error(responseData);
-                }
-
-                setLoading(false)
-                //sessionStorage.setItem("code", code);
-                alert("successfully added two factor auhtenticator");
-            } catch(err) {
-                setLoading(true)
-                setError(err.message);
-            }
-        }
-        submitCodeHandler()
-    }, [code, parsedUserData.id, parsedUserData.token, secret])
+    const parsedData = JSON.parse(sessionStorage.getItem("user"));
 
     return (
         <div>
-        <div style={{display: "flex", marginTop: "6px", alignItem: "center", justifyContent: "space-between"}}>
+        <div style={{display: "flex", marginTop: "6px", 
+            alignItem: "center", justifyContent: "space-between"}}>
             <div onClick={() => navigate(-1)}><IoIosArrowBack /></div>
             <div></div>
         </div>
         <div style={{textAlign: "center", marginTop: "20px"}}>
             <div>
-                <img src={qrCode} alt="" />
+                {parsedUserData.isMFA ? null : <img src={qrCode} alt="" />}
             </div>
             
-            <div>
-                <p>Secret Code</p>
+            {parsedUserData.isMFA ? null : <div>
+                {secret && <p>Secret Code</p>}
                 <p style={{color: "black", fontSize: "11px"}}>{secret}</p>
-            </div>
+            </div>}
             
-            {!secret ? <button onClick={getQrCodeHandler}>Click to get code</button>: null}
+            {parsedData.isMFA ? null : <button 
+             style={{ display: parsedData.isMFA ? "none" : null, cursor: "pointer" }} 
+             onClick={getQrCodeHandler}>Click to get code</button>}
             {loading && <p>Loading...</p>}
             <p style={{color: "red"}}>{error}</p>
 
             <div>
-                {secret && <div>Scan the QR code on your google authenticator App to get Code.</div>}
+                {secret && <div style={{ display: parsedData.isMFA ? "none" : null }} 
+                >Scan the QR code on your google authenticator App to get Code.</div>}
                 {secret.length !== 0 ? 
-                <div style={{fontSize: "15px"}}>Enter Code to complete Two
-                     Factor authenticator Process.</div> : null}
+                <div style={{fontSize: "15px", margin: "40px", display: parsedData.isMFA ? "none" : null }}>
+                    Enter Code to complete Two
+                    Factor authenticator Process.</div> : null}
                 {secret ? <div>
-                    <input type="number" value={code} onChange={(e) => setCode(e.target.value)} placeholder="Enter Google Authenticator code" />
-                    {/* <button onClick={submitCodeHandler()}>Submit Code</button> */}
+                    <input style={{padding: "8px 16px", display: parsedData.isMFA ? "none" : null }} 
+                    type="number" value={code} onChange={(e) => setCode(e.target.value)}
+                    placeholder="Authenticator code" />
                 </div> : null}
+            </div>
+            {parsedData.isMFA && <div style={{color: "green", display: "flex", alignItems: "center", flexDirection: "column"}}>
+                <div style={{fontSize: "2em"}}><GiCheckMark /></div>
+                <p>2FA verified</p>
+            </div>}
+            <div>
+                <p style={{color: "green"}}>{successMessage}</p>
             </div>
         </div>
         </div>
     )
 }
 
-export default TwoFactorAuthenticator;
+export default TwoFactorAuthenticatorPage;

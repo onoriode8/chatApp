@@ -29,24 +29,8 @@ const TwoFactorAuthenticator = React.lazy(() => import("./pages/twoFactor/twoFac
 
 function App() {
 
-  // const fetchData = () =>
-  //   fetch("https://jsonplaceholder.typicode.com/users")
-  //     .then(response => {
-  //       console.log("RESPONSE", response.json());
-  //       response.json();
-  // });
-
-  // const { isLoading, error, data } = useQuery("fetchData", fetchData());
-
-  // const [userData, setUserData] = useState(null);
-
-  // console.log("ISLOADING", isLoading);
-  // console.log("ERROR", error);
-  // console.log("DATA", data);
-
-  // const { error, errorFun } = useContext(AuthContext);
-
   const navigate = useNavigate();
+
 
   const localData = sessionStorage.getItem("auth");
   const sessionData = sessionStorage.getItem("user");

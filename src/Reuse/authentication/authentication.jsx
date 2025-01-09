@@ -15,7 +15,7 @@ import "./authentication.css";
 const authentication = ({ account, header, path, titleOnButton, paragraph, 
     onChangePasswordHandler, onChangeEmailHandler, onChangeUsernameHandler,
     onSubmitFuncHandler, showPassword, setPrevStateHandler, showSignIn,
-    setPhoneNumber,
+    setPhoneNumber, phoneNumber, email, username, password,
     error, loading  }) => {
     // console.log("submit", onSubmitFuncHandler)
     return(
@@ -29,21 +29,22 @@ const authentication = ({ account, header, path, titleOnButton, paragraph,
             <div className="authentication_input_wrapper">
                 {!showSignIn && <div className="authentication_username_email_wrapper">
                     <label>Email address</label>
-                    <input type="text" onChange={onChangeEmailHandler} placeholder="" />
+                    <input type="text" value={email} onChange={onChangeEmailHandler} placeholder="" />
                 </div>}
                 {!showSignIn && <div className="authentication_username_email_wrapper">
                     <label>Phone Number</label>
-                    <input type="number" onChange={setPhoneNumber} placeholder="" />
+                    <input type="number" value={phoneNumber} onChange={setPhoneNumber} placeholder="" />
                 </div>}
 
                 <div className="authentication_username_email_wrapper">
                     <label>Username</label>
-                    <input type="text" onChange={onChangeUsernameHandler} placeholder="" />
+                    <input type="text" value={username} onChange={onChangeUsernameHandler} placeholder="" />
                 </div>
 
                 <div className="authentication_password_container">
                     <label>Password</label>
-                    <input type={!showPassword ? "password" : "text"} onChange={onChangePasswordHandler} placeholder="" />
+                    <input type={!showPassword ? "password" : "text"} value={password} 
+                    onChange={onChangePasswordHandler} placeholder="" />
                     <div className="authentication_showPassword_wrapper" onClick={setPrevStateHandler}>
                         <input type="checkbox" />
                         <div>Show password</div>

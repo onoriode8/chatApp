@@ -16,7 +16,8 @@ const signIn = ({ username, password, onChangeUsernameHandler,
 
             showSignIn={showSignIn}
             header="Sign in to BaseDay" titleOnButton="Sign in"
-            paragraph="New to BaseDay?" account="Create an account" path="/signup/new-user"
+            paragraph="New to BaseDay?" account="Create an account"
+            path="/signup/new-user"
         />
     </div>
 );

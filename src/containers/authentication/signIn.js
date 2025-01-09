@@ -43,8 +43,7 @@ const SignInFunction = () => {
                     password: password
                 }),
                 headers: {
-                    "Content-Type" : "application/json",
-                    // "Authorization" : "Bearer " + 
+                    "Content-Type" : "application/json"
                 }
             })
             const responseData = await response.json();
@@ -63,7 +62,8 @@ const SignInFunction = () => {
                 notification: responseData.notification,
                 image: responseData.image,
                 username: responseData.username,
-                token: responseData.token
+                token: responseData.token,
+                isMFA: responseData.isMFA
             }
             const authData = JSON.stringify(data);
             const userParsedToString = JSON.stringify(userData);
@@ -72,9 +72,7 @@ const SignInFunction = () => {
             sessionStorage.setItem("user", userParsedToString);
             setUsername("")
             setPassword("")
-            //window.location.href = "/home";
             navigate("/home");
-            //window.location.reload();
         } catch(err) {
             setLoading(false)
             setUsername("")
