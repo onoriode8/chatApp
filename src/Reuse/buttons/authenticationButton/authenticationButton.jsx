@@ -5,7 +5,6 @@ import "./authenticationButton.css";
 
 
 const authenticationButton = ({ submit, title }) => {
-    // console.log("sub", submit)
     return (
         <div className="authenticationButton_wrapper">
             <button onClick={submit}>{title}</button>

@@ -1,10 +1,15 @@
+import { useContext } from 'react';
+
+import { AuthContext } from '../../hooks/context';
 import { IoIosArrowBack } from 'react-icons/io'
 import { CgProfile } from "react-icons/cg";
 
 import './profileDetails.css';
 
 
-const profileDetails = ({ navigate, parsedUserData }) => (
+const ProfileDetails = ({ navigate }) => {
+    const parsedUserData = useContext(AuthContext)
+    return (
     <div>
         <div className="profile_details">PROFILE</div>
         <div className="profile_details_containers">
@@ -23,7 +28,7 @@ const profileDetails = ({ navigate, parsedUserData }) => (
                 <div className="profile_details_wrapper_fullname_container">
                     <div className="profile_details_fullname_containers">
                         <div>Full Name</div>
-                        <div>{parsedUserData.fullname.toUpperCase()}</div>
+                        <div>{parsedUserData.fullname ? parsedUserData.fullname.toUpperCase() : null}</div>
                     </div>
                     <div className="profile_details_accountnumber_containers">
                         <div>Account Number</div>
@@ -42,5 +47,6 @@ const profileDetails = ({ navigate, parsedUserData }) => (
         </div>
     </div>
 );
+}
 
-export default profileDetails;
+export default ProfileDetails;

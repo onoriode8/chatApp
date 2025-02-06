@@ -1,21 +1,26 @@
+import { useContext } from 'react'
+
 import NotificationList from "../notificationList/notificationList";
+import Header from "../../../Reuse/header/header";
+import { AuthContext } from '../../../hooks/context';
 
-
-const notification = ({ parsedUserData }) => {
-    const mapNotification = parsedUserData.notification;
+const Notification = ({ navigate }) => {
+    const { notification } = useContext(AuthContext)
+    // parsedUserData.notification;
     let mapData;
-    if(mapNotification.length !== 0) {
-        mapData = mapNotification.map(item => <NotificationList
+    if(notification.length !== 0) {
+        mapData = notification.map(item => <NotificationList
             key={item.id} message={item.message} date={item.date}
             ip={item.ip}
-            />)
+        />)
     }
 
     return (
         <div>
+            <Header header="Notification" navigate={navigate} />
             {mapData}
         </div>
     )
 }
 
-export default notification;
+export default Notification;

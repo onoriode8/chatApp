@@ -12,11 +12,12 @@ import './sidedrawerList.css';
 
 
 const SidedrawerList = () => {
-    const sessionData = sessionStorage.getItem("user");
+ const sessionData = sessionStorage.getItem("user");
 
   const parsedUserData = JSON.parse(sessionData);
 
   const { logout } = useContext(AuthContext);
+  
   const styleList = {
     listStyle: "none"
   }

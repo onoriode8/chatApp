@@ -11,7 +11,7 @@ const transactionHistoryList = ({
         <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
             <div className="transactionHistory_header_wrapper">
                 <div>Transfer to {receiverName.toUpperCase()}</div>
-                <div style={{fontSize: "26px"}}><strong>N{amountSent}</strong></div> 
+                <div style={{fontSize: "26px"}}><strong>N{amountSent.toLocaleString()}</strong></div> 
                 <div style={{color: "green"}}>{status}</div>
             </div>
         </div>
@@ -46,6 +46,7 @@ const transactionHistoryList = ({
                 <div>Session Id</div>
                 <div>{sessionId}</div>
             </div>
+            <hr />
         </div>
     </div>
 );

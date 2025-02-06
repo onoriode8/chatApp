@@ -3,11 +3,12 @@ import React from 'react';
 import SettingsPage from '../../pages/settingspage/settingspage';
 
 
-const Settings = ({ navigate }) => {
+const Settings = ({ navigate, parsedUserData }) => {
 
     return (
     <div>
-        <SettingsPage  navigate={navigate} />
+        <SettingsPage  navigate={navigate}
+         parsedUserData={parsedUserData} />
     </div>
 );
     }

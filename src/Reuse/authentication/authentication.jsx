@@ -5,7 +5,7 @@ import { FcLock } from "react-icons/fc";
 
 
 import AuthenticationButton from "../../Reuse/buttons/authenticationButton/authenticationButton";
-
+import AuthenticatorProceed from "../authenticatorProceed/authenticatorProceed"
 
 
 import "./authentication.css";
@@ -16,11 +16,11 @@ const authentication = ({ account, header, path, titleOnButton, paragraph,
     onChangePasswordHandler, onChangeEmailHandler, onChangeUsernameHandler,
     onSubmitFuncHandler, showPassword, setPrevStateHandler, showSignIn,
     setPhoneNumber, phoneNumber, email, username, password,
-    error, loading  }) => {
-    // console.log("submit", onSubmitFuncHandler)
+    error, loading, responseData, code, setCode }) => {
+
     return(
     <div>
-        <div className="authentication_main_wrapper">
+        {responseData === null || !responseData.isMFA ? <div className="authentication_main_wrapper">
             <div className="authentication_logo_area">
                 <p><FcLock /></p>
                 <header>{header}</header>
@@ -29,21 +29,25 @@ const authentication = ({ account, header, path, titleOnButton, paragraph,
             <div className="authentication_input_wrapper">
                 {!showSignIn && <div className="authentication_username_email_wrapper">
                     <label>Email address</label>
-                    <input type="text" value={email} onChange={onChangeEmailHandler} placeholder="" />
+                    <input type="text" value={email} required
+                    onChange={onChangeEmailHandler} placeholder="" />
                 </div>}
                 {!showSignIn && <div className="authentication_username_email_wrapper">
                     <label>Phone Number</label>
-                    <input type="number" value={phoneNumber} onChange={setPhoneNumber} placeholder="" />
+                    <input type="number" value={phoneNumber} required
+                    onChange={setPhoneNumber} placeholder="" />
                 </div>}
 
                 <div className="authentication_username_email_wrapper">
                     <label>Username</label>
-                    <input type="text" value={username} onChange={onChangeUsernameHandler} placeholder="" />
+                    <input type="text" value={username} required 
+                    onChange={onChangeUsernameHandler} placeholder="" />
                 </div>
 
                 <div className="authentication_password_container">
                     <label>Password</label>
-                    <input type={!showPassword ? "password" : "text"} value={password} 
+                    <input type={!showPassword ? "password" : "text"}
+                     value={password} required
                     onChange={onChangePasswordHandler} placeholder="" />
                     <div className="authentication_showPassword_wrapper" onClick={setPrevStateHandler}>
                         <input type="checkbox" />
@@ -65,10 +69,9 @@ const authentication = ({ account, header, path, titleOnButton, paragraph,
             <p style={{color: "red", fontSize: "small"}}>{error}</p>
         </div>
 
-        </div>
-
-        
-
+        </div> : <AuthenticatorProceed greetings="Welcome"
+            responseData={responseData} code={code} 
+            setCode={setCode} error={error} loading={loading} />}
     </div>
 )};
 

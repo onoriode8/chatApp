@@ -15,6 +15,8 @@ const SignUpFunction = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
 
+    const [responseData] = useState(null)
+
     const navigate = useNavigate()
 
 
@@ -63,16 +65,16 @@ const SignUpFunction = () => {
             const data = true;
             const userData = {
                 id: responseData.id,
-                balance: responseData.balance,
-                fullname: responseData.fullname,
-                email: responseData.email,
-                referenceCode: responseData.referenceCode,
-                walletNumber: responseData.walletNumber,
-                notification: responseData.notification,
-                image: responseData.image,
-                username: response.username,
+                // balance: responseData.balance,
+                // fullname: responseData.fullname,
+                // email: responseData.email,
+                // referenceCode: responseData.referenceCode,
+                // walletNumber: responseData.walletNumber,
+                // notification: responseData.notification,
+                // image: responseData.image,
+                // username: responseData.username,
                 token: responseData.token,
-                isMFA: responseData.isMFA
+                // isMFA: responseData.isMFA
             }
             const authData = JSON.stringify(data);
             const userParsedToString = JSON.stringify(userData);
@@ -91,6 +93,9 @@ const SignUpFunction = () => {
             setPassword("")
             setPhoneNumber("")
             setError(err.message);
+            setTimeout(() => {
+                setError(null);
+            }, 3000)
         }
     }
 
@@ -106,7 +111,7 @@ const SignUpFunction = () => {
                 onSubmitFuncHandler={onSubmitFuncHandler}
                 showPassword={showPassword}
                 setPrevStateHandler={setPrevStateHandler}
-
+                responseData={responseData}
                 error={error} loading={loading}
             />
         </div>

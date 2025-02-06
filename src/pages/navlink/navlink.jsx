@@ -15,7 +15,7 @@ const Navlink = ({styles, display,alignItems,justifyContent,flexDirection}) => {
 
   const parsedUserData = JSON.parse(sessionData);
 
-  const { logout } = useContext(AuthContext);
+  const { logout }= useContext(AuthContext);
 
   return (
     <div className="navlink_container__QB2X">

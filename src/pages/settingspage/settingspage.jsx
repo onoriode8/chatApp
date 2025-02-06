@@ -1,16 +1,20 @@
+import { useContext } from "react"
 import { Link } from 'react-router-dom'
-
 import { IoIosArrowBack } from 'react-icons/io';
 import { IoLockClosedOutline } from 'react-icons/io5'
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import { LiaKeySolid } from 'react-icons/lia';
 import { TfiPowerOff } from "react-icons/tfi";
 
+import { AuthContext } from "../../hooks/context";
 
 import "./settingspage.css";
 
 
-const settingsPage = ({ navigate }) => (
+const SettingsPage = ({ navigate, parsedUserData }) => {
+    const { logout } = useContext(AuthContext)
+
+    return (
     <div>
         <div className="settingsPage_wrappers">
             <header className="settingsPage_header_wrapper">
@@ -38,8 +42,8 @@ const settingsPage = ({ navigate }) => (
                 <Link to=""><MdKeyboardArrowRight /></Link>
             </div>
         </div>
-        <div className="settingsPage_signout">Sign out</div>
+        <div className="settingsPage_signout" onClick={logout}>Sign out</div>
     </div>
-);
+)}
 
-export default settingsPage;
+export default SettingsPage;

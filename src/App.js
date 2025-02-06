@@ -1,11 +1,11 @@
-import React, { Suspense } from "react";
+import React, { useContext, Suspense } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 // import { useQuery } from "@tanstack/react-query";
 
 import Toolbar from "./pages/Toolbar/toolbar";
 import ErrorBoundary from "./containers/errorBoundary";
 
-import { ContextProvider } from "./hooks/context";
+import { AuthContext, ContextProvider } from "./hooks/context";
 
 import "./App.css";
 
@@ -45,7 +45,6 @@ function App() {
 
   const loading = <p>Loading...</p>
 
-  
   return (
     <React.Fragment>
       { !parsedLocalData ? <Routes>
@@ -58,32 +57,30 @@ function App() {
           <ErrorMessage  />
           <Routes>
             <Route
-              path="/home"
-              element={
+              path="/home" element={
                 <Suspense fallback={loading}>
-                  <HomePage parsedUserData={parsedUserData} />
+                  <HomePage />
                 </Suspense>
               }
             />
             <Route path="/notification" element={
               <Suspense fallback={loading}>
-                <NotificationItem parsedUserData={parsedUserData} />
+                <NotificationItem
+                  navigate={() => navigate(-1)} />
               </Suspense>
             } />
             <Route
               path={`/profile/${parsedUserData.id}`}
               element={
                 <Suspense fallback={loading}>
-                  <ProfilePage navigate={() => navigate(-1)}
-                     parsedUserData={parsedUserData} />
+                  <ProfilePage navigate={() => navigate(-1)} />
                 </Suspense>
               }
             />
             <Route path="/transaction-history" element={
               <Suspense>
                 <TransactionHistory 
-                  navigate={() => navigate(-1)}
-                  parsedUserData={parsedUserData} />
+                  navigate={() => navigate(-1)} />
               </Suspense>
             } />
             <Route

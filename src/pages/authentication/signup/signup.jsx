@@ -3,7 +3,7 @@ import Authentication from "../../../Reuse/authentication/authentication";
 
 const signUp = ({ email, username, password, phoneNumber, onChangeEmailHandler,
     onChangeUsernameHandler, onChangePasswordHandler, setPhoneNumber,
-     onSubmitFuncHandler, showPassword, error, loading,
+     onSubmitFuncHandler, showPassword, error, loading, responseData,
     setPrevStateHandler }) => (
     <div>
         <Authentication 
@@ -16,6 +16,8 @@ const signUp = ({ email, username, password, phoneNumber, onChangeEmailHandler,
             showPassword={showPassword}
             setPrevStateHandler={setPrevStateHandler}
             error={error} loading={loading}
+
+            responseData={responseData}
 
             header="Sign up to BaseDay" titleOnButton="Sign up"
             paragraph="Already have an account?" account="Login" path="/" 

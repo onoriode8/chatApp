@@ -1,21 +1,21 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 import TransactionHistoryList from "../transactionHistoryList/transactionHistoryList";
 import Header from "../../../Reuse/header/header";
+import { AuthContext } from "../../../hooks/context";
 
-
-const TransactionHistory = ({ navigate, parsedUserData }) => {
-
+const TransactionHistory = ({ navigate }) => {
     const [transactionList, setTransactionList] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
+    const parsedUserData = useContext(AuthContext)
 
     useEffect(() => {
         const fetchUserTransactionHistoryList = async () => {
             try {
                 setLoading(true);
-                const response = await fetch(`https://final-year-project-pijh.onrender.com/transaction_history/${parsedUserData.id}`, {
+                const response = await fetch(`https://final-year-project-pijh.onrender.com/transaction_history/${parsedUserData.userId}`, {
                     headers: {
                         "Content-Type" : "application/json",
                         "Authorization" : "Bearer " + parsedUserData.token
@@ -34,7 +34,7 @@ const TransactionHistory = ({ navigate, parsedUserData }) => {
         }
 
         fetchUserTransactionHistoryList();
-    }, [parsedUserData.id, parsedUserData.token]);
+    }, [parsedUserData.userId, parsedUserData.token]);
 
     let transactionDefault = <p style={{textAlign: "center"}}>
             No Transaction History yet!.

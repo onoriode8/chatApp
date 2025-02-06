@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useState, useContext, useEffect } from "react";
+
+import { AuthContext } from "../../hooks/context";
 
 export const useTwoFactorAuthenticator = ({ parsedUserData }) => {
     const [secret, setSecret] = useState("");
@@ -9,18 +10,19 @@ export const useTwoFactorAuthenticator = ({ parsedUserData }) => {
     const [error, setError] = useState(null);
     const [successMessage, setSuccessMessage] = useState(null);
 
+    const [copyText, setCopyText] = useState(false)
 
     const [code, setCode] = useState("");
 
-
+    const { isMFA } = useContext(AuthContext)
 
     //Get Generated 2FA Code.
     const getQrCodeHandler = async () => {
-        const data = sessionStorage.getItem("user")
-        const isMFAData = JSON.parse(data)
+        // const data = sessionStorage.getItem("user")
+        // const isMFAData = JSON.parse(data)
 
         try {
-            if(isMFAData.isMFA === true) {
+            if(isMFA === true) {
                 throw new Error("You can't generate a new code")
             }
             setLoading(true)
@@ -56,7 +58,7 @@ export const useTwoFactorAuthenticator = ({ parsedUserData }) => {
                     method: "POST",
                     body: JSON.stringify({
                         code: code,
-                        secret: secret, //send from server backend.
+                        secret: secret, 
                         userId: parsedUserData.id
                     }),
                     headers: {
@@ -71,15 +73,11 @@ export const useTwoFactorAuthenticator = ({ parsedUserData }) => {
 
                 setLoading(false)
                 setCode("")
-                const userData = JSON.parse(sessionStorage.getItem("user"));
-                userData.isMFA = responseData.verified
-                const data = JSON.stringify(userData)
-                sessionStorage.setItem("user", data)
                 setTimeout(() => {
                     setSuccessMessage(responseData.message);
                 }, 3000)
             } catch(err) {
-                setLoading(true)
+                setLoading(false)
                 setCode("")
                 setTimeout(() => {
                     setError(err.message);
@@ -89,7 +87,16 @@ export const useTwoFactorAuthenticator = ({ parsedUserData }) => {
         submitCodeHandler()
     }, [code, parsedUserData.id, parsedUserData.token, secret])
 
-    return { secret, qrCode, loading, error, code, successMessage,
-             setCode, getQrCodeHandler 
+    const copySecretTextHandler = async () => {
+        try {
+            if(secret.length === 0) throw new Error("Text can't be empty.")
+            await navigator.clipboard.writeText(secret)
+            setCopyText(true)
+        } catch(err) {}
+    }
+
+    return { secret, qrCode, loading, error, code, 
+             successMessage, copyText,
+             setCode, getQrCodeHandler, copySecretTextHandler
     }
 }

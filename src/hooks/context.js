@@ -16,6 +16,10 @@ export const AuthContext = createContext({
     username: null,
     image: null,
     friendsref: null,
+    secret: null,
+    notification: [],
+    isMFA: false,
+    referenceCode: null,
     error: null,
     errorFun: () => {},
     logout: () => {}
@@ -35,7 +39,9 @@ export const ContextProvider = (props) => {
     //useState for updating user fetch data.
     const [userData, setUserData] = useState({ balance: 0.00, fullname: null,
             walletNumber: null, token: null, email: null, userId: null,
-            username: null, image: null, friendsref: null }); 
+            username: null, image: null, friendsref: null, secret: null,
+            notification: [], isMFA: false,
+         })
     const [error, setError] = useState();
 
     //useEffect for fetching user data from the server and rendering to UI when the UI gets reloaded.
@@ -55,9 +61,11 @@ export const ContextProvider = (props) => {
               setUserData({
                 balance: responseData.balance, walletNumber: responseData.walletNumber,
                 fullname: responseData.fullname, token: parsedUserData.token, 
-                email: responseData.email, username: responseData.email,
-                userId: responseData.id,
-                image: responseData.image, friendsref: responseData.friendsref
+                email: responseData.email, username: responseData.username,
+                userId: responseData._id, notification: responseData.notification,
+                secret: responseData.twoFactorAuthenticator ? responseData.twoFactorAuthenticator.secret : null,
+                image: responseData.image, friendsref: responseData.friendsref,
+                isMFA: responseData.isMFA, referenceCode: responseData.referenceCode
               })
           } catch(err) {
               const errorM = "Check your connection!";
@@ -84,10 +92,7 @@ export const ContextProvider = (props) => {
     const logoutHandler = () => {
         sessionStorage.removeItem("auth");
         sessionStorage.removeItem("user");
-        sessionStorage.removeItem("twoFactor")
-
         navigate("/");
-        window.location.reload();
     }
       
 
@@ -97,10 +102,11 @@ export const ContextProvider = (props) => {
            toggleShowBalanceHandler: toggleShowBalanceHandler, email: userData.email,
            toggleSideDrawerHandler: toggleSideDrawerHandler, username: userData.username,
            balance: userData.balance, fullname: userData.fullname,
-           userId: userData.userId,
+           userId: userData.userId, secret: userData.secret,
            walletNumber: userData.walletNumber, logout: logoutHandler,
            image: userData.image, friendsref: userData.friendsref, error: error, errorFun:() => setError(null),
-           sideDrawer: sideDrawer }}>
+           sideDrawer: sideDrawer, notification: userData.notification,
+           isMFA: userData.isMFA, referenceCode: userData.referenceCode  }}>
             {props.children}
         </AuthContext.Provider>
     )

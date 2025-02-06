@@ -12,7 +12,7 @@ import LargeButton from '../../Reuse/buttons/largeButton/largeButton';
 import Spinner from '../../pages/loading/spinner/spinner';
 import Loading from "../../pages/loading/loading";
 import TransactionConfirm from '../../pages/transactionConfirmation/transactionConfirm/transactionConfirm';
-
+import Proceed from "../../Reuse/authenticatorProceed/proceed";
 
 
 const Transfer = ({ navigate, parsedUserData }) => {
@@ -29,6 +29,7 @@ const Transfer = ({ navigate, parsedUserData }) => {
 
     const [error, setError] = useState(null);
 
+    const { isMFA } = useContext(AuthContext)
 
     //useState to toggle screenModel for beneficiaryList
     const [toggleOnScreenModel, setToggleOnScreenModel] = useState(false);
@@ -39,6 +40,8 @@ const Transfer = ({ navigate, parsedUserData }) => {
     //useState to entered payment pin to make transfer.
     const [paymentPin, setPaymentPin] = useState("");
 
+    //state to trigger change page if user already verified 2FA.
+    const [pushToVerify, setPushToVerify] = useState(false);
 
     //AuxContext Provider for rendering user data to UI
     const {walletNumber, fullname } = useContext(AuthContext);
@@ -47,6 +50,9 @@ const Transfer = ({ navigate, parsedUserData }) => {
     const toggleOnScreenModelHandler = () => {
         setToggleOnScreenModel(prevState => !prevState)
     }
+
+    // const {} = useFetchUserDataHandler({amount, narration, 
+    //     recipientData, parsedUserData, setLoading, setError, navigate})
 
 
     const onSubmitTransferHandler = (event) => {
@@ -63,10 +69,13 @@ const Transfer = ({ navigate, parsedUserData }) => {
             return;
         };
 
-        setLoading(true);
-        
+        if(isMFA) {
+            setPushToVerify(true)
+        }
         // fetch request to retrieve user balance 
         // and details before successfull transaction.
+        if(!isMFA) { //condition statement to check if 2FA is enabled.
+        setLoading(true);
         const fetchUserDataHandler = async() => {
             //convert amount in string to Number.
             const formattedDataAmount = amount.replace(/[^0-9.-]+/g, "");
@@ -92,17 +101,14 @@ const Transfer = ({ navigate, parsedUserData }) => {
                 }
                 setLoading(false);
                 alert("Your Transaction was successful.");
-                navigate("/");
+                navigate("/home");
             } catch(err) {
                 setLoading(false)
                 setError(err.message);
-                alert(err.message);
             }
         }
-        
-        fetchUserDataHandler();
-         
-        // console.log(recipientWalletNumber);
+            fetchUserDataHandler();
+        }
 
         // setChangeTransferPage(true);
 
@@ -182,7 +188,8 @@ const Transfer = ({ navigate, parsedUserData }) => {
                 <Loading />
             </>}
             <Header header="Transfer To Baseday" navigate={navigate} />
-            {!changeTransferPage && <div>
+            {/* {!changeTransferPage &&  */}
+            {!pushToVerify ? <div>
                 <WalletAccount parsedUserData={parsedUserData} />
                 <Amount amount={amount} amountValue={amountValue} setAmount={setAmount} />
                 <RecipientWalletNumber recipientWalletValue={recipientWalletValue}
@@ -201,7 +208,9 @@ const Transfer = ({ navigate, parsedUserData }) => {
                 toggleOnScreenModelHandler={toggleOnScreenModelHandler}
                 setNarration={(e)=>setNarration(e.target.value)} />
                 <LargeButton submit={onSubmitTransferHandler} title="Confirm Transaction" />
-            </div>}
+            </div> : <Proceed responseData={parsedUserData} 
+                amount={amount} narration={narration} 
+                recipientData={recipientData} /> }
             {/* {changeTransferPage && <div>
                 <TransactionConfirm recipientWalletNumber={recipientWalletNumber}
                     narration={narration} amount={amount}
