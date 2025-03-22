@@ -1,15 +1,10 @@
-import PropTypes from "prop-types";
-
-import "./loading.css";
+import './loading.css'
 
 
-
-const loading = ({toggleOnScreenModelHandler}) => (
-    <div className="loading_loading" onClick={toggleOnScreenModelHandler}></div>
-);
-
-loading.propTypes = {
-    toggleOnScreenModelHandler: PropTypes.func
-};
+const loading = () => (
+    <div>
+        <span className="loader"></span>
+    </div>
+)
 
 export default loading;
