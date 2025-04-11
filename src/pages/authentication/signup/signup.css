@@ -7,6 +7,17 @@
     /* background: rgb(76, 76, 225); */
 }
 
+.authentication_wrapper a {
+    text-decoration: none;
+    font-size: 18px;
+    font-family: 'Times New Roman', Times, serif;
+    margin: 18px 0px;
+    color: orange;
+    border: 1px solid black;
+    padding: 3px 115px;
+    border-radius: 5px;
+}
+
 .authentication_image_wrapper img {
     width: 25vh;
     height: 25vh;
@@ -68,6 +79,9 @@
 }
 
 @media(max-width: 499px) {
+    .authentication_wrapper a {
+        padding: 3px 65px;
+    }
     .authentication_email_wrapper input,
     .authentication_password_wrapper input {
         width: 200px;
@@ -76,4 +90,5 @@
     .authentication_form_wrapper button {
         width: 250px;
     }
+
 }

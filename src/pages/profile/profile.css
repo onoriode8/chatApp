@@ -1,0 +1,58 @@
+.profile_wrapper {
+    margin: 10em 0em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.profile_wrapper div:first-child {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.profile_wrapper div:first-child div {
+    /* border: 1px solid black; */
+    /* font-size: 2em; */
+    margin-top: 18em;
+    cursor: pointer;
+}
+
+.profile_wrapper div:first-child img {
+    width: 500px;
+    height: 500px;
+}
+
+.profile_bio_wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.profile_bio_wrapper p,
+.profile_name p {
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color: rgb(107, 99, 99);
+    
+}
+
+.profile_button {
+    margin-top: 16px;
+    padding: 5px 16px;
+    color: #fff;
+    background: rgb(83, 163, 83);
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+@media(max-width: 490px) {
+    .profile_wrapper div:first-child img {
+        width: 300px;
+        height: 300px;
+    }
+    .profile_wrapper div:first-child div {
+        margin-top: 10em;
+    }
+}

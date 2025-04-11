@@ -1,0 +1,33 @@
+.userList_wrapper {
+    /* border: 1px solid black; */
+    display: flex;
+    justify-content: center;
+    width: 50vh;
+}
+
+.userList_wrapper a {
+    text-decoration: none;
+}
+
+.userList_profile_log_wrapper {
+    display: flex;
+    align-items: center;
+    padding: 38px 0px;
+}
+
+.userList_profile_log_wrapper div:first-child img {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+}
+
+.userList_profile_log_wrapper p {
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgb(48, 156, 48);
+}
+
+@media (max-width: 490px) {
+    .userList_wrapper {
+        width: 20vh;
+    }
+}

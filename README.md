@@ -1,8 +1,8 @@
 
 ## FINAL YEAR PROJECT FRONTEND CODE
-### DESIGN AND IMPLEMENTATION OF ONLINE BANKING WALLET WITH TWO FACTOR AUTHENTICATOR SYSTEM 
+### DESIGN AND IMPLEMENTATION OF ONLINE CHAT APPLICATION WITH FRIENDS.
 
-## This project allows user to create an account and get a welcome bonus when registered for the first time. Each user can transfer funds from his/her account to an existing user in the app. User can also add 2Fa two factor authentication to secure user data and funds. It enables a transaction done with two factor authenticator system.
+## This project allows user to chat with any existing users in realtime with help of socket.io library.
 
 
 

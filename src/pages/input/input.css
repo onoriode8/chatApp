@@ -1,0 +1,21 @@
+.Input_wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 110vh;
+    position: fixed;
+    width: 100%;
+}
+
+.Input_wrapper input {
+    width: 100%;
+    padding: 10px 0px;
+    outline: none;
+    border: 2px solid rgba(30, 146, 30, 0.4);
+    border-radius: 10px;;
+}
+
+.Input_wrapper div:first-child,
+.Input_wrapper div:last-child {
+    font-size: xx-large;
+}

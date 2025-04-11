@@ -2,9 +2,7 @@ import './loading.css'
 
 
 const loading = () => (
-    <div>
-        <span className="loader"></span>
-    </div>
+    <span className="loading_loader"></span>
 )
 
 export default loading;

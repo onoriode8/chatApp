@@ -1,21 +1,31 @@
-
-
-import profile from '../../assets/profile.avif' 
+import { NavLink } from 'react-router-dom';
+import profile from '../../../assets/profile.avif' 
 
 import { MdOutlineMailOutline } from "react-icons/md";
 import { FcLock, FcMultipleCameras } from "react-icons/fc";
 
-import { useImagePicker } from '../../hooks/image-picker';
-import { useSignup } from '../../hooks/authentication';
-import Loading from '../loading/loading';
+import { useImagePicker } from '../../../hooks/image-picker';
+import { useSignup } from '../../../hooks/authentication';
+import Loading from '../../loading/loading';
 
-import './authentication.css'
+import './signup.css'
 
 
-const Authentication = ({btnTitle}) => {
-    const {imageUrl, imageRef, openFileHandler, filePickerHandler} = useImagePicker()
-    const { loading, onChangeEmailHandler, onChangePasswordHandler, signupUserHandler} = useSignup()
-    
+const Signup = () => {
+    const {imageUrl, imageRef, openFileHandler,
+        filePickerHandler} = useImagePicker()
+    const { loading, onChangeEmailHandler, 
+        email, password,
+        onChangePasswordHandler, 
+        signupUserHandler} = useSignup()
+
+    //disbled signin button
+    let disabled = true;
+    if(password.trim().length >= 6 && email.trim().length >= 12 &&
+        imageUrl !== undefined) {
+        disabled =  false
+    }
+
     return (
     <div className="authentication_wrapper">
         <div className="authentication_image_wrapper">
@@ -29,23 +39,24 @@ const Authentication = ({btnTitle}) => {
         <form className="authentication_form_wrapper" onSubmit={signupUserHandler}>
             <div className="authentication_email_wrapper">
                 <div><MdOutlineMailOutline /></div>
-                <input type="email" placeholder="Email" onChange={onChangeEmailHandler}/>
+                <input type="email" value={email} placeholder="Email" onChange={onChangeEmailHandler}/>
             </div>
             <div className="authentication_password_wrapper">
                 <div><FcLock /></div>
-                <input type="password" placeholder="password" onChange={onChangePasswordHandler}/>
+                <input type="password" value={password} placeholder="password" onChange={onChangePasswordHandler}/>
             </div>
-            <button type="submit">
+            <button type="submit" disabled={disabled}>
                 <div>
                     <div></div>
-                    <div>{btnTitle} Signup </div>
+                    <div>Signup</div>
                     {loading && <Loading />}
                     {!loading && <div></div>} 
                 </div>
             </button>
         </form>
+        <NavLink to="/">switch to signin</NavLink>
     </div>
     )
 }
 
-export default Authentication;
+export default Signup;

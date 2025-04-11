@@ -1,0 +1,10 @@
+.searchUsers_wrapper {
+    margin-top: 2em;
+}
+
+.searchUsers_wrapper input {
+    padding: 8px 30px;
+    outline: none;
+    border-radius: 5px;
+    border: 0.5px solid green;
+}
