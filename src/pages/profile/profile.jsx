@@ -38,11 +38,11 @@ const Profile = () => {
                 className="profile_button">Update</button>}
             {loading && <Loading />}
             {/* <Loading /> */}
-            <div className="profile_name">
+            {user && <div className="profile_name">
                 <p>
                     {user.fullname.toUpperCase()}
                 </p>
-            </div>
+            </div>}
             <div className="profile_bio_wrapper">
                 <p>Hey there am using this chat! 
                     Connect with me for free.
