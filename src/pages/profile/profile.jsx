@@ -39,8 +39,8 @@ const Profile = () => {
             {loading && <Loading />}
             {/* <Loading /> */}
             <div className="profile_name">
-                <p>fullname
-                    {/* {user.fullname.toUpperCase()} */}
+                <p>
+                    {user.fullname.toUpperCase()}
                 </p>
             </div>
             <div className="profile_bio_wrapper">
