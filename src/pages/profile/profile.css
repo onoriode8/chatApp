@@ -22,6 +22,7 @@
 .profile_wrapper div:first-child img {
     width: 500px;
     height: 500px;
+    border-radius: 200px;
 }
 
 .profile_bio_wrapper {

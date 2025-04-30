@@ -43,7 +43,7 @@ export const useImagePicker = () => {
 
 
 export const useUploadProfile = (file, imageUrl) => {
-    const parsedData = JSON.stringify(sessionStorage.getItem("cookie-string"))
+    const parsedData = JSON.parse(sessionStorage.getItem("cookie-string"))
     const [loading, setLoading] = useState(false)
 
     const navigate = useNavigate()
@@ -54,16 +54,19 @@ export const useUploadProfile = (file, imageUrl) => {
         setLoading(true)
         const formData = new FormData()
         formData.append("updateProfile", file)
+        // console.log(file)
+        // console.log(parsedData.token)
         try {
-            const response = await fetch("http://localhost:5000/user/update/profile", {
+            const response = await fetch("http://localhost:5000/user/user/update/profile", {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": "Bearer " + parsedData.token
                 },
-                body: formData
+                formData
             })
             const responseData = await response.json()
+            console.log(response)
             if(response.ok === false) throw new Error(responseData)
             setLoading(false)
             imageUrl = null
@@ -74,6 +77,7 @@ export const useUploadProfile = (file, imageUrl) => {
             imageUrl = null
             if(err.message === "jwt expired") {
                 sessionStorage.removeItem("cookie-string")
+                sessionStorage.removeItem("chat")
                 navigate("/")
                 window.location.reload()
             } else {

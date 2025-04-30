@@ -8,6 +8,8 @@ export const useSignup = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [loading, setLoading] = useState(false)
+    const [errorMessage, setErrorMessage] = useState(null)
+
 
     const navigate = useNavigate()
 
@@ -58,12 +60,16 @@ export const useSignup = () => {
             setEmail("")
             setPassword("")
             setFilePicker(null)
-            console.log(err.message)
+            setErrorMessage(err.message)
+            setTimeout(() => {
+                setErrorMessage(null)
+            }, 3000)
         }
     }
 
     return {
-        loading, email, password, onChangeEmailHandler, 
+        loading, email, password, errorMessage,
+         onChangeEmailHandler, 
         onChangePasswordHandler, signupUserHandler
     }
 }
@@ -73,6 +79,7 @@ export const useSignin = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [loading, setLoading] = useState(false)
+    const [errorMessage, setErrorMessage] = useState(null)
 
     const navigate = useNavigate()
 
@@ -86,6 +93,17 @@ export const useSignin = () => {
 
     const signupUserHandler = async (e) => {
         e.preventDefault()
+        // const watchId = navigator.geolocation.getCurrentPosition(
+        //     (position) => {
+        //       const { latitude, longitude } = position.coords;
+        //       console.log('Sending location:', latitude, longitude);
+        //     //   socket.emit('location-update', { latitude, longitude });
+        //     console.log(position)
+        //     },
+        // )
+    
+        // console.log("line 92", watchId)
+        // return
         if(email.trim().length < 6 && 
             password.trim().length < 5) return
         setLoading(true)
@@ -118,12 +136,16 @@ export const useSignin = () => {
             setLoading(false)
             setEmail("")
             setPassword("")
-            console.log(err.message)
+            setErrorMessage(err.message)
+            setTimeout(() => {
+                setErrorMessage(null)
+            }, 3000)
         }
     }
 
     return {
-        loading, email, password, onChangeEmailHandler, 
+        loading, email, password, errorMessage,
+        onChangeEmailHandler, 
         onChangePasswordHandler, signupUserHandler
     }
 }

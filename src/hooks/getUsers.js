@@ -8,12 +8,12 @@ export const useGetUser = () => {
     const parsedData = JSON.parse(sessionStorage.getItem("cookie-string"))
     const [users, setUsers] = useState([])
     
-    const [toggleSearchBar, setToggleSearchBar] = useState(false)
-    const [input, setInput] = useState("")
+    const [toggleSearchBar, setToggleSearchBar] = useState(true)
+    // const [input, setInput] = useState("")
 
     const navigate = useNavigate()
 
-    const { setToggleSearchBarCont } = useContext(AuthContext)
+    const { setToggleSearchBarCont, input } = useContext(AuthContext)
 
     useEffect(() => {
         if(users.length !== 0) return
@@ -27,12 +27,12 @@ export const useGetUser = () => {
                     }
                 })
                 const responseData = await response.json()
-                console.log(responseData)
                 if(!response.ok) throw new Error(responseData)
                 setUsers(responseData)
             } catch(err) {
                 if(err.message === "jwt expired") {
                     sessionStorage.removeItem("cookie-string")
+                    sessionStorage.removeItem("chat")
                     navigate("/")
                     window.location.reload()
                 } else {
@@ -44,11 +44,9 @@ export const useGetUser = () => {
     }, [])
 
     let searchInput = users;
-    if(users.length !== 0) {
-        searchInput = users.filter(user => user.fullname === input)
+    if(users.length !== 0 && input.length !== 0) {
+        searchInput = users.filter(user => user.fullname === input.toLowerCase())
     }
-
-    console.log(searchInput)
 
     const toggleSearchBarHandler = () => {
         //dispatch toggleSearchBar to Context Provide.
@@ -58,7 +56,6 @@ export const useGetUser = () => {
 
     return { 
         users, searchInput, 
-        setInput,  
         toggleSearchBarHandler
     }
 }

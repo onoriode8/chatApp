@@ -21,6 +21,12 @@
     border-radius: 5px;
 }
 
+.userList_profile_log_wrapper div:first-child img {
+    width: 50px;
+    height: 50px;
+    border-radius: 100px;
+}
+
 .userList_profile_log_wrapper p {
     font-family: Arial, Helvetica, sans-serif;
     color: rgb(48, 156, 48);

@@ -1,9 +1,14 @@
 
-## FINAL YEAR PROJECT FRONTEND CODE
-### DESIGN AND IMPLEMENTATION OF ONLINE CHAT APPLICATION WITH FRIENDS.
+## FREELANCE PROJECT FRONTEND CODE
+### DESIGN AND IMPLEMENTATION OF ONLINE CHAT APPLICATION WITH SOCKET.IO AND MERN STACK.
 
-## This project allows user to chat with any existing users in realtime with help of socket.io library.
 
+### Developed and deployed a full-stack chat application using the MERN stack.
+### This project allows user to chat with any existing users in realtime with help of socket.io
+### Built Restful APIs with Express and MongoDB, implemented real-time chat using Socket.io.
+### Imporved app performance by optimizing React components and backend queries.
+### Integrated authentication with JWT.
+### Deployed Frontend application using Vercel and Backend with Render
 
 
 #### INSTRUCTION TO START / Developer Instructions

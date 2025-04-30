@@ -11,7 +11,7 @@ import './signin.css'
 
 const Signin = () => {
     const { loading, onChangeEmailHandler, 
-        email, password,
+        email, password, errorMessage,
         onChangePasswordHandler, 
         signupUserHandler} = useSignin()
 
@@ -45,6 +45,10 @@ const Signin = () => {
             </button>
         </form>
         <NavLink to="/signup">switch to signup</NavLink>
+        {errorMessage &&
+        <div className="signin_authentication_errorMessage_p">
+            <p><strong>Message: </strong> {errorMessage}</p>
+        </div>}
     </div>
     )
 }

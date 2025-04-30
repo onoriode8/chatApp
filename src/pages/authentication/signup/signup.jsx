@@ -15,7 +15,7 @@ const Signup = () => {
     const {imageUrl, imageRef, openFileHandler,
         filePickerHandler} = useImagePicker()
     const { loading, onChangeEmailHandler, 
-        email, password,
+        email, password, errorMessage,
         onChangePasswordHandler, 
         signupUserHandler} = useSignup()
 
@@ -55,6 +55,10 @@ const Signup = () => {
             </button>
         </form>
         <NavLink to="/">switch to signin</NavLink>
+        {errorMessage &&
+        <div className="authentication_errorMessage_p">
+            <p><strong>Message: </strong> {errorMessage}</p>
+        </div>}
     </div>
     )
 }

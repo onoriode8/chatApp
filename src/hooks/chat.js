@@ -1,17 +1,25 @@
-import { useState, useEffect, useRef } from 'react'
-import axios from 'axios'
+import { useState, useEffect, useRef, useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { AuthContext } from './context'
+// import axios from 'axios'
 
 export const useChatRoom = () => {
     const parsedData = JSON.parse(sessionStorage.getItem("cookie-string"))
+    const receiver = JSON.parse(sessionStorage.getItem("chat"))
+
     const [inputMessage, setInputMessage] = useState("")
     const [pickedFile, setPickedFile] = useState(null)
 
-    const [socketMessage, setSocketMessage] = useState("")
+    // const [socketMessage, setSocketMessage] = useState("")
+    const { socketMessage, setSocketMessage } = useContext(AuthContext)
+
     const [loading, setLoading] = useState(false)
 
     const [serverMessage, setServerMessage] = useState([])
 
     const inputRefElement = useRef()
+
+    const navigate = useNavigate()
 
     const openFileHandler = () => {
         inputRefElement.current.click()
@@ -25,52 +33,91 @@ export const useChatRoom = () => {
     //send pickedFile to server later after sending messages.
     console.log("FILE PICKED TO SEND", pickedFile)
 
+    //Reload to get server messages.
     useEffect(() => {
-        if(!parsedData) return
+        if(!parsedData && !receiver) return
         try {
-            const getServerMessage = async() => { //haven't add route to backend
-                const response = await fetch("http://localhost:5000/user/get/server/message", {
+            const getServerMessage = async() => {
+                const response = await fetch(
+                    `http://localhost:5000/user/get/server/message/${parsedData.id}/${receiver.id}`, {
                     headers: {
                         "Content-Type":"application/json",
                         "Authorization": "Bearer " + parsedData.token
                     }
                 })
                 const responseData = await response.json()
+                console.log(responseData)
                 if(!response.ok) throw new Error(responseData)
-                setServerMessage(responseData)
+                const conversations = 
+                    responseData.filter(r => {
+                        return r.creatorId === parsedData.id 
+                        && r.receiverId === receiver.id
+                        || r.creatorId === receiver.id 
+                        && r.receiverId === parsedData.id
+                })
+                console.log(conversations)
+                setServerMessage(conversations)
             }
             getServerMessage()
         } catch(err) {
-            console.log(err.message)
+            if(err.message === "jwt expired") {
+                sessionStorage.removeItem("cookie-string")
+                sessionStorage.removeItem("chat")
+                navigate("/")
+                window.location.reload()
+            } else {
+                // console.log(err.message)
+            }
         }
     }, [])
 
     //send message function
     const sendMessage = async() => {
+        if(!parsedData && !receiver) return
         try{
             setLoading(true)
-            const response = await axios.post("http://localhost:5000/send/message", {
-                message: inputMessage
+            const response = await fetch(
+                `http://localhost:5000/user/send/message/${parsedData.id}/${receiver.id}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + parsedData.token
+                },
+                body: JSON.stringify(
+                    { message : inputMessage }
+                )
             })
-            console.log("SEND MESSAGE", response)
+            const responseData = await response.json()
+            if(!response.ok) throw new Error(responseData)
+            // console.log("SEND MESSAGE", response)
             setLoading(false)
             setInputMessage("")
+            setSocketMessage(responseData)
+            // console.log(responseData)
         } catch(err) {
             setLoading(false)
-            setInputMessage("")
-            console.log(err.message)
+            setInputMessage("") 
+            if(err.message === "jwt expired") {
+                sessionStorage.removeItem("cookie-string")
+                sessionStorage.removeItem("chat")
+                navigate("/")
+                window.location.reload()
+            } else {
+                // console.log(err.message)
+            }
         }
     }
 
-    //onchange input entered
+    //onchange input entered for sending private message.
     const inputMessageHandler = (e) => {
         setInputMessage(e.target.value)
     }
 
+    console.log("OMO SEE OH", serverMessage)
     return {
         serverMessage, loading, inputMessage, 
         openFileHandler, inputRefElement,
-        pickedFileHandler,
+        pickedFileHandler, socketMessage,
         sendMessage, inputMessageHandler
     }
 }

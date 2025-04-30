@@ -11,17 +11,15 @@ import { useGetUser } from '../../hooks/getUsers';
 
 import './toolbar.css'
 
-// import profile from '../../assets/profile.avif'
-
 const Toolbar = () => {
+    const receiver = JSON.parse(sessionStorage.getItem("chat"))
+
     const { user, chatInfo } = useContext(AuthContext)
     const { toggleSearchBarHandler } = useGetUser()
     let imageUrl = null
     if(user) {
-        console.log(user)
         imageUrl = `http://localhost:5000/${user.profile.replace(/\\/g, "/")}` //.replace(/\\/g, "/")
     }
-    console.log("User from context", imageUrl)
     const location = useLocation()
     const logoutHandler = () => {
         sessionStorage.removeItem("cookie-string")
@@ -32,11 +30,11 @@ const Toolbar = () => {
     return (
         <div className="Toolbar_wrapper">
             {location.pathname === `/chat/${chatInfo.chatId}`
-            || location.pathname === `/chat/undefined`
+            || location.pathname === `/chat/${receiver ? receiver.id : null}`
             ? null : <div className="Toolbar_ul_wrapper">
                 <ul>
                     {user && <NavLink to="/view-profile" title="profile">
-                      <img src={imageUrl} alt="" /></NavLink>}
+                      <img src={imageUrl} alt="profile" /></NavLink>}
                     <NavLink to="/users" title="users"><FaUsers /></NavLink>
                     <NavLink to="add-group-chat" title="Add group chat"><IoIosAddCircle /></NavLink>
                     {location.pathname === "/users" ? <li title="search users" 

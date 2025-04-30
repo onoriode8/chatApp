@@ -5,6 +5,7 @@ import { ContextProvider, AuthContext } from './hooks/context'
 
 import './App.css'
 
+import ErrorBoundary from './ErrorBoundary';
 
 const Signup = React.lazy(() => import("./components/signup"))
 const SignIn = React.lazy(() => import("./components/signin"))
@@ -13,18 +14,25 @@ const User = React.lazy(() => import("./pages/user/user"))
 const ToolBar = React.lazy(() => import("./pages/toolbar/toolbar"))
 const ViewProfile = React.lazy(() => import("./pages/profile/profile"))
 const Chat = React.lazy(() => import("./pages/chat/chat"))
+const ErrorMessage = React.lazy(() => import("./pages/errorMessage/errorMessage"))
 
 
 const App = () => {
+  // sessionStorage.removeItem("chat")
+  // sessionStorage.removeItem("cookie-string")
+
+  const chatData = JSON.parse(sessionStorage.getItem("chat"))
   const parsedData = JSON.parse(sessionStorage.getItem("cookie-string"))
   const loading = <div className="app_loader_wrapper">
     <span className="app_loader"></span>
   </div>
 
-  const {chatInfo} = useContext(AuthContext)
+  const { errorMessage } = useContext(AuthContext)
 
   return (
     <ContextProvider>
+    {/* <ErrorBoundary> */}
+    {errorMessage !== null ? <ErrorMessage /> : null }
     {parsedData && <ToolBar />}
       <Routes>
         {!parsedData && <Route path="/" element={
@@ -43,17 +51,18 @@ const App = () => {
           <Suspense fallback={loading}>
             <User />
           </Suspense>} />}
-        {parsedData && <Route path={chatInfo ? `/chat/${chatInfo.chatId}` : null} element={
+        {parsedData && <Route path={chatData ? `/chat/${chatData.id}` : null} element={
           <Suspense fallback={loading}>
             <Chat />
           </Suspense>} />}
 
 
-          <Route path={`/chat/undefined`} element={
+          {/* <Route path={`/chat/undefined`} element={
           <Suspense fallback={loading}>
             <Chat />
-          </Suspense>} />
+          </Suspense>} /> */}
       </Routes>
+      {/* </ErrorBoundary> */}
     </ContextProvider>
   )
 }

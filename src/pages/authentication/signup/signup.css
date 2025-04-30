@@ -78,6 +78,11 @@
     border: 1px solid black;
 }
 
+.authentication_errorMessage_p p {
+    color: red;
+    font-size: small;
+}
+
 @media(max-width: 499px) {
     .authentication_wrapper a {
         padding: 3px 65px;

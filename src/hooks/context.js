@@ -9,7 +9,17 @@ export const AuthContext = createContext({
     chatInfo: null,
     chatPushInfo: () => {},
     toggleSearchBarCont: null,
-    setToggleSearchBarCont: () => {}
+    setToggleSearchBarCont: () => {},
+    socketMessage: "",
+    setSocketMessage: () => {},
+
+    errorMessage: null, 
+    setErrorMessage: () => {},
+
+
+    input: "", 
+    setInput: () => {}
+    
 });
 
 
@@ -18,11 +28,20 @@ export const ContextProvider = (props) => {
     const [profilePic, setProfilePic] = useState()
     const [user, setUser] = useState(null)
 
+    //use state on another file
+    const [socketMessage, setSocketMessage] = useState("")
+    const [input, setInput] = useState("")
+
+
     const [chatInfo, setChatInfo] = useState({
         chatFullname: null, chatId: null, chatProfile: null
     })
 
     const [toggleSearchBar, setToggleSearchBar] = useState()
+
+    //displaying error message.
+    const [errorMessage, setErrorMessage] = useState(null)
+
 
     //toggle search use bar function
     const toggleSearchBarFunction = (toggleBoolean) => {
@@ -44,11 +63,12 @@ export const ContextProvider = (props) => {
 
     const navigate = useNavigate()
 
-    // useEffect(() => {
-    //     if(parsedData ===  null) {
-    //         navigate("/")
-    //     }
-    // }, [])
+    useEffect(() => {
+
+        if(parsedData ===  null) {
+            navigate("/")
+        }
+    }, [])
 
     useEffect(() => {
         if(!parsedData) return
@@ -62,22 +82,30 @@ export const ContextProvider = (props) => {
                     }
                 })
                 const responseData = await response.json()
-                console.log(responseData)
+                // console.log(responseData)
                 if(!response.ok) throw new Error(responseData)
                 setUser(responseData)
-                console.log(responseData)
+                // console.log(responseData)
             }
             getUserFunc()
         } catch(err) {
-            if(err.message === "jwt expired") {
+            if(err.message === "jwt expired" || err.message === "Not found") {
                 sessionStorage.removeItem("cookie-string")
+                sessionStorage.removeItem("chat")
                 navigate("/")
                 window.location.reload()
             } else {
-                console.log(err.message)
+                setErrorMessage(err.message)
+                // console.log(err.message)
             }
         }
     }, [])
+
+    const toggleSetErrorMessage = () => {
+        // console.log("click")
+        setErrorMessage(null)
+        window.location.reload()
+    }
 
 
     return (
@@ -88,7 +116,11 @@ export const ContextProvider = (props) => {
             chatInfo: chatInfo,
             chatPushInfo: dispatchChatInfoHandler,
             toggleSearchBarCont: toggleSearchBar,
-            setToggleSearchBarCont: toggleSearchBarFunction
+            setToggleSearchBarCont: toggleSearchBarFunction,
+            socketMessage, setSocketMessage,
+            errorMessage, setErrorMessage: toggleSetErrorMessage,
+            input, setInput
+
         }}>
             {props.children}
         </AuthContext.Provider>

@@ -77,6 +77,11 @@
     border: 1px solid black;
 }
 
+.signin_authentication_errorMessage_p p {
+    color: red;
+    font-size: small;
+}
+
 @media(max-width: 499px) {
     .signin_authentication_wrapper a {
         padding: 3px 65px;

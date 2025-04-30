@@ -9,10 +9,13 @@ import './profile.css'
 
 const Profile = () => {
     const { user } = useContext(AuthContext)
-    const serverProfile = `http://localhost:5000/${user.profile}` //.replace(/\\/g, "/")
+    let serverProfile = null;
+    if(user) {
+        serverProfile = `http://localhost:5000/${user.profile}` //.replace(/\\/g, "/")
+    }
     const {openFileHandler, 
-            imageRef, imageUrl, files,
-            filePickerHandler} = useImagePicker()
+        imageRef, imageUrl, files,
+        filePickerHandler} = useImagePicker()
 
     const { updateProfileHandler,
         loading } = useUploadProfile(files, imageUrl)
@@ -21,9 +24,7 @@ const Profile = () => {
     return (
         <div className="profile_wrapper">
             <div>
-                <img style={{ 
-                    display: imageUrl === undefined ? "none" : "block" }}
-                    src={profile} alt="" />
+                <img src={`${profile}`} alt="" />
                 <div title="upload photo" onClick={openFileHandler}>
                     <FcMultipleCameras />
                     <input ref={imageRef} type="file" 

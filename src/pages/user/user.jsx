@@ -12,8 +12,9 @@ import "./user.css";
 const User = () => {
     const { toggleSearchBarCont } = useContext(AuthContext)
     const { users, searchInput } = useGetUser()
-    console.log("No of users", users)
-    console.log("No of users in searchInput", searchInput)
+    // const parsedData = JSON.parse(sessionStorage.getItem("cookie-string"))
+    // console.log("No of users", users)
+    // console.log("No of users in searchInput", searchInput)
 
     return (
         <div className="user_container_wrapper">
@@ -22,7 +23,7 @@ const User = () => {
                     <div><FaUsers style={{color: "blue"}} /></div>
                     <div>
                         <div>Total Users</div>
-                        <div>{users.length}</div>
+                        <div>{users.length + 1}</div>
                     </div>
                 </div>
             </div>
@@ -31,7 +32,7 @@ const User = () => {
             </div>}
             {users.length !== 0 ? 
             //searchInput
-            users.map(i => 
+            searchInput.map(i => 
             <UserList key={i._id} id={i._id}
                 fullname={i.fullname}
                 profile={i.profile} />) : null}
