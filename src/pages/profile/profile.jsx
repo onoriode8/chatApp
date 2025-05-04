@@ -4,15 +4,17 @@ import { FcMultipleCameras } from "react-icons/fc"
 import  { AuthContext } from '../../hooks/context'
 import Loading from '../loading/loading';
 import { useImagePicker, useUploadProfile } from '../../hooks/image-picker';
-// import imageUrls from "../../assets/profile.avif"
+
+
 import './profile.css'
 
 const Profile = () => {
     const { user } = useContext(AuthContext)
     let serverProfile = null;
     if(user) {
-        serverProfile = `http://localhost:5000/${user.profile}` //.replace(/\\/g, "/")
+        serverProfile = `http://localhost:5000/${user.profile}`
     }
+
     const {openFileHandler, 
         imageRef, imageUrl, files,
         filePickerHandler} = useImagePicker()
@@ -21,6 +23,7 @@ const Profile = () => {
         loading } = useUploadProfile(files, imageUrl)
     
     const profile = imageUrl === undefined ? serverProfile : imageUrl
+
     return (
         <div className="profile_wrapper">
             <div>
@@ -37,7 +40,7 @@ const Profile = () => {
                 onClick={updateProfileHandler}
                 className="profile_button">Update</button>}
             {loading && <Loading />}
-            {/* <Loading /> */}
+            
             {user && <div className="profile_name">
                 <p>
                     {user.fullname.toUpperCase()}

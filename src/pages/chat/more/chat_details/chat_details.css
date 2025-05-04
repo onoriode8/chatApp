@@ -1,0 +1,39 @@
+.chatDetails_container_wrapper_ {
+    text-align: center;
+    margin: 20px 0px;
+}
+
+.chatDetails_contact_wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.chatDetails_contact_wrapper div:first-child {
+    font-size: x-large;
+}
+
+.chatDetails_image_profile_ div img {
+    margin: 50px 0px;
+    width: 350px;
+    height: 350px;
+    border-radius: 10px; 
+}
+
+.chatDetails_specialCases_ {
+    color: red;
+    opacity: 0.5;
+    box-shadow: 1px 1px 1px 1px #1134;
+    background: #fff;
+    border-radius: 8px; 
+    text-transform: capitalize;
+    margin: 0px 20px;
+    padding: 10px 0px;
+    text-align: start;
+}
+
+.chatDetails_specialCases_ div {
+    font-size: bold;
+    /* border: 1px solid black; */
+    margin: 0px 13px ;
+}

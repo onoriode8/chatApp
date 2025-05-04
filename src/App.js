@@ -1,7 +1,7 @@
-import React, { Suspense, useContext } from 'react';
+import React, { Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom'
 
-import { ContextProvider, AuthContext } from './hooks/context'
+import { ContextProvider } from './hooks/context'
 
 import './App.css'
 
@@ -15,6 +15,7 @@ const ToolBar = React.lazy(() => import("./pages/toolbar/toolbar"))
 const ViewProfile = React.lazy(() => import("./pages/profile/profile"))
 const Chat = React.lazy(() => import("./pages/chat/chat"))
 const ErrorMessage = React.lazy(() => import("./pages/errorMessage/errorMessage"))
+const ChatProfile = React.lazy(() => import("./pages/chat/more/chat_details/chat_details"))
 
 
 const App = () => {
@@ -27,12 +28,11 @@ const App = () => {
     <span className="app_loader"></span>
   </div>
 
-  const { errorMessage } = useContext(AuthContext)
 
   return (
     <ContextProvider>
     {/* <ErrorBoundary> */}
-    {errorMessage !== null ? <ErrorMessage /> : null }
+    <ErrorMessage />
     {parsedData && <ToolBar />}
       <Routes>
         {!parsedData && <Route path="/" element={
@@ -55,7 +55,10 @@ const App = () => {
           <Suspense fallback={loading}>
             <Chat />
           </Suspense>} />}
-
+        {parsedData && <Route path={`/chat_profile`} element={
+          <Suspense fallback={loading}>
+            <ChatProfile />
+          </Suspense>}/>}
 
           {/* <Route path={`/chat/undefined`} element={
           <Suspense fallback={loading}>

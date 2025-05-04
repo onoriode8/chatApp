@@ -9,11 +9,12 @@ export const useGetUser = () => {
     const [users, setUsers] = useState([])
     
     const [toggleSearchBar, setToggleSearchBar] = useState(true)
-    // const [input, setInput] = useState("")
 
     const navigate = useNavigate()
 
-    const { setToggleSearchBarCont, input } = useContext(AuthContext)
+    const { setToggleSearchBarCont, input,
+        setErrorMessage
+     } = useContext(AuthContext)
 
     useEffect(() => {
         if(users.length !== 0) return
@@ -36,7 +37,7 @@ export const useGetUser = () => {
                     navigate("/")
                     window.location.reload()
                 } else {
-                    console.log(err.message)
+                    setErrorMessage(err.message)
                 }
             }
         }

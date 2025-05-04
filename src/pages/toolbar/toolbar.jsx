@@ -30,6 +30,7 @@ const Toolbar = () => {
     return (
         <div className="Toolbar_wrapper">
             {location.pathname === `/chat/${chatInfo.chatId}`
+            || location.pathname === `/chat_profile`
             || location.pathname === `/chat/${receiver ? receiver.id : null}`
             ? null : <div className="Toolbar_ul_wrapper">
                 <ul>

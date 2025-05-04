@@ -22,7 +22,6 @@ export const useImagePicker = () => {
         if(!File) return
         setFiles(File)
     }
-    // console.log("PICKED IMAGE TO SEND 2", imageUrl, files)
 
     useEffect(() => {
         if(!files && !pickedFile) return
@@ -54,8 +53,6 @@ export const useUploadProfile = (file, imageUrl) => {
         setLoading(true)
         const formData = new FormData()
         formData.append("updateProfile", file)
-        // console.log(file)
-        // console.log(parsedData.token)
         try {
             const response = await fetch("http://localhost:5000/user/user/update/profile", {
                 method: "PATCH",

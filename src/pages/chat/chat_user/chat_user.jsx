@@ -9,20 +9,34 @@ import "./chat_user.css"
 const url = `http://localhost:5000/`
 
 
-export const ReceiverMessages = ({message, time }) => {
-    const chatData = JSON.parse(sessionStorage.getItem("chat"))
 
-    // const now = time
-    // const hours = now.getHours()
-    // const minutes = now.getMinutes()
-    // const ampm = hours >= 12 ? "PM" : "AM"
+export const ReceiverMessages = ({message, date, time }) => {
+    const chatData = JSON.parse(sessionStorage.getItem("chat"))
+    
+    const formattedTimeFunc = () => { 
+        //learn how this time is programmed to am or pm later on.
+        const splitTime = time.split(":")
+        let hours = Number(splitTime[0]);
+        const minutes = splitTime[1];
+        
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+
+        hours = hours % 12;
+        hours = hours ? hours : 12; 
+
+        const formattedTime = `${hours}:${minutes} ${ampm}`;
+        return formattedTime;
+    }
+
+    const currentTime = formattedTimeFunc()
+
     return (
         <div>
             <div className="Receiver_chat_wrapper">
                 <div className="Chat_body_receiver_wrapper">
                     {message}
+                    <div>{currentTime}</div>
                 </div>
-                {/* <p>{time.toString().split(" ")[4]} {ampm}</p> */}
             </div>
             <div className="Chat_body_receiver_img">
                     <img src={`${url}${chatData.profile}`} alt="" />
@@ -34,20 +48,30 @@ export const ReceiverMessages = ({message, time }) => {
 
 export const CreatorMessages = ({message, time, date}) => {
     const { user } = useContext(AuthContext)
-    
-    console.log("SEE", message, time, date)
 
-    // const now = time
-    // const hours = now.getHours()
-    // const minutes = now.getMinutes()
-    // const ampm = hours >= 12 ? "PM" : "AM"
+    const formattedTimeFunc = () => {
+        const splitTime = time.split(":")
+        let hours = Number(splitTime[0]);
+        const minutes = splitTime[1];
+        
+        const ampm = hours >= 12 ? 'PM' : 'AM';
+
+        hours = hours % 12;
+        hours = hours ? hours : 12; 
+
+        const formattedTime = `${hours}:${minutes} ${ampm}`;
+        return formattedTime;
+    }
+
+    const currentTime = formattedTimeFunc()
+
     return (
         <div>
             <div className="Creator_chat_wrapper">
                 <div className="Chat_body_sender_wrapper">
                     {message}
-                </div>
-                {/* <p>{time.toString().split(" ")[4]} {ampm}</p> */}
+                    <div>{currentTime}</div>
+                </div> 
             </div>
             <div className="Chat_body_sender_img">
                 <img src={`${url}${user ? user.profile : null}`} alt="" />

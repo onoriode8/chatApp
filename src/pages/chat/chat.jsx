@@ -61,7 +61,7 @@ const Chat = () => {
         //check if filteredMsg length is 0 before rendering to receiver.
         console.log("receiver check", filteredMsg)
         renderedReceiverServerMessages = filteredMsg.map(message => 
-            <ReceiverMessages key={message.senderId} message={message.message}
+            <ReceiverMessages key={message.id} message={message.message}
                 date={message.createdAt} time={message.time} />)
     }
 
@@ -72,7 +72,7 @@ const Chat = () => {
             id.creatorId === parsedData.id || id.creatorId === chatData.id)
         const filteredMsg = findUser.conversation.filter(msg => msg.senderId === parsedData.id)
         renderedServerMessages = filteredMsg.map(message => 
-            <CreatorMessages key={message.senderId} message={message.message}
+            <CreatorMessages key={message.id} message={message.message}
                 date={message.createdAt}  time={message.time} />)
     }
 
@@ -86,63 +86,35 @@ const Chat = () => {
                     <div>{chatData.fullname.toUpperCase()}</div>
                     {chatInfo ? chatInfo.chatFullname : chatData.fullname}
                 </div>
-                <div><BsThreeDotsVertical /></div>
+                <li>
+                    <a href={`/chat_profile`}>
+                    <BsThreeDotsVertical /></a>
+                </li>
             </div>
             {/* Receiver chat */}
             {receiverMessage ? <div >
                 {receiverMessage.map(message => 
                     <ReceiverMessages 
-                        key={message.senderId} 
+                        key={message.id} 
                         message={message.message} 
-                        time={message.createdAt} />
+                        time={message.time}
+                        date={message.createdAt} />
                 )}
             </div> : renderedReceiverServerMessages }
-
-            {/* <div className="Chat_body_receiver_img">
-                <img src={`${url}${chatData.profile}`} alt="" />
-            </div> */}
 
             {/* Sender chat */}
             {creatorMessage ? <div >
                 {creatorMessage.map(message => 
                     <CreatorMessages 
-                        key={message.senderId}
+                        key={message.id}
                         message={message.message}
-                        time={message.createdAt}  />
+                        time={message.time}
+                        date={message.createdAt}  />
                 )}
                 </div> : renderedServerMessages}
-           
-            {/* <div className="Chat_body_sender_img">
-                <img src={`${url}${user ? user.profile : null}`} alt="" />
-            </div> */}
-
             <Input />
         </div>
     )
 }
 
-export default Chat;
-
- // {/* {serverMessage.length !== 0 ? <div>*/}
-                // {/*serverMessage.map(message =>  */}
-                    // {/*<CreatorMessages  */}
-                        // {/*key={message.senderId} */}
-                        // {/*message={message.message} */}
-                        // {/*time={message.createdAt}  />)}</div>} */} */}
-
-
-
-
-                //         creatorMessage ? <div >
-                // {creatorMessage.map(message => 
-                //     <CreatorMessages 
-                //         key={message.senderId}
-                //         message={message.message}
-                //         time={message.createdAt}  />
-                // )}
-                // </div> : 
-                // <div>{serverMessage.length !== 0 ? 
-                //     <div>{serverMessage.map(message => <CreatorMessages
-                //          key={message.senderId}
-                //          message={message.message}
-                //          time={message.createdAt}  />)} </div>
+export default Chat; 

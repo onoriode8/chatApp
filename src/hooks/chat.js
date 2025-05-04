@@ -1,7 +1,12 @@
 import { useState, useEffect, useRef, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
+import connectSocket from 'socket.io-client'
+
 import { AuthContext } from './context'
 // import axios from 'axios'
+
+
+const io = connectSocket("http://localhost:5000");
 
 export const useChatRoom = () => {
     const parsedData = JSON.parse(sessionStorage.getItem("cookie-string"))
@@ -48,6 +53,12 @@ export const useChatRoom = () => {
                 const responseData = await response.json()
                 console.log(responseData)
                 if(!response.ok) throw new Error(responseData)
+                let data;
+                for(const array of responseData) {
+                    data = array;
+                }
+                if(data === null) return
+                console.log("DATA RETURNED AFTER LOOPING", data)
                 const conversations = 
                     responseData.filter(r => {
                         return r.creatorId === parsedData.id 
@@ -91,9 +102,12 @@ export const useChatRoom = () => {
             if(!response.ok) throw new Error(responseData)
             // console.log("SEND MESSAGE", response)
             setLoading(false)
+            io.on("message", (socket) => {
+                console.log("SOCKET CONNECTED", socket);
+                setSocketMessage(responseData)
+            })
             setInputMessage("")
             setSocketMessage(responseData)
-            // console.log(responseData)
         } catch(err) {
             setLoading(false)
             setInputMessage("") 
@@ -107,6 +121,12 @@ export const useChatRoom = () => {
             }
         }
     }
+
+    useEffect(() => {
+        io.on("message", socket => {
+            console.log("SOCKET CONNECTED", socket)
+        })
+    })
 
     //onchange input entered for sending private message.
     const inputMessageHandler = (e) => {

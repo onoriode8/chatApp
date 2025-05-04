@@ -16,7 +16,6 @@ export const AuthContext = createContext({
     errorMessage: null, 
     setErrorMessage: () => {},
 
-
     input: "", 
     setInput: () => {}
     
@@ -72,8 +71,8 @@ export const ContextProvider = (props) => {
 
     useEffect(() => {
         if(!parsedData) return
-        try {
-            const getUserFunc = async() => {
+        const getUserFunc = async() => {
+            try {
                 const response = 
                 await fetch(`http://localhost:5000/user/user/${parsedData.id}`, {
                     headers: {
@@ -82,27 +81,23 @@ export const ContextProvider = (props) => {
                     }
                 })
                 const responseData = await response.json()
-                // console.log(responseData)
                 if(!response.ok) throw new Error(responseData)
                 setUser(responseData)
-                // console.log(responseData)
-            }
-            getUserFunc()
-        } catch(err) {
-            if(err.message === "jwt expired" || err.message === "Not found") {
-                sessionStorage.removeItem("cookie-string")
-                sessionStorage.removeItem("chat")
-                navigate("/")
-                window.location.reload()
-            } else {
-                setErrorMessage(err.message)
-                // console.log(err.message)
+            } catch(err) {
+                if(err.message === "jwt expired" || err.message === "Not found") {
+                    sessionStorage.removeItem("cookie-string")
+                    sessionStorage.removeItem("chat")
+                    navigate("/")
+                    window.location.reload()
+                } else {
+                    setErrorMessage(err.message)
+                }
             }
         }
+        getUserFunc()
     }, [])
 
     const toggleSetErrorMessage = () => {
-        // console.log("click")
         setErrorMessage(null)
         window.location.reload()
     }
@@ -118,7 +113,8 @@ export const ContextProvider = (props) => {
             toggleSearchBarCont: toggleSearchBar,
             setToggleSearchBarCont: toggleSearchBarFunction,
             socketMessage, setSocketMessage,
-            errorMessage, setErrorMessage: toggleSetErrorMessage,
+            errorMessage, setErrorMessage,
+            toggleSetErrorMessage,
             input, setInput
 
         }}>
