@@ -3,10 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import connectSocket from 'socket.io-client'
 
 import { AuthContext } from './context'
-// import axios from 'axios'
 
 
-const io = connectSocket("http://localhost:5000");
 
 export const useChatRoom = () => {
     const parsedData = JSON.parse(sessionStorage.getItem("cookie-string"))
@@ -17,12 +15,14 @@ export const useChatRoom = () => {
 
     // const [socketMessage, setSocketMessage] = useState("")
     const { socketMessage, setSocketMessage } = useContext(AuthContext)
+    
 
     const [loading, setLoading] = useState(false)
 
     const [serverMessage, setServerMessage] = useState([])
 
     const inputRefElement = useRef()
+    const socketRef = useRef(null)
 
     const navigate = useNavigate()
 
@@ -35,30 +35,27 @@ export const useChatRoom = () => {
         setPickedFile(file)
     }
 
-    //send pickedFile to server later after sending messages.
-    console.log("FILE PICKED TO SEND", pickedFile)
-
     //Reload to get server messages.
     useEffect(() => {
         if(!parsedData && !receiver) return
         try {
             const getServerMessage = async() => {
                 const response = await fetch(
-                    `http://localhost:5000/user/get/server/message/${parsedData.id}/${receiver.id}`, {
+                    `${process.env.REACT_APP_DB_URL}/user/get/server/message/${parsedData.id}/${receiver.id}`, {
                     headers: {
                         "Content-Type":"application/json",
                         "Authorization": "Bearer " + parsedData.token
                     }
                 })
                 const responseData = await response.json()
-                console.log(responseData)
-                if(!response.ok) throw new Error(responseData)
+                if(!response.ok) {
+                    throw new Error(responseData) 
+                }
                 let data;
                 for(const array of responseData) {
                     data = array;
                 }
                 if(data === null) return
-                console.log("DATA RETURNED AFTER LOOPING", data)
                 const conversations = 
                     responseData.filter(r => {
                         return r.creatorId === parsedData.id 
@@ -66,19 +63,18 @@ export const useChatRoom = () => {
                         || r.creatorId === receiver.id 
                         && r.receiverId === parsedData.id
                 })
-                console.log(conversations)
                 setServerMessage(conversations)
             }
             getServerMessage()
         } catch(err) {
-            if(err.message === "jwt expired") {
+            if(err.message !== "jwt expired") {
+                alert(err.message)
+            } else if(err.message === "jwt expired") {
                 sessionStorage.removeItem("cookie-string")
                 sessionStorage.removeItem("chat")
                 navigate("/")
                 window.location.reload()
-            } else {
-                // console.log(err.message)
-            }
+            } 
         }
     }, [])
 
@@ -87,8 +83,7 @@ export const useChatRoom = () => {
         if(!parsedData && !receiver) return
         try{
             setLoading(true)
-            const response = await fetch(
-                `http://localhost:5000/user/send/message/${parsedData.id}/${receiver.id}`, {
+            const response = await fetch(`${process.env.REACT_APP_DB_URL}/user/send/message/${parsedData.id}/${receiver.id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
@@ -100,14 +95,8 @@ export const useChatRoom = () => {
             })
             const responseData = await response.json()
             if(!response.ok) throw new Error(responseData)
-            // console.log("SEND MESSAGE", response)
             setLoading(false)
-            io.on("message", (socket) => {
-                console.log("SOCKET CONNECTED", socket);
-                setSocketMessage(responseData)
-            })
             setInputMessage("")
-            setSocketMessage(responseData)
         } catch(err) {
             setLoading(false)
             setInputMessage("") 
@@ -116,24 +105,30 @@ export const useChatRoom = () => {
                 sessionStorage.removeItem("chat")
                 navigate("/")
                 window.location.reload()
-            } else {
-                // console.log(err.message)
-            }
+            } else {}
         }
     }
 
     useEffect(() => {
-        io.on("message", socket => {
-            console.log("SOCKET CONNECTED", socket)
+        socketRef.current = connectSocket(process.env.REACT_APP_DB_URL);
+
+        socketRef.current.on("message", socket => {
+            if(socket.conversation.creatorId === parsedData.id 
+                && socket.conversation.receiverId === receiver.id 
+                || socket.conversation.creatorId === receiver.id 
+                && socket.conversation.receiverId === parsedData.id) {
+                    setSocketMessage(socket.conversation)
+            }
+
+            return () => socketRef.current.disconnect()
         })
-    })
+    }, [])
 
     //onchange input entered for sending private message.
     const inputMessageHandler = (e) => {
         setInputMessage(e.target.value)
     }
 
-    console.log("OMO SEE OH", serverMessage)
     return {
         serverMessage, loading, inputMessage, 
         openFileHandler, inputRefElement,

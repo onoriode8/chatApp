@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-// import { useImagePicker } from './image-picker'
+
 import { AuthContext } from './context'
 
 export const useSignup = () => { 
@@ -12,8 +12,6 @@ export const useSignup = () => {
 
 
     const navigate = useNavigate()
-
-    // sessionStorage.removeItem("cookie-string")
 
     // const { files } = useImagePicker()
     const { pickedFile, setFilePicker } = useContext(AuthContext)
@@ -37,7 +35,7 @@ export const useSignup = () => {
         formData.append("password", password)
         formData.append("userProfile", pickedFile)
         try {
-            const response = await fetch("http://localhost:5000/user/signup", {
+            const response = await fetch(`${process.env.REACT_APP_DB_URL}/user/signup`, {
                 method: "POST",
                 body: formData
             })
@@ -93,23 +91,11 @@ export const useSignin = () => {
 
     const signupUserHandler = async (e) => {
         e.preventDefault()
-        // const watchId = navigator.geolocation.getCurrentPosition(
-        //     (position) => {
-        //       const { latitude, longitude } = position.coords;
-        //       console.log('Sending location:', latitude, longitude);
-        //     //   socket.emit('location-update', { latitude, longitude });
-        //     console.log(position)
-        //     },
-        // )
-    
-        // console.log("line 92", watchId)
-        // return
         if(email.trim().length < 6 && 
             password.trim().length < 5) return
         setLoading(true)
-        // console.log("RE", email, password)
         try {
-            const response = await fetch("http://localhost:5000/user/signin", {
+            const response = await fetch(`${process.env.REACT_APP_DB_URL}/user/signin`, {
                 method: "POST",
                 headers: {
                     "Content-Type":"application/json"
@@ -123,7 +109,6 @@ export const useSignin = () => {
             setLoading(false)
             setEmail("")
             setPassword("")
-            // console.log(responseData)
             sessionStorage.setItem("cookie-string",
                  JSON.stringify({
                     token: responseData.token,

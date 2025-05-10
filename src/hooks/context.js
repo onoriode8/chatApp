@@ -74,7 +74,7 @@ export const ContextProvider = (props) => {
         const getUserFunc = async() => {
             try {
                 const response = 
-                await fetch(`http://localhost:5000/user/user/${parsedData.id}`, {
+                await fetch(`${process.env.REACT_APP_DB_URL}/user/user/${parsedData.id}`, {
                     headers: {
                         "Content-Type": "application/json",
                         "Authorization": "Bearer " + parsedData.token

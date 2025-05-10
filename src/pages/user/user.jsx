@@ -12,9 +12,6 @@ import "./user.css";
 const User = () => {
     const { toggleSearchBarCont } = useContext(AuthContext)
     const { users, searchInput } = useGetUser()
-    // const parsedData = JSON.parse(sessionStorage.getItem("cookie-string"))
-    // console.log("No of users", users)
-    // console.log("No of users in searchInput", searchInput)
 
     return (
         <div className="user_container_wrapper">

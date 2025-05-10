@@ -37,3 +37,19 @@
         /* color: blue; */
     }
 }
+
+/* @media(min-width: 768px) {
+    .user_container_wrapper {
+        text-align: start;
+    }
+
+    .user_total_users_wrapper {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .user_wrapper {
+        margin: 0px 100px;
+        width: 120px;
+    }
+} */

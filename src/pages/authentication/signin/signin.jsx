@@ -4,7 +4,7 @@ import { MdOutlineMailOutline } from "react-icons/md";
 import { FcLock } from "react-icons/fc";
 
 import { useSignin } from '../../../hooks/authentication';
-import Loading from '../../loading/loading';
+import Loading from '../../loader/loading/loading';
 
 import './signin.css'
 

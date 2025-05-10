@@ -16,18 +16,16 @@ const ViewProfile = React.lazy(() => import("./pages/profile/profile"))
 const Chat = React.lazy(() => import("./pages/chat/chat"))
 const ErrorMessage = React.lazy(() => import("./pages/errorMessage/errorMessage"))
 const ChatProfile = React.lazy(() => import("./pages/chat/more/chat_details/chat_details"))
-
+const ChatLoader = React.lazy(() => import("./pages/loader/chatLoader/chatLoader"))
 
 const App = () => {
-  // sessionStorage.removeItem("chat")
-  // sessionStorage.removeItem("cookie-string")
 
   const chatData = JSON.parse(sessionStorage.getItem("chat"))
   const parsedData = JSON.parse(sessionStorage.getItem("cookie-string"))
   const loading = <div className="app_loader_wrapper">
     <span className="app_loader"></span>
   </div>
-
+  
 
   return (
     <ContextProvider>
@@ -60,10 +58,10 @@ const App = () => {
             <ChatProfile />
           </Suspense>}/>}
 
-          {/* <Route path={`/chat/undefined`} element={
+        {/* {parsedData && <Route path="chat_loader" element={
           <Suspense fallback={loading}>
-            <Chat />
-          </Suspense>} /> */}
+            <ChatLoader />
+          </Suspense>}/>} */}
       </Routes>
       {/* </ErrorBoundary> */}
     </ContextProvider>

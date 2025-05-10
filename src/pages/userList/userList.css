@@ -1,5 +1,4 @@
 .userList_wrapper {
-    /* border: 1px solid black; */
     display: flex;
     justify-content: center;
     width: 50vh;
@@ -37,3 +36,20 @@
         width: 20vh;
     }
 }
+
+/* 
+@media(min-width: 768px) {
+   .userList_wrapper {
+        justify-content: flex-start;
+        
+        margin: 0px 50px;
+   } 
+}
+
+@media(min-width: 1023px) {
+    .userList_wrapper {
+         justify-content: flex-start;
+         
+         margin: 0px 100px;
+    } 
+ } */

@@ -1,6 +1,5 @@
 .Chat_wrapper {
     margin-top: 100px;
-    /* overflow-y: scroll; */
 }
 
 .Chat_header_wrapper {
@@ -14,6 +13,16 @@
     justify-content: space-between;
     width: 100%;
     padding: 20px 0px;
+}
+
+.Chat_header_wrapper li {
+    list-style: none;
+}
+
+.Chat_header_wrapper li a {
+    color: #fff;
+    font-size: 25px;
+    margin-right: 5px;
 }
 
 .Chat_header_wrapper div:first-child, 
@@ -38,6 +47,14 @@
     width: 30px;
     height: 30px;
     border-radius: 5rem;
+}
+
+#divId {
+    border: none;
+    padding: 30px 0px;
+    position: relative;
+    scroll-margin-bottom: 20px; 
+    scroll-behavior: smooth;
 }
 
 /* .Chat_body_sender_img {

@@ -30,3 +30,9 @@
     height: 40px;
     border-radius: 50px;
 }
+
+/* @media(min-width: 768px) {
+    .Toolbar_wrapper {
+        width: 40%;
+    }
+} */

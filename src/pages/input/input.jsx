@@ -1,13 +1,10 @@
 import { useChatRoom } from '../../hooks/chat'
-import Loading from '../loading/loading'
+import Loading from '../loader/loading/loading'
 
 import { FcMultipleCameras } from "react-icons/fc";
 import { TbSend2 } from "react-icons/tb";
 
 import './input.css'
-import { useContext } from 'react';
-import { AuthContext } from '../../hooks/context';
-// import { useImagePicker } from '../../hooks/image-picker';
 
 
 const Input = () => {
@@ -16,13 +13,6 @@ const Input = () => {
         sendMessage, loading, inputMessageHandler,
         pickedFileHandler } = useChatRoom()
 
-    // const { inputMessage } = useContext(AuthContext)
-
-    // const { imageRef, openFileHandler,
-    //     filePickerHandler
-    // } = useImagePicker()
-    console.log("FROM SERVER WHEN RELOAD", serverMessage)
-    console.log("CHECK", inputMessage)
     return (
         <div className="Input_container_wrapper">
             <div className="Input_wrapper">
@@ -35,8 +25,10 @@ const Input = () => {
                     onChange={inputMessageHandler}
                     placeholder="Message" />
                 {loading ? <Loading /> : 
-                <div>{inputMessage.trim().length === 0 
-                ? null : <TbSend2 onClick={sendMessage} />}</div>}
+                <div>
+                    <a href="#divId">{inputMessage.trim().length === 0 
+                    ? null : <TbSend2 onClick={sendMessage} />}</a>
+                </div>}
             </div>
         </div>
     )

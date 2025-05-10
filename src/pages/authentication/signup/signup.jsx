@@ -6,7 +6,7 @@ import { FcLock, FcMultipleCameras } from "react-icons/fc";
 
 import { useImagePicker } from '../../../hooks/image-picker';
 import { useSignup } from '../../../hooks/authentication';
-import Loading from '../../loading/loading';
+import Loading from '../../loader/loading/loading';
 
 import './signup.css'
 

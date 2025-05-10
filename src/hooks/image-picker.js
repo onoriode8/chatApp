@@ -54,7 +54,7 @@ export const useUploadProfile = (file, imageUrl) => {
         const formData = new FormData()
         formData.append("updateProfile", file)
         try {
-            const response = await fetch("http://localhost:5000/user/user/update/profile", {
+            const response = await fetch(`${process.env.REACT_APP_DB_URL}/user/user/update/profile`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",

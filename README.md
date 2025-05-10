@@ -9,6 +9,7 @@
 ### Improved app performance by optimizing React components and backend queries.
 ### Integrated authentication with JWT.
 ### Deployed Frontend application using Vercel and Backend with Render
+### Frontend code optimization using lazy loading in Reactjs.
 
 
 #### INSTRUCTION TO START / Developer Instructions

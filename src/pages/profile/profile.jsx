@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { FcMultipleCameras } from "react-icons/fc"
 
 import  { AuthContext } from '../../hooks/context'
-import Loading from '../loading/loading';
+import Loading from '../loader/loading/loading';
 import { useImagePicker, useUploadProfile } from '../../hooks/image-picker';
 
 
@@ -12,7 +12,7 @@ const Profile = () => {
     const { user } = useContext(AuthContext)
     let serverProfile = null;
     if(user) {
-        serverProfile = `http://localhost:5000/${user.profile}`
+        serverProfile = `${process.env.REACT_APP_DB_URL}/${user.profile}`
     }
 
     const {openFileHandler, 

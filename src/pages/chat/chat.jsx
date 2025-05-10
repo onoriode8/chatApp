@@ -18,7 +18,8 @@ const Chat = () => {
 
     const { chatInfo } = useContext(AuthContext)
 
-    const { socketMessage, serverMessage } = useChatRoom()
+    const { 
+        socketMessage, serverMessage } = useChatRoom()
 
     const navigate = useNavigate()
     const backFunction = () => {
@@ -26,18 +27,7 @@ const Chat = () => {
         navigate(-1)
     }
 
-    //comment back on later.
-    // let profileImage = `http://localhost:5000`+chatData.profile`;
-    // if(chatInfo) {
-    //     profileImage = `http://localhost:5000`+chatInfo.chatProfile
-    // }
-
-    // console.log("HERE ", socketMessage.conversation)
-    // console.log(user)
-
-    console.log("getConversation from server", serverMessage)
-
-    const url = `http://localhost:5000/`
+    const url = process.env.REACT_APP_DB_URL
 
     let creatorMessage;
     if(socketMessage) {
@@ -51,21 +41,18 @@ const Chat = () => {
             .filter(user => user.senderId === chatData.id)
     }
 
-    //render receiver message when page reload.
+    // //render receiver message when page reload.
     let renderedReceiverServerMessages = serverMessage;
     if(serverMessage.length !== 0) {
         const findUser = serverMessage.find(id => 
             id.creatorId === parsedData.id || id.creatorId === chatData.id)
-        // console.log("TOGGLE", findUser)
         const filteredMsg = findUser.conversation.filter(msg => msg.senderId === chatData.id)
-        //check if filteredMsg length is 0 before rendering to receiver.
-        console.log("receiver check", filteredMsg)
         renderedReceiverServerMessages = filteredMsg.map(message => 
             <ReceiverMessages key={message.id} message={message.message}
                 date={message.createdAt} time={message.time} />)
     }
 
-    //render creator server message when page reload
+    // //render creator server message when page reload
     let renderedServerMessages = serverMessage;
     if(serverMessage.length !== 0) {
         const findUser = serverMessage.find(id => 
@@ -75,7 +62,6 @@ const Chat = () => {
             <CreatorMessages key={message.id} message={message.message}
                 date={message.createdAt}  time={message.time} />)
     }
-
 
     return (
         <div className="Chat_wrapper">
@@ -103,7 +89,7 @@ const Chat = () => {
             </div> : renderedReceiverServerMessages }
 
             {/* Sender chat */}
-            {creatorMessage ? <div >
+            {creatorMessage ? <div>
                 {creatorMessage.map(message => 
                     <CreatorMessages 
                         key={message.id}
@@ -111,7 +97,8 @@ const Chat = () => {
                         time={message.time}
                         date={message.createdAt}  />
                 )}
-                </div> : renderedServerMessages}
+                </div> : renderedServerMessages} 
+                <div id="divId"></div>
             <Input />
         </div>
     )
