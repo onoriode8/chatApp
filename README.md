@@ -16,4 +16,11 @@
 ##### 1. CLONE THIS REPO USING git clone url.
 ##### 2. INSTALL NODEJS IF YOU DON'T HAVE IT.
 ##### 3. RUN npm install to install all dependencies.
-##### 4. RUN NPM START ON THE TERMINAL using npm run dev
+##### 4. RUN NPM START ON THE TERMINAL using npm run dev OR npm start.
+
+##### Below is the chat view of the app.
+
+##### REAL-TIME CHAT APP VIEW BELOW.
+<img width="281" alt="" src="https://github.com/user-attachments/assets/9cc8c186-da68-46ef-81bd-3985b892abbe" />
+
+###### Login details: test@gmail.com  password12345
