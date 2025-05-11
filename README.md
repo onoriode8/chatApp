@@ -18,3 +18,8 @@
 ##### 3. RUN npm install to install all dependencies.
 ##### 4. RUN NPM START ON THE TERMINAL using npm run dev OR npm start.
 
+##### Below is the chat view of the app.
+
+##### REAL-TIME CHAT APP
+###### Login details: test@gmail.com  password12345
+<img width="281" alt="Screenshot 2025-05-10 183453" src="https://github.com/user-attachments/assets/9cc8c186-da68-46ef-81bd-3985b892abbe" />
