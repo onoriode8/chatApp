@@ -13,7 +13,7 @@ const Signin = () => {
     const { loading, onChangeEmailHandler, 
         email, password, errorMessage,
         onChangePasswordHandler, 
-        signupUserHandler} = useSignin()
+        signInUserHandler} = useSignin()
 
     //disbled signin button
     let disabled = true;
@@ -24,7 +24,7 @@ const Signin = () => {
     return (
     <div className="signin_authentication_wrapper">
         <form className="signin_authentication_form_wrapper" 
-            onSubmit={signupUserHandler}>
+            onSubmit={signInUserHandler}>
             <div className="signin_authentication_email_wrapper">
                 <div><MdOutlineMailOutline /></div>
                 <input type="email" value={email} required

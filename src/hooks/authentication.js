@@ -90,7 +90,7 @@ export const useSignin = () => {
         setPassword(e.target.value)
     }
 
-    const signupUserHandler = async (e) => {
+    const signInUserHandler = async (e) => {
         e.preventDefault()
         if(email.trim().length < 6 && 
             password.trim().length < 5) return
@@ -132,6 +132,6 @@ export const useSignin = () => {
     return {
         loading, email, password, errorMessage,
         onChangeEmailHandler, 
-        onChangePasswordHandler, signupUserHandler
+        onChangePasswordHandler, signInUserHandler
     }
 }
