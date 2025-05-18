@@ -35,7 +35,6 @@ export const useSignup = () => {
         formData.append("password", password)
         formData.append("userProfile", pickedFile)
         try {
-            
             const response = await fetch(`${process.env.REACT_APP_DB_URL}/user/signup`, {
                 method: "POST",
                 body: formData
