@@ -26,7 +26,7 @@ const App = () => {
     <span className="app_loader"></span>
   </div>
   
-
+ 
   return (
     <ContextProvider>
     {/* <ErrorBoundary> */}

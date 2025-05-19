@@ -22,9 +22,11 @@ const Signin = () => {
     }
 
     return (
+    <div className="__mn">
     <div className="signin_authentication_wrapper">
         <form className="signin_authentication_form_wrapper" 
             onSubmit={signInUserHandler}>
+            <p style={{textAlign: "center"}}>SIGNIN</p>
             <div className="signin_authentication_email_wrapper">
                 <div><MdOutlineMailOutline /></div>
                 <input type="email" value={email} required
@@ -49,6 +51,7 @@ const Signin = () => {
         <div className="signin_authentication_errorMessage_p">
             <p><strong>Message: </strong> {errorMessage}</p>
         </div>}
+        </div>
     </div>
     )
 }
