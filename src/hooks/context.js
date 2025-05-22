@@ -82,7 +82,6 @@ export const ContextProvider = (props) => {
                 })
                 const responseData = await response.json()
                 if(!response.ok) throw new Error(responseData)
-                console.log("FROM CONTEXT", responseData)
                 setUser(responseData)
             } catch(err) {
                 if(err.message === "jwt expired" || err.message === "Not found") {
