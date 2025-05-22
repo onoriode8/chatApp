@@ -13,13 +13,13 @@ const UserList = ({ fullname, profile, id }) => {
         const chat = { fullname, id, profile }
         sessionStorage.setItem("chat", JSON.stringify(chat))
     }
-    console.log("FRONTEND_URL", process.env.REACT_APP_FRONTEND_URL)
+
     return (
         <div className="userList_wrapper">
             <a href={`/chat/${id}`} 
                 onClick={addChatInfoHandler}
                 className="userList_profile_log_wrapper">
-                <div><img src={`${process.env.REACT_APP_FRONTEND_URL}/${profile}`} alt="" /></div>
+                <div><img src={`${profile}`} alt="" /></div>
                 <p>{fullname ? fullname.toUpperCase() : fullname}</p>
             </a>
         </div>
