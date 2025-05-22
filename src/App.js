@@ -26,7 +26,6 @@ const App = () => {
     <span className="app_loader"></span>
   </div>
   
- console.log("DATA", parsedData)
   return (
     <ContextProvider>
     {/* <ErrorBoundary> */}
