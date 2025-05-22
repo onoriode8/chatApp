@@ -12,7 +12,7 @@ const Profile = () => {
     const { user } = useContext(AuthContext)
     let serverProfile = null;
     if(user) {
-        serverProfile = `${process.env.REACT_APP_DB_URL}/${user.profile}`
+        serverProfile = `${process.env.REACT_APP_FRONTEND_URL}/${user.profile}`
     }
 
     const {openFileHandler, 
