@@ -6,7 +6,8 @@ import { AuthContext } from '../../../hooks/context';
 import "./chat_user.css"
 
 
-const url = process.env.REACT_APP_DB_URL
+// const url = process.env.REACT_APP_DB_URL
+const FrontendUrl = process.env.REACT_APP_FRONTEND_URL
 
 
 
@@ -39,7 +40,7 @@ export const ReceiverMessages = ({message, date, time }) => {
                 </div>
             </div>
             <div className="Chat_body_receiver_img">
-                    <img src={`${url}/${chatData.profile}`} alt="" />
+                    <img src={`${FrontendUrl}/${chatData.profile}`} alt="" />
             </div>
         </div>
     )
@@ -74,7 +75,7 @@ export const CreatorMessages = ({message, time, date}) => {
                 </div> 
             </div>
             <div className="Chat_body_sender_img">
-                <img src={`${url}/${user ? user.profile : null}`} alt="" />
+                <img src={`${FrontendUrl}/${user ? user.profile : null}`} alt="" />
             </div>
         </div>
     )
