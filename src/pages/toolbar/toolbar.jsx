@@ -18,7 +18,7 @@ const Toolbar = () => {
     const { toggleSearchBarHandler } = useGetUser()
     let imageUrl = null
     if(user) {
-        imageUrl = `${process.env.REACT_APP_DB_URL}/${user.profile.replace(/\\/g, "/")}`
+        imageUrl = `${process.env.REACT_APP_FRONTEND_URL}/${user.profile.replace(/\\/g, "/")}`
     }
     const location = useLocation()
     const logoutHandler = () => {
