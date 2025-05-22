@@ -27,7 +27,8 @@ const Chat = () => {
         navigate(-1)
     }
 
-    const url = process.env.REACT_APP_DB_URL
+    // const url = process.env.REACT_APP_DB_URL
+    const FrontendUrl = process.env.REACT_APP_FRONTEND_URL
 
     let creatorMessage;
     if(socketMessage) {
@@ -68,7 +69,7 @@ const Chat = () => {
             <div className="Chat_header_wrapper">
                 <div onClick={backFunction}><IoIosArrowBack /></div>
                 <div className="Chat_img_wrapper">
-                    <div><img src={`${url}/${chatData.profile}`} alt="" /></div>
+                    <div><img src={`${FrontendUrl}/${chatData.profile}`} alt="" /></div>
                     <div>{chatData.fullname.toUpperCase()}</div>
                     {chatInfo ? chatInfo.chatFullname : chatData.fullname}
                 </div>
