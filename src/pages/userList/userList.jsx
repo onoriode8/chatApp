@@ -13,7 +13,7 @@ const UserList = ({ fullname, profile, id }) => {
         const chat = { fullname, id, profile }
         sessionStorage.setItem("chat", JSON.stringify(chat))
     }
-    console.log("FRONTEND_URL", process.env.FRONTEND_URL)
+    console.log("FRONTEND_URL", process.env.REACT_APP_FRONTEND_URL)
     return (
         <div className="userList_wrapper">
             <a href={`/chat/${id}`} 
