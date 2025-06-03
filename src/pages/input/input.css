@@ -26,8 +26,3 @@
 .Input_wrapper div:last-child {
     font-size: xx-large;
 }
-
-.Input_wrapper input:last-child {
-   font-size 16px;
-   border: 1px solid black;
-}
