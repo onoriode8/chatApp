@@ -5,7 +5,6 @@ import connectSocket from 'socket.io-client'
 import { AuthContext } from './context'
 
 
-
 export const useChatRoom = () => {
     const parsedData = JSON.parse(sessionStorage.getItem("cookie-string"))
     const receiver = JSON.parse(sessionStorage.getItem("chat"))
@@ -40,8 +39,7 @@ export const useChatRoom = () => {
         if(!parsedData && !receiver) return
         try {
             const getServerMessage = async() => {
-                const response = await fetch(
-                    `${process.env.REACT_APP_DB_URL}/user/get/server/message/${parsedData.id}/${receiver.id}`, {
+                const response = await fetch(`${process.env.REACT_APP_DB_URL}/user/get/server/message/${parsedData.id}/${receiver.id}`, {
                     headers: {
                         "Content-Type":"application/json",
                         "Authorization": "Bearer " + parsedData.token

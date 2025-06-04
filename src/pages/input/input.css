@@ -19,7 +19,8 @@
     padding: 10px 0px;
     outline: none;
     border: 1px solid rgba(30, 146, 30, 0.4);
-    border-radius: 10px;;
+    border-radius: 10px;
+    font-size: 16px;
 }
 
 .Input_wrapper div:first-child,

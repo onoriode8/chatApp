@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 import { AuthContext } from "./context";
 
-
 export const useGetUser = () => {
     const parsedData = JSON.parse(sessionStorage.getItem("cookie-string"))
     const [users, setUsers] = useState([])

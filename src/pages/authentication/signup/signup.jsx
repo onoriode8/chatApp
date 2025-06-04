@@ -23,7 +23,7 @@ const Signup = () => {
     let disabled = true;
     if(password.trim().length >= 6 && email.trim().length >= 12 &&
         imageUrl !== undefined) {
-        disabled =  false
+        disabled = false
     }
 
     return (

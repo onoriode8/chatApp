@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { AuthContext } from './context'
 
+
 export const useSignup = () => { 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -35,6 +36,7 @@ export const useSignup = () => {
         formData.append("password", password)
         formData.append("userProfile", pickedFile)
         try {
+            // console.log("url", process.env.REACT_APP_DB_URL)
             const response = await fetch(`${process.env.REACT_APP_DB_URL}/user/signup`, {
                 method: "POST",
                 body: formData

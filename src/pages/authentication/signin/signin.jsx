@@ -18,7 +18,7 @@ const Signin = () => {
     //disbled signin button
     let disabled = true;
     if(password.trim().length >= 6 && email.trim().length >= 12 ) {
-        disabled =  false
+        disabled = false
     }
 
     return (
@@ -40,7 +40,7 @@ const Signin = () => {
             <button disabled={disabled} type="submit"> 
                 <div>
                     <div></div> 
-                    <div>SignIn </div>
+                    <div className="SignIn_signin_text">SignIn </div>
                     {loading && <Loading />}
                     {!loading && <div></div>} 
                 </div>

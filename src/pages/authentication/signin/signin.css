@@ -48,10 +48,6 @@
     margin-top: 80px;
 }
 
-/* .signin_authentication_form_wrapper {
-
-}  */
-
 .signin_authentication_form_wrapper button {
     width: 350px;
     padding: 8px 5px;
@@ -87,11 +83,17 @@
     padding: 8px 5px;
     width: 300px;
     border: 1px solid black;
+    font-size: 16px;
 }
 
 .signin_authentication_errorMessage_p p {
     color: red;
     font-size: small;
+}
+
+.SignIn_signin_text {
+    color: green;
+    font-style: bold;
 }
 
 @media (min-width: 500px) {
