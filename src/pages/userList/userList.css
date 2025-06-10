@@ -37,19 +37,10 @@
     }
 }
 
-/* 
-@media(min-width: 768px) {
-   .userList_wrapper {
-        justify-content: flex-start;
-        
-        margin: 0px 50px;
-   } 
-}
-
 @media(min-width: 1023px) {
     .userList_wrapper {
-         justify-content: flex-start;
-         
-         margin: 0px 100px;
-    } 
- } */
+        width: 70vh;
+        border: 1px solid black;
+        
+    }
+}

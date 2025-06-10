@@ -20,7 +20,8 @@ export const useGetUser = () => {
         if(!parsedData) return
         const fetchAllUsers = async() => {
             try {
-                const response = await fetch(`${process.env.REACT_APP_DB_URL}/user/users/${parsedData.id}`, {
+                // ${process.env.REACT_APP_DB_URL}
+                const response = await fetch(`http://localhost:5000/user/users/${parsedData.id}`, {
                     headers: {
                         "Content-Type": "application/json",
                         'Authorization': "Bearer " + parsedData.token
