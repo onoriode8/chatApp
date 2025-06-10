@@ -49,7 +49,6 @@ export const useGetUser = () => {
     }
 
     const toggleSearchBarHandler = () => {
-        //dispatch toggleSearchBar to Context Provide.
         setToggleSearchBarCont(toggleSearchBar)
         setToggleSearchBar(prevState => !prevState)
     }

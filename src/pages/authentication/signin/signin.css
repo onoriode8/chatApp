@@ -126,12 +126,12 @@
     .signin_authentication_wrapper {
         border: none; 
         width: 450px;
-        height: 25vh;
+        height: 35vh;
         box-shadow: 2px 0px 2px 2px rgba(33, 33, 36, 0.267);
     }
 
      .__mn {
-        margin-top: 300px;
+        margin-top: 200px;
     }
 }
 

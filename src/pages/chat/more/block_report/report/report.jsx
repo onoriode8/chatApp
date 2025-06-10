@@ -9,7 +9,7 @@ const report = ({ fullname,
     togglePopupScreenHandler }) => {
     
     return (
-        <div>
+        <div className="report_wrappe">
             {!toggle && <div onClick={togglePopupScreenHandler}
                 >Report {fullname}</div>}
             {toggle && <div>

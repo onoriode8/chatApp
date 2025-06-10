@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { IoIosArrowBack } from "react-icons/io";
 
 import ClearChats from '../clear_chats/clear_chats'
-import Report from '../block_report/report/report';
+// import Report from '../block_report/report/report';
 import Block from '../block_report/block/block';
 
 import "./chat_details.css"
@@ -14,9 +14,6 @@ const ChatDetails = () => {
     const [toggleBlock, setToggleBlock] = useState(false)
     const [toggleClearChat, setToggleClearChat] = useState(false)
     const [toggleReport, setToggleReport] = useState(false)
-
-
-    const url = process.env.REACT_APP_DB_URL
 
     const toggleBlockPopupScreenHandler = () => {
         setToggleBlock(prevState => !prevState)
@@ -43,7 +40,7 @@ const ChatDetails = () => {
                 <div></div> {/* Edit*/}
             </div>
             <div className="chatDetails_image_profile_">
-                <div><img src={`${url}${chatData.profile}`} alt="" /></div>
+                <div><img src={`${chatData.profile}`} alt="" /></div>
                 <div>
                     <p>{chatData.fullname.toUpperCase()}</p>
                 </div>
@@ -56,11 +53,11 @@ const ChatDetails = () => {
                     togglePopupScreenHandler={
                         toggleClearChatPopupScreenHandler}
                     fullname={chatData.fullname} />
-                <Report 
+                {/* <Report 
                     toggle={toggleReport}
                     togglePopupScreenHandler={
                         toggleReportPopupScreenHandler}
-                    fullname={chatData.fullname} />
+                    fullname={chatData.fullname} /> */}
                 <Block 
                     toggle={toggleBlock}
                     togglePopupScreenHandler={

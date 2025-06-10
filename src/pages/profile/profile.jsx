@@ -19,7 +19,7 @@ const Profile = () => {
         imageRef, imageUrl, files,
         filePickerHandler} = useImagePicker()
 
-    const { updateProfileHandler,
+    const { updateProfileHandler, message,
         loading } = useUploadProfile(files, imageUrl)
     
     const profile = imageUrl === undefined ? serverProfile : imageUrl
@@ -50,6 +50,9 @@ const Profile = () => {
                 <p>Hey there am using this chat! 
                     Connect with me for free.
                 </p>
+            </div>
+            <div style={{textAlign: "center", color: "green", fontSize: "20px"}}>
+                <p>{ message }</p>
             </div>
         </div>
     )

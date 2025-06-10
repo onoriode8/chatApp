@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { IoIosArrowBack } from "react-icons/io";
@@ -16,19 +16,15 @@ const Chat = () => {
     const chatData = JSON.parse(sessionStorage.getItem("chat"))
     const parsedData = JSON.parse(sessionStorage.getItem("cookie-string"))
 
-    const { chatInfo } = useContext(AuthContext)
+    const { chatInfo, deletedMessage, deletedMessageFunc } = useContext(AuthContext)
 
-    const { 
-        socketMessage, serverMessage } = useChatRoom()
+    const { socketMessage, serverMessage } = useChatRoom()
 
     const navigate = useNavigate()
     const backFunction = () => {
         sessionStorage.removeItem("chat")
         navigate(-1)
     }
-
-    // const url = process.env.REACT_APP_DB_URL
-    // const FrontendUrl = process.env.REACT_APP_FRONTEND_URL
 
     let creatorMessage;
     if(socketMessage) {
@@ -60,9 +56,15 @@ const Chat = () => {
             id.creatorId === parsedData.id || id.creatorId === chatData.id)
         const filteredMsg = findUser.conversation.filter(msg => msg.senderId === parsedData.id)
         renderedServerMessages = filteredMsg.map(message => 
-            <CreatorMessages key={message.id} message={message.message}
-                date={message.createdAt}  time={message.time} />)
+            <CreatorMessages key={message.id} id={message.id} message={message.message}
+                date={message.createdAt} time={message.time} />)
     }
+
+    useEffect(() => {
+        setTimeout(() => {
+           deletedMessageFunc(null)
+        }, 1000);
+    })
 
     return (
         <div className="Chat_wrapper">
@@ -83,6 +85,7 @@ const Chat = () => {
                 {receiverMessage.map(message => 
                     <ReceiverMessages 
                         key={message.id} 
+                        id={message.id}
                         message={message.message} 
                         time={message.time}
                         date={message.createdAt} />
@@ -94,12 +97,16 @@ const Chat = () => {
                 {creatorMessage.map(message => 
                     <CreatorMessages 
                         key={message.id}
+                        id={message.id}
                         message={message.message}
                         time={message.time}
                         date={message.createdAt}  />
                 )}
                 </div> : renderedServerMessages} 
                 <div id="divId"></div>
+                {deletedMessage && <div className="chat_success_message">
+                    {deletedMessage !== null ? <p>{deletedMessage}</p>: null}
+                </div>}
             <Input />
         </div>
     )

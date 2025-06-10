@@ -14,8 +14,7 @@ const Signin = () => {
         email, password, errorMessage,
         onChangePasswordHandler, 
         signInUserHandler} = useSignin()
-
-    //disbled signin button
+        
     let disabled = true;
     if(password.trim().length >= 6 && email.trim().length >= 12 ) {
         disabled = false

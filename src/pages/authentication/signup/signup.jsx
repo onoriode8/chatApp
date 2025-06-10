@@ -19,7 +19,6 @@ const Signup = () => {
         onChangePasswordHandler, 
         signupUserHandler} = useSignup()
 
-    //disbled signin button
     let disabled = true;
     if(password.trim().length >= 6 && email.trim().length >= 12 &&
         imageUrl !== undefined) {

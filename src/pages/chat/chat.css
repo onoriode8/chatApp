@@ -57,7 +57,32 @@
     scroll-behavior: smooth;
 }
 
-/* .Chat_body_sender_img {
-    display: flex;
-    justify-content: flex-end;
-} */
+.chat_success_message {
+    text-align: center;
+    border: none;
+    border-radius: 7px;
+    padding: 6px 0px;
+    background:rgb(103, 108, 44);
+    margin: 0% 40%;
+    bottom: 0;
+}
+
+.chat_success_message p {
+    color: #fff;
+    text-transform: capitalize;
+    position: relative;
+    z-index: 20;
+    font-family: Roman;
+}
+
+@media(max-width: 541px) {
+    .chat_success_message {
+        margin: 0% 35%;
+    }
+}
+
+@media(max-width: 490px) {
+    .chat_success_message {
+        margin: 0% 30%;
+    }
+}

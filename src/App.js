@@ -28,7 +28,6 @@ const App = () => {
   
   return (
     <ContextProvider>
-    {/* <ErrorBoundary> */}
     <ErrorMessage />
     {parsedData && <ToolBar />}
       <Routes>
@@ -36,7 +35,7 @@ const App = () => {
           <Suspense fallback={loading}>
             <SignIn />
           </Suspense>} />}
-        {!parsedData && <Route path="/signup" element={
+        !{parsedData && <Route path="/signup" element={
           <Suspense fallback={loading}>
             <Signup />
           </Suspense>} />}

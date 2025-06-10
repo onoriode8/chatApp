@@ -44,46 +44,52 @@ export const useImagePicker = () => {
 export const useUploadProfile = (file, imageUrl) => {
     const parsedData = JSON.parse(sessionStorage.getItem("cookie-string"))
     const [loading, setLoading] = useState(false)
+    const [message, setMessage] = useState(null)
 
     const navigate = useNavigate()
-
 
     const updateProfileHandler = async (e) => {
         if(file === undefined && !parsedData) return 
         setLoading(true)
         const formData = new FormData()
         formData.append("updateProfile", file)
+        console.log(file)
         try {
             const response = await fetch(`${process.env.REACT_APP_DB_URL}/user/user/update/profile`, {
                 method: "PATCH",
                 headers: {
-                    "Content-Type": "application/json",
                     "Authorization": "Bearer " + parsedData.token
                 },
-                formData
+                body: formData
             })
             const responseData = await response.json()
-            console.log(response)
             if(response.ok === false) throw new Error(responseData)
             setLoading(false)
             imageUrl = null
             file = null
+            setMessage(responseData)
+            setTimeout(() => {
+                setMessage(null)
+            }, 1500)
+            setTimeout(() => {
+                navigate("/users")
+                window.location.reload()
+            }, 3000)
         } catch(err) {
             setLoading(false)
             file = null
             imageUrl = null
+            setMessage(err.message)
             if(err.message === "jwt expired") {
                 sessionStorage.removeItem("cookie-string")
                 sessionStorage.removeItem("chat")
                 navigate("/")
                 window.location.reload()
-            } else {
-                console.log(err.message)
-            }
+            } else {}
         }
     }
     
     return {
-        updateProfileHandler, loading
+        updateProfileHandler, loading, message
     }
 }

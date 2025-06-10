@@ -12,7 +12,6 @@ export const useChatRoom = () => {
     const [inputMessage, setInputMessage] = useState("")
     const [pickedFile, setPickedFile] = useState(null)
 
-    // const [socketMessage, setSocketMessage] = useState("")
     const { socketMessage, setSocketMessage } = useContext(AuthContext)
     
 
@@ -34,7 +33,6 @@ export const useChatRoom = () => {
         setPickedFile(file)
     }
 
-    //Reload to get server messages.
     useEffect(() => {
         if(!parsedData && !receiver) return
         try {
@@ -76,7 +74,6 @@ export const useChatRoom = () => {
         }
     }, [])
 
-    //send message function
     const sendMessage = async() => {
         if(!parsedData && !receiver) return
         try{
@@ -108,7 +105,7 @@ export const useChatRoom = () => {
     }
 
     useEffect(() => {
-        socketRef.current = connectSocket(process.env.REACT_APP_DB_URL);
+        socketRef.current = connectSocket(`${process.env.REACT_APP_DB_URL}`)
 
         socketRef.current.on("message", socket => {
             if(socket.conversation.creatorId === parsedData.id 
@@ -122,7 +119,6 @@ export const useChatRoom = () => {
         })
     }, [])
 
-    //onchange input entered for sending private message.
     const inputMessageHandler = (e) => {
         setInputMessage(e.target.value)
     }

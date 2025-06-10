@@ -12,13 +12,14 @@ export const AuthContext = createContext({
     setToggleSearchBarCont: () => {},
     socketMessage: "",
     setSocketMessage: () => {},
-
     errorMessage: null, 
     setErrorMessage: () => {},
-
     input: "", 
-    setInput: () => {}
-    
+    setInput: () => {},
+    showModel: false,
+    setShowModel: () => {},
+    deletedMessage: null,
+    deletedMessageFunc: () => {}
 });
 
 
@@ -27,10 +28,8 @@ export const ContextProvider = (props) => {
     const [profilePic, setProfilePic] = useState()
     const [user, setUser] = useState(null)
 
-    //use state on another file
     const [socketMessage, setSocketMessage] = useState("")
     const [input, setInput] = useState("")
-
 
     const [chatInfo, setChatInfo] = useState({
         chatFullname: null, chatId: null, chatProfile: null
@@ -38,11 +37,19 @@ export const ContextProvider = (props) => {
 
     const [toggleSearchBar, setToggleSearchBar] = useState()
 
-    //displaying error message.
     const [errorMessage, setErrorMessage] = useState(null)
 
+    const [showModel, setShowModel] = useState(false)
+    const [deletedMessage, setDeletedMessageFunc] = useState(null)
+ 
+    const deletedMessageHandler = (successMessage) => {
+        setDeletedMessageFunc(successMessage)
+    }
 
-    //toggle search use bar function
+    const toggleModelHandler = () => {
+        setShowModel(prevState => !prevState)
+    } 
+
     const toggleSearchBarFunction = (toggleBoolean) => {
         setToggleSearchBar(toggleBoolean)
     }
@@ -73,8 +80,7 @@ export const ContextProvider = (props) => {
         if(!parsedData) return
         const getUserFunc = async() => {
             try {
-                const response = 
-                await fetch(`${process.env.REACT_APP_DB_URL}/user/user/${parsedData.id}`, {
+                const response = await fetch(`${process.env.REACT_APP_DB_URL}/user/user/${parsedData.id}`, {
                     headers: {
                         "Content-Type": "application/json",
                         "Authorization": "Bearer " + parsedData.token
@@ -115,8 +121,11 @@ export const ContextProvider = (props) => {
             socketMessage, setSocketMessage,
             errorMessage, setErrorMessage,
             toggleSetErrorMessage,
-            input, setInput
-
+            input, setInput,
+            showModel: showModel,
+            setShowModel: toggleModelHandler,
+            deletedMessage: deletedMessage,
+            deletedMessageFunc: deletedMessageHandler
         }}>
             {props.children}
         </AuthContext.Provider>

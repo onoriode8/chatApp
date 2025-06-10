@@ -31,8 +31,26 @@
     border-radius: 50px;
 }
 
-/* @media(min-width: 768px) {
+@media(min-width: 1023px) {
     .Toolbar_wrapper {
-        width: 40%;
+        background: #fff;
+        box-shadow: 0 8px 5px 0 #1134;
+        width: 12%;
+        height: 100vh;
     }
-} */
+
+    .Toolbar_ul_wrapper ul a {
+        color: rgb(72, 93, 227); 
+        height: 8vh;
+        padding: 20px 0px;
+    }
+
+    .Toolbar_ul_wrapper ul {
+        display: flex;
+        flex-direction: column;
+        padding: 50px;
+        color: #fff;
+        font-size: 1.7em;
+        cursor: pointer;
+    }
+}

@@ -14,7 +14,6 @@ export const useSignup = () => {
 
     const navigate = useNavigate()
 
-    // const { files } = useImagePicker()
     const { pickedFile, setFilePicker } = useContext(AuthContext)
 
     const onChangeEmailHandler = (e) => {
@@ -36,7 +35,6 @@ export const useSignup = () => {
         formData.append("password", password)
         formData.append("userProfile", pickedFile)
         try {
-            // console.log("url", process.env.REACT_APP_DB_URL)
             const response = await fetch(`${process.env.REACT_APP_DB_URL}/user/signup`, {
                 method: "POST",
                 body: formData

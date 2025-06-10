@@ -1,8 +1,37 @@
 .Creator_chat_wrapper {
     display: flex;
-    flex-direction: column;
-    align-items: end;
+    flex-direction: row; 
+    align-items: center;
     justify-content: flex-end;
+}
+
+.Creator_chat_wrapper div:first-child {
+    display: flex;
+    align-items: center;
+}
+
+.creatorMessages_dropdown {
+    font-size: xx-large;
+}
+
+.creatorMessage_show_model {
+    border: 0.5px solid #1134;
+    padding: 6px 12px;
+    font-family: 'Times New Roman', Times, serif;
+    margin-right: 8px;
+}
+
+.creatorMessage_show_model div {
+    display: flex;
+    align-items: center;
+    margin: 2px 8px;
+}
+
+.creatorMessage_show_model div:first-child:hover {
+    background: lightblue;
+    border-radius: 5px;
+    padding-top: 2px;
+    padding-bottom: 2px;
 }
 
 .Chat_body_receiver_wrapper {

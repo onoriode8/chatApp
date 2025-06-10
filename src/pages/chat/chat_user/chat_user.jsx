@@ -1,4 +1,6 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
+import { RiDeleteBinLine, RiArrowDropDownLine } from "react-icons/ri";
+import socketConnect from "socket.io-client"
 
 import { AuthContext } from '../../../hooks/context';
 
@@ -6,20 +8,13 @@ import { AuthContext } from '../../../hooks/context';
 import "./chat_user.css"
 
 
-// const url = process.env.REACT_APP_DB_URL
-// const FrontendUrl = process.env.REACT_APP_FRONTEND_URL
-
-
-
-export const ReceiverMessages = ({message, date, time }) => {
+export const ReceiverMessages = ({message, date, time, id }) => {
     const chatData = JSON.parse(sessionStorage.getItem("chat"))
     
     const formattedTimeFunc = () => { 
-        //learn how this time is programmed to am or pm later on.
         const splitTime = time.split(":")
         let hours = Number(splitTime[0]);
         const minutes = splitTime[1];
-        
         const ampm = hours >= 12 ? 'PM' : 'AM';
 
         hours = hours % 12;
@@ -47,8 +42,11 @@ export const ReceiverMessages = ({message, date, time }) => {
 }
 
 
-export const CreatorMessages = ({message, time, date}) => {
-    const { user } = useContext(AuthContext)
+export const CreatorMessages = ({message, time, id, data, date}) => {
+    const parsedData = JSON.parse(sessionStorage.getItem("cookie-string"))
+    const chatData = JSON.parse(sessionStorage.getItem("chat"))
+
+    const { user, showModel, setShowModel, deletedMessageFunc } = useContext(AuthContext)
 
     const formattedTimeFunc = () => {
         const splitTime = time.split(":")
@@ -65,10 +63,56 @@ export const CreatorMessages = ({message, time, date}) => {
     }
 
     const currentTime = formattedTimeFunc()
+    
+    const deleteSingleMessageByIdHandler = async () => {
+        if(!chatData && !id) return;
+        try {
+            const response = await fetch(`${process.env.REACT_APP_DB_URL}/user/single/chat/delete/${chatData.id}/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type":"application/json",
+                    "Authorization": "Bearer " + parsedData.token
+                }
+            })
+            const data = await response.json()
+            if(data.ok === false) {
+                throw new Error(data)
+            }
+            window.location.reload()
+        } catch(err) {
+            console.log(err.message)
+        }
+    }
+
+    useEffect(() => {
+        const socketC = socketConnect(`${process.env.REACT_APP_DB_URL}`)
+        socketC.on("deletedMessage", socket => {
+            if(socket.action.id === parsedData.id) {
+                deletedMessageFunc(socket.message)
+            }
+            return () => socket.disconnect()
+        })
+    }, [])
 
     return (
         <div>
             <div className="Creator_chat_wrapper">
+                <div>
+                    <div className="creatorMessages_dropdown" onClick={setShowModel}>
+                        <RiArrowDropDownLine />
+                    </div>
+                    {showModel && <div className="creatorMessage_show_model">
+                        <div onClick={deleteSingleMessageByIdHandler}>
+                            <div><RiDeleteBinLine /></div>
+                            <div>Delete</div>
+                        </div>
+                        {/* <hr />
+                        <div>
+                            <div><RiDeleteBinLine /></div>
+                            <div>Delete</div>
+                        </div> */}
+                    </div>}
+                </div>
                 <div className="Chat_body_sender_wrapper">
                     {message}
                     <div>{currentTime}</div>
