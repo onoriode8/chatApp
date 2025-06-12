@@ -30,9 +30,9 @@ export const ReceiverMessages = ({message, id, file, date, time}) => {
         <div>
             <div className="Receiver_chat_wrapper">
                 <div className="Chat_body_receiver_wrapper">
-                    <div>
+                    {file && <div>
                         <img src={file} alt="" />
-                    </div>
+                    </div>}
                     {message}
                     <div>{currentTime}</div>
                 </div>
@@ -115,9 +115,9 @@ export const CreatorMessages = ({message, time, id, file, data, date}) => {
                     </div>}
                 </div>
                 <div className="Chat_body_sender_wrapper">
-                    <div>
+                    {file && <div>
                         <img src={file} alt="" />
-                    </div>
+                    </div>}
                     {message}
                     <div>{currentTime}</div>
                 </div> 

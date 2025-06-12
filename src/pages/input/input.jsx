@@ -15,7 +15,7 @@ const Input = () => {
         openFileHandler, inputRefElement, inputMessage,
         sendMessage, loading, inputMessageHandler,
         pickedFileHandler } = useChatRoom()
-        
+
     const cancelFilePickedHandler = () => {
         setImageUrl(null)
         setPickedFile(null)
@@ -28,7 +28,7 @@ const Input = () => {
                 <div>
                     <div title="close" onClick={cancelFilePickedHandler}><MdOutlineCancelPresentation /></div>
                     <div title="send" onClick={sendFileHandler}><BsSend /></div>
-                    <div>{fileLoading}</div>
+                    {fileLoading && <div><Loading /></div>}
                 </div>
             </div>}
             <div className="Input_wrapper">
