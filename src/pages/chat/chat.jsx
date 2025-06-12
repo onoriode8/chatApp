@@ -23,7 +23,8 @@ const Chat = () => {
     const navigate = useNavigate()
     const backFunction = () => {
         sessionStorage.removeItem("chat")
-        navigate(-1)
+        navigate(-1);
+        window.location.reload();
     }
 
     let creatorMessage;
