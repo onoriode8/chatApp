@@ -39,9 +39,14 @@
         height: 100vh;
     }
 
+    .Toolbar_ul_wrapper ul a img {
+        width: 100px;
+        height: 100px;
+    }
+
     .Toolbar_ul_wrapper ul a {
         color: rgb(72, 93, 227); 
-        height: 8vh;
+        height: 12vh;
         padding: 20px 0px;
     }
 

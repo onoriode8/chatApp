@@ -13,8 +13,6 @@
 }
 
 .profile_wrapper div:first-child div {
-    /* border: 1px solid black; */
-    /* font-size: 2em; */
     margin-top: 18em;
     cursor: pointer;
 }
@@ -22,7 +20,7 @@
 .profile_wrapper div:first-child img {
     width: 500px;
     height: 500px;
-    border-radius: 200px;
+    border-radius: 300px;
 }
 
 .profile_bio_wrapper {

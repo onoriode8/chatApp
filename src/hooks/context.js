@@ -70,7 +70,6 @@ export const ContextProvider = (props) => {
     const navigate = useNavigate()
 
     useEffect(() => {
-
         if(parsedData ===  null) {
             navigate("/")
         }
@@ -80,7 +79,6 @@ export const ContextProvider = (props) => {
         if(!parsedData) return
         const getUserFunc = async() => {
             try {
-                // ${process.env.REACT_APP_DB_URL}
                 const response = await fetch(`${process.env.REACT_APP_DB_URL}/user/user/${parsedData.id}`, {
                     headers: {
                         "Content-Type": "application/json",

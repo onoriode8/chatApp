@@ -11,16 +11,13 @@ export const useGetUser = () => {
 
     const navigate = useNavigate()
 
-    const { setToggleSearchBarCont, input,
-        setErrorMessage
-     } = useContext(AuthContext)
+    const { setToggleSearchBarCont, input, setErrorMessage } = useContext(AuthContext)
 
     useEffect(() => {
         if(users.length !== 0) return
         if(!parsedData) return
         const fetchAllUsers = async() => {
             try {
-                // ${process.env.REACT_APP_DB_URL}
                 const response = await fetch(`${process.env.REACT_APP_DB_URL}/user/users/${parsedData.id}`, {
                     headers: {
                         "Content-Type": "application/json",

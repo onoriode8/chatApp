@@ -45,7 +45,10 @@ const Chat = () => {
             id.creatorId === parsedData.id || id.creatorId === chatData.id)
         const filteredMsg = findUser.conversation.filter(msg => msg.senderId === chatData.id)
         renderedReceiverServerMessages = filteredMsg.map(message => 
-            <ReceiverMessages key={message.id} message={message.message}
+            <ReceiverMessages key={message.id}
+                id={message.id}
+                file={message.file}
+                message={message.message}
                 date={message.createdAt} time={message.time} />)
     }
 
@@ -56,7 +59,9 @@ const Chat = () => {
             id.creatorId === parsedData.id || id.creatorId === chatData.id)
         const filteredMsg = findUser.conversation.filter(msg => msg.senderId === parsedData.id)
         renderedServerMessages = filteredMsg.map(message => 
-            <CreatorMessages key={message.id} id={message.id} message={message.message}
+            <CreatorMessages key={message.id} id={message.id}
+                file={message.file}
+                message={message.message}
                 date={message.createdAt} time={message.time} />)
     }
 
@@ -81,11 +86,12 @@ const Chat = () => {
                 </li>
             </div>
             {/* Receiver chat */}
-            {receiverMessage ? <div >
+            {receiverMessage ? <div>
                 {receiverMessage.map(message => 
                     <ReceiverMessages 
                         key={message.id} 
                         id={message.id}
+                        file={message.file}
                         message={message.message} 
                         time={message.time}
                         date={message.createdAt} />
@@ -99,11 +105,12 @@ const Chat = () => {
                         key={message.id}
                         id={message.id}
                         message={message.message}
+                        file={message.file}
                         time={message.time}
                         date={message.createdAt}  />
                 )}
                 </div> : renderedServerMessages} 
-                <div id="divId"></div>
+                {/* <div id="divId"></div> */}
                 {deletedMessage && <div className="chat_success_message">
                     {deletedMessage !== null ? <p>{deletedMessage}</p>: null}
                 </div>}

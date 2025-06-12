@@ -64,6 +64,12 @@
     font-size: 15px;
 }
 
+.Chat_body_sender_wrapper div:first-child img {
+    width: 125px;
+    height: 125px;
+    border-radius: 5px; 
+}
+
 .Chat_body_sender_img {
     display: flex;
     justify-content: flex-end;
@@ -90,6 +96,12 @@
     border-radius: 8px;
     font-size: 15px;
     box-shadow: 1px 1px 1px 1px #1134;
+}
+
+.Chat_body_receiver_wrapper div:first-child img {
+    width: 125px;
+    height: 125px;
+    border-radius: 5px; 
 }
 
 .Receiver_chat_wrapper {

@@ -19,8 +19,11 @@ const UserList = ({ fullname, profile, id }) => {
             <a href={`/chat/${id}`} 
                 onClick={addChatInfoHandler}
                 className="userList_profile_log_wrapper">
-                <div><img src={`${profile}`} alt="" /></div>
-                <p>{fullname ? fullname.toUpperCase() : fullname}</p>
+                <div>
+                    <div><img src={`${profile}`} alt="" /></div>
+                    <div></div>
+                    <div>{fullname ? fullname.toUpperCase() : fullname}</div>
+                </div>
             </a>
         </div>
     )

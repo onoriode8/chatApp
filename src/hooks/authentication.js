@@ -40,7 +40,14 @@ export const useSignup = () => {
                 body: formData
             })
             const responseData = await response.json()
-            if(response.ok === false) throw new Error(responseData)
+            if(response.ok === false) {
+                if(responseData.statusCode === 429) {
+                    const error = new Error(responseData.error)
+                    error.status = responseData.statusCode
+                    throw error;
+                }
+                throw new Error(responseData)
+            }
             setLoading(false)
             setEmail("")
             setPassword("")
@@ -95,7 +102,6 @@ export const useSignin = () => {
             password.trim().length < 5) return
         setLoading(true)
         try {
-            // ${process.env.REACT_APP_DB_URL}
             const response = await fetch(`${process.env.REACT_APP_DB_URL}/user/signin`, {
                 method: "POST",
                 headers: {
@@ -106,7 +112,14 @@ export const useSignin = () => {
                 })
             })
             const responseData = await response.json()
-            if(response.ok === false) throw new Error(responseData)
+            if(response.ok === false) {
+                if(responseData.statusCode === 429) {
+                    const error = new Error(responseData.error)
+                    error.status = responseData.statusCode
+                    throw error;
+                }
+                throw new Error(responseData)
+            }
             setLoading(false)
             setEmail("")
             setPassword("")

@@ -8,7 +8,7 @@ import { AuthContext } from '../../../hooks/context';
 import "./chat_user.css"
 
 
-export const ReceiverMessages = ({message, date, time, id }) => {
+export const ReceiverMessages = ({message, id, file, date, time}) => {
     const chatData = JSON.parse(sessionStorage.getItem("chat"))
     
     const formattedTimeFunc = () => { 
@@ -30,6 +30,9 @@ export const ReceiverMessages = ({message, date, time, id }) => {
         <div>
             <div className="Receiver_chat_wrapper">
                 <div className="Chat_body_receiver_wrapper">
+                    <div>
+                        <img src={file} alt="" />
+                    </div>
                     {message}
                     <div>{currentTime}</div>
                 </div>
@@ -42,7 +45,7 @@ export const ReceiverMessages = ({message, date, time, id }) => {
 }
 
 
-export const CreatorMessages = ({message, time, id, data, date}) => {
+export const CreatorMessages = ({message, time, id, file, data, date}) => {
     const parsedData = JSON.parse(sessionStorage.getItem("cookie-string"))
     const chatData = JSON.parse(sessionStorage.getItem("chat"))
 
@@ -79,9 +82,7 @@ export const CreatorMessages = ({message, time, id, data, date}) => {
                 throw new Error(data)
             }
             window.location.reload()
-        } catch(err) {
-            console.log(err.message)
-        }
+        } catch(err) {}
     }
 
     useEffect(() => {
@@ -114,6 +115,9 @@ export const CreatorMessages = ({message, time, id, data, date}) => {
                     </div>}
                 </div>
                 <div className="Chat_body_sender_wrapper">
+                    <div>
+                        <img src={file} alt="" />
+                    </div>
                     {message}
                     <div>{currentTime}</div>
                 </div> 

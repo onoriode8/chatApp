@@ -8,40 +8,71 @@
     text-decoration: none;
 }
 
-.userList_profile_log_wrapper {
+.userList_profile_log_wrapper div {
     display: flex;
     align-items: center;
-    padding: 38px 0px;
+    /* margin: 20px 0px; */
+    padding: 10px 0px;
+    /* height: 2vh; */
+    /* box-shadow: 0.3px 1px 5px 0px #1134; */
+    /* border: 1px solid; */
 }
 
-.userList_profile_log_wrapper div:first-child img {
+.userList_profile_log_wrapper div:first-child div:first-child img {
     width: 50px;
     height: 50px;
     border-radius: 5px;
 }
 
-.userList_profile_log_wrapper div:first-child img {
+.userList_profile_log_wrapper div:first-child div:first-child img {
     width: 50px;
     height: 50px;
     border-radius: 100px;
+    margin-right: 100px;
 }
 
-.userList_profile_log_wrapper p {
+.userList_profile_log_wrapper div:first-child div:last-child {
     font-family: Arial, Helvetica, sans-serif;
     color: rgb(48, 156, 48);
 }
 
 @media (max-width: 490px) {
     .userList_wrapper {
-        width: 20vh;
+        /* width: 35vh; */
+    }
+
+    .userList_wrapper a {
+        box-shadow: 0.3px 1px 5px 0px #1134;
+        margin: 20px 0px;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+    .userList_profile_log_wrapper div {
+        display: flex;
+        align-items: center;
+        padding: 2px 8px;
     }
 }
 
 @media(min-width: 1023px) {
     .userList_wrapper {
-        width: 70vh;
-        border: 1px solid black;
-        margin: 0px 30px;
-        
+        margin-left: 150px;
+        margin-top: 20px;
+        height: 13vh;
+        box-shadow: 0.3px 1px 5px 0px #1134;
+    }
+
+    .userList_profile_log_wrapper div:first-child {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+@media(min-width: 1280px) {
+    .userList_wrapper {
+        margin-left: 200px;
     }
 }

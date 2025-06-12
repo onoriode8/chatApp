@@ -11,11 +11,13 @@ export const useChatRoom = () => {
 
     const [inputMessage, setInputMessage] = useState("")
     const [pickedFile, setPickedFile] = useState(null)
+    const [imageUrl, setImageUrl] = useState(null)
 
     const { socketMessage, setSocketMessage } = useContext(AuthContext)
     
 
     const [loading, setLoading] = useState(false)
+    const [fileLoading, setFileLoading] = useState(false)
 
     const [serverMessage, setServerMessage] = useState([])
 
@@ -32,6 +34,16 @@ export const useChatRoom = () => {
         const file = e.target.files[0]
         setPickedFile(file)
     }
+
+    useEffect(() => {
+        if(!pickedFile) return
+        const fileReader = new FileReader()
+        fileReader.onload = (e) => {
+            const result = e.target.result
+            setImageUrl(result)
+        }
+        fileReader.readAsDataURL(pickedFile)
+    }, [pickedFile, imageUrl])
 
     useEffect(() => {
         if(!parsedData && !receiver) return
@@ -74,19 +86,53 @@ export const useChatRoom = () => {
         }
     }, [])
 
+    //send file handler
+    const sendFileHandler = async() => {
+        if(!parsedData && !receiver) return
+        if(!pickedFile) return
+        try{
+            setFileLoading(true)
+            const formData = new FormData();
+            formData.append("sendFile", pickedFile)
+            const response = await fetch(`${process.env.REACT_APP_DB_URL}/user/api/send/image/${parsedData.id}/${receiver.id}`, {
+                method: "PATCH",
+                headers: {
+                    "Authorization": "Bearer " + parsedData.token
+                },
+                body: formData
+            })
+            const responseData = await response.json()
+            if(!response.ok) throw new Error(responseData)
+            setFileLoading(false)
+            setPickedFile(null)
+            setImageUrl(null)
+        } catch(err) {
+            setFileLoading(false)
+            setPickedFile(null)
+            setImageUrl(null)
+            if(err.message === "jwt expired") {
+                sessionStorage.removeItem("cookie-string")
+                sessionStorage.removeItem("chat")
+                navigate("/")
+                window.location.reload()
+            } else {}
+        }
+    }
+
     const sendMessage = async() => {
         if(!parsedData && !receiver) return
+        if(inputMessage.length === 0) return
         try{
             setLoading(true)
+            const formData = new FormData();
+            formData.append("sendImage", pickedFile)
+            formData.append("message", inputMessage)
             const response = await fetch(`${process.env.REACT_APP_DB_URL}/user/send/message/${parsedData.id}/${receiver.id}`, {
                 method: "PATCH",
                 headers: {
-                    "Content-Type": "application/json",
                     "Authorization": "Bearer " + parsedData.token
                 },
-                body: JSON.stringify(
-                    { message : inputMessage }
-                )
+                body: formData
             })
             const responseData = await response.json()
             if(!response.ok) throw new Error(responseData)
@@ -106,7 +152,6 @@ export const useChatRoom = () => {
 
     useEffect(() => {
         socketRef.current = connectSocket(`${process.env.REACT_APP_DB_URL}`)
-
         socketRef.current.on("message", socket => {
             if(socket.conversation.creatorId === parsedData.id 
                 && socket.conversation.receiverId === receiver.id 
@@ -114,7 +159,6 @@ export const useChatRoom = () => {
                 && socket.conversation.receiverId === parsedData.id) {
                     setSocketMessage(socket.conversation)
             }
-
             return () => socketRef.current.disconnect()
         })
     }, [])
@@ -127,6 +171,8 @@ export const useChatRoom = () => {
         serverMessage, loading, inputMessage, 
         openFileHandler, inputRefElement,
         pickedFileHandler, socketMessage,
-        sendMessage, inputMessageHandler
+        sendMessage, inputMessageHandler,
+        imageUrl, setImageUrl, setPickedFile,
+        fileLoading, sendFileHandler
     }
 }

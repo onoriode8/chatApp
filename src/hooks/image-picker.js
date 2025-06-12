@@ -53,7 +53,6 @@ export const useUploadProfile = (file, imageUrl) => {
         setLoading(true)
         const formData = new FormData()
         formData.append("updateProfile", file)
-        console.log(file)
         try {
             const response = await fetch(`${process.env.REACT_APP_DB_URL}/user/user/update/profile`, {
                 method: "PATCH",
@@ -63,7 +62,14 @@ export const useUploadProfile = (file, imageUrl) => {
                 body: formData
             })
             const responseData = await response.json()
-            if(response.ok === false) throw new Error(responseData)
+            if(response.ok === false) {
+                if(responseData.statusCode === 429) {
+                    const error = new Error(responseData.error)
+                    error.status = responseData.statusCode
+                    throw error;
+                }
+                throw new Error(responseData)
+            }
             setLoading(false)
             imageUrl = null
             file = null
