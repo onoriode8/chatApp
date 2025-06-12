@@ -21,8 +21,12 @@
 ##### Below is the chat view of the app.
 
 ##### REAL-TIME CHAT APP VIEW BELOW.
-<img width="281" alt="" src="https://github.com/user-attachments/assets/9cc8c186-da68-46ef-81bd-3985b892abbe" />
 
 ###### Login details: 
 ###### test@gmail.com  password12345
 ###### test1@gmail.com password1234
+
+<img width="281" alt="" src="https://github.com/user-attachments/assets/9cc8c186-da68-46ef-81bd-3985b892abbe" />
+
+<img width="207" alt="Screenshot 2025-06-12 080052" src="https://github.com/user-attachments/assets/bef99c38-406d-4af8-becf-daf5a84b2345" />
+
