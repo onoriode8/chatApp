@@ -138,9 +138,13 @@ export const useChatRoom = () => {
             if(!response.ok) throw new Error(responseData)
             setLoading(false)
             setInputMessage("")
+            setPickedFile(null)
+            setImageUrl(null)
         } catch(err) {
             setLoading(false)
             setInputMessage("") 
+            setPickedFile(null)
+            setImageUrl(null)
             if(err.message === "jwt expired") {
                 sessionStorage.removeItem("cookie-string")
                 sessionStorage.removeItem("chat")

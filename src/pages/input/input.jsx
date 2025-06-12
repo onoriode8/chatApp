@@ -15,6 +15,7 @@ const Input = () => {
         openFileHandler, inputRefElement, inputMessage,
         sendMessage, loading, inputMessageHandler,
         pickedFileHandler } = useChatRoom()
+        
     const cancelFilePickedHandler = () => {
         setImageUrl(null)
         setPickedFile(null)

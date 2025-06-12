@@ -47,6 +47,10 @@
     font-size: 16px;
 }
 
+.Input_wrapper input:last-child {
+    font-size: 16px;
+}
+
 .Input_wrapper div:last-child {
     display: flex;
     align-items: center;
